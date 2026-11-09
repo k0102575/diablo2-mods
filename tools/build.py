@@ -1,6 +1,7 @@
 """Build deterministic rune downgrade installation ZIPs from the multi-mod repo."""
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
 
@@ -24,17 +25,12 @@ for name, info in sorted(assets.items()):
     data = (mod/name).read_bytes()
     assert hashlib.sha256(data).hexdigest() == info['sha256'], f'Asset changed: {name}'
     runtime[f'mods/{mod.name}/{name}'] = data
-full = dict(runtime)
-for name in ['README.md', 'CHANGELOG.md']:
-    full[name] = (mod/name).read_bytes()
-full['LICENSE'] = (root/'LICENSE').read_bytes()
-for path in sorted((mod/'docs').glob('*')):
-    if path.is_file():
-        full['docs/'+path.name] = path.read_bytes()
-manifest = {name: hashlib.sha256(data).hexdigest() for name, data in sorted(full.items())}
-full['MANIFEST.sha256.json'] = (json.dumps(manifest, indent=2)+'\n').encode()
-minimal = dict(runtime)
-minimal[f'mods/{mod.name}/LICENSE.txt'] = (root/'LICENSE').read_bytes()
+# Use the exact edition code/configuration exercised by the Node verifier.
+editions = json.loads(subprocess.check_output(
+    ['node', str(root/'tools/package-editions.mjs')], text=True
+))
+assert {e['edition'] for e in editions} == {'tiered', 'standard'}
+assert all(report.get('checksByEdition', {}).get(e['edition'], 0) > 0 for e in editions), 'Both editions must pass validation'
 
 def build(name, contents):
     archive = dist/name
@@ -55,5 +51,21 @@ def build(name, contents):
     (dist/(archive.name+'.sha256')).write_text(digest+'  '+archive.name+'\n')
     print(f'{archive}\nSHA256 {digest}\n{len(contents)} files verified')
 
-build(f'{mod.name}-{version}.zip', full)
-build(f'{mod.name}-{version}-mods-only.zip', minimal)
+for edition in editions:
+    label = edition['edition']
+    contents = dict(runtime)
+    contents[f'mods/{mod.name}/mod.js'] = edition['code'].encode()
+    contents[f'mods/{mod.name}/mod.json'] = (json.dumps(edition['metadata'], ensure_ascii=False, indent=2)+'\n').encode()
+    full = dict(contents)
+    for name in ['README.md', 'CHANGELOG.md']:
+        full[name] = (mod/name).read_bytes()
+    full['LICENSE'] = (root/'LICENSE').read_bytes()
+    for path in sorted((mod/'docs').glob('*')):
+        if path.is_file():
+            full['docs/'+path.name] = path.read_bytes()
+    manifest = {name: hashlib.sha256(data).hexdigest() for name, data in sorted(full.items())}
+    full['MANIFEST.sha256.json'] = (json.dumps(manifest, indent=2)+'\n').encode()
+    minimal = dict(contents)
+    minimal[f'mods/{mod.name}/LICENSE.txt'] = (root/'LICENSE').read_bytes()
+    build(f'{mod.name}-{version}-{label}.zip', full)
+    build(f'{mod.name}-{version}-{label}-mods-only.zip', minimal)

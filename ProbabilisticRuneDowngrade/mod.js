@@ -1,6 +1,6 @@
 /*
  * 확률형 룬 분해 모드 — 악마술사의 군림 전용
- * Probabilistic Rune Downgrade 0.2.0 / 제작자: 빵길빵길
+ * Probabilistic Rune Downgrade 0.3.0-alpha.1 / 제작자: 빵길빵길
  * 오프라인 D2RMM 데이터 모드입니다. 엘드~조드 전체 등급을 생성합니다.
  *
  * 이 파일은 D2RMM의 '모드 설치' 버튼을 누를 때 실행됩니다.
@@ -45,25 +45,34 @@ if (D2RMM.getVersion() < 1.9) {
 
 // 배열의 순서가 결과 번호입니다.
 // 0: 하위 룬 2개 / 1: 하위 룬 1개 / 2: 원래 룬 / 3: 꽝
-const chances = [
-  'doubleChance',
-  'singleChance',
-  'returnChance',
-  'missChance',
-].map(key => {
-  const n = config[key];
-
-  if (!Number.isInteger(n) || n < 0 || n > 100) {
-    fail(key + ': expected integer 0..100.');
+// 빌드 시 두 배포판에 고정합니다. 저장된 설정으로 판종을 자동 추측하지 않습니다.
+const probabilityMode = 'tiered';
+const outcomeKeys = ['doubleChance', 'singleChance', 'returnChance', 'missChance'];
+const probabilityTiers = [
+  { id: 'low', label: '하급 / Low (Eld-Lem, 2-20)', min: 2, max: 20 },
+  { id: 'mid', label: '중급 / Mid (Pul-Gul, 21-25)', min: 21, max: 25 },
+  { id: 'high', label: '고급 / High (Vex-Zod, 26-33)', min: 26, max: 33 },
+];
+function readChances(prefix, label) {
+  const values = outcomeKeys.map(key => {
+    const id = prefix ? prefix + key[0].toUpperCase() + key.slice(1) : key;
+    const value = config[id];
+    if (!Number.isInteger(value) || value < 0 || value > 100) {
+      fail(label + ': ' + id + ': expected integer 0..100.');
+    }
+    return value;
+  });
+  const total = values.reduce((a, b) => a + b, 0);
+  if (total !== 100) {
+    fail(label + ': probabilities must sum to exactly 100 / 확률 합계는 100이어야 합니다. Total=' + total);
   }
-
-  return n;
-});
-
-// 잘못 입력한 확률을 임의로 보정하지 않습니다.
-if (chances.reduce((a, b) => a + b, 0) !== 100) {
-  fail('Probabilities must sum to exactly 100 / 확률 합계는 100이어야 합니다.');
+  return values;
 }
+if (!['tiered', 'standard'].includes(probabilityMode)) fail('Unsupported probability edition.');
+// 어느 구간의 설정이 잘못돼도 게임 데이터를 쓰기 전에 설치를 중단합니다.
+const chancesByTier = probabilityMode === 'tiered'
+  ? Object.fromEntries(probabilityTiers.map(tier => [tier.id, readChances(tier.id, tier.label)]))
+  : { standard: readChances('', '전체 / Standard') };
 
 // 악마술사의 군림 데이터만 수정합니다. base 경로는 사용하지 않습니다.
 const prefix = 'global\\excel\\';
@@ -419,6 +428,10 @@ if (cube.rows.length + ranks.length * 101 > 32767) {
 }
 
 for (const rank of ranks) {
+  // 분해 결과가 아닌 입력 룬의 등급으로 구간을 선택합니다.
+  const tier = probabilityTiers.find(t => rank >= t.min && rank <= t.max);
+  if (!tier) fail('Rune rank has no probability tier: ' + rank);
+  const chances = chancesByTier[probabilityMode === 'tiered' ? tier.id : 'standard'];
   // 예: rank=24라면 rune=r24(이스트), lower=r23(말)입니다.
   const tag = String(rank).padStart(2, '0');
   const pending = 'pg' + (rank - 2).toString(36);

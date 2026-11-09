@@ -1,6 +1,6 @@
 # Probabilistic Rune Downgrade
 
-By **k0102575** · Version **0.2.0** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
+By **k0102575** · Version **0.3.0-alpha.1** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
 
 Downgrade Eld through Zod with four configurable outcomes. Use one rune and one Rune Dismantling Hammer, then transmute the pending item alone to receive the result.
 
@@ -18,6 +18,22 @@ Downgrade Eld through Zod with four configurable outcomes. Use one rune and one 
 | One Rune Dismantling Hammer returned — miss | 15% |
 
 All **32 input ranks, Eld (r02) through Zod (r33)**, are enabled. El (r01) cannot be downgraded. The two-rune outcome always gives **two**, at every rank, regardless of the vanilla upgrade recipe. There is no Ist-only option. The first step consumes both ingredients; rune outcomes do not refund the hammer. A miss consumes the rune and returns only the hammer.
+
+## Choose one edition
+
+**Standard:** four chance settings shared by every input rune rank.
+
+**Tiered:** three collapsible groups, with four settings each:
+
+| Group | Input runes |
+|---|---|
+| Low | Eld-Lem (r02-r20) |
+| Mid | Pul-Gul (r21-r25) |
+| High | Vex-Zod (r26-r33) |
+
+The input rune determines the group. Defaults are **50/25/10/15 in all groups**. Each group must independently total 100. Higher ranks are not automatically harder; configure the chances you want. These are the mod's chosen boundaries, not an official universal trading classification.
+
+Choose either the `-standard-mods-only.zip` or `-tiered-mods-only.zip` file. Both install to `mods/ProbabilisticRuneDowngrade`; **install only one edition**. Both use the same hammer, recipes and artwork. The source folder directly installs Tiered. Previous global settings are not automatically migrated into the twelve Tiered settings: review them in D2RMM before installation. Resolve all pending items and back up saves before switching editions or probabilities.
 
 ## Why two transmutations?
 
@@ -38,7 +54,7 @@ Pending items use **Glowing Runes** icons by **바론9**. Normal and resulting r
 ## Installation
 
 1. Close the game and back up offline characters and the shared stash.
-2. Extract `ProbabilisticRuneDowngrade-0.2.0-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
+2. Extract `ProbabilisticRuneDowngrade-0.3.0-alpha.1-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
 3. In D2RMM 1.9+, enable **Probabilistic Rune Downgrade** and set the four chances.
 4. If using Relics of Sanctuary, place this mod **after Relics** in the install order. Click **Install Mods**.
 5. Launch the offline game with your D2RMM configuration. Use a copy of your save for initial checks.
@@ -66,7 +82,9 @@ The following author-reported game checks used **0.1.0, before the icon change**
 
 The combined setup included Relics of Sanctuary, Corruption Shards for RoTW, and rune stacking. Checks also covered descending from Zod to El, runewords, rune storage and stacking, existing upgrade recipes, socket use, save/reload, and resolving a pending item after save/reload. The exact game build and complete active mod list were not recorded. These samples do not prove the random distribution or universal compatibility.
 
-**Automated checks:** 58 generator checks using synthetic fixtures cover all ranks and stored rolls, settings validation and compatibility cases. Each of the four configurations with exactly one outcome at 0% and all others positive passed automated checks. Separately, the author reported **10 in-game trials each with mod 0.1.0, D2RMM 1.9.2 and game version 3.3** with `33/33/34/0`, `33/33/0/34`, `33/0/33/34` and `0/33/33/34`: **40 trials with no issues reported**. The exact game build, standalone/mixed-mod status and outcome counts for these additional trials have not yet been recorded. **Game version 3.4 has not been verified.** Automated checks do not run D2RMM or the game.
+**0.3.0-alpha.1 validation:** 171 automated checks pass across both editions. The new settings UI and tiered behavior have **not been tested in the D2RMM app or game**; historical game checks below do not validate this version.
+
+Generator checks using synthetic fixtures cover all ranks and stored rolls, settings validation and compatibility cases. Each of the four configurations with exactly one outcome at 0% and all others positive passed automated checks. Separately, the author reported **10 in-game trials each with mod 0.1.0, D2RMM 1.9.2 and game version 3.3** with `33/33/34/0`, `33/33/0/34`, `33/0/33/34` and `0/33/33/34`: **40 trials with no issues reported**. The exact game build, standalone/mixed-mod status and outcome counts for these additional trials have not yet been recorded. **Game version 3.4 has not been verified.** Automated checks do not run D2RMM or the game.
 
 **0.1.1 icon-version check:** With D2RMM 1.9.0 and game 3.3, the author confirmed the glowing pending icon, save/reload and all four outcomes. No 100- or 50-trial probability run was performed in this session; standalone/mixed-mod status, settings and outcome counts were not recorded. This does not validate the hammer feature in-game.
 
@@ -80,4 +98,4 @@ The combined setup included Relics of Sanctuary, Corruption Shards for RoTW, and
 - Uses D2RMM. Diablo II and its game assets belong to their respective rights holders. This repository's original code and documentation are under the MIT License; this does not license third-party game assets.
 - AI assistance was used to prepare and translate this description and to create the dismantling hammer icon. The in-game test results above were reported by the author; AI-generated text is not evidence of game testing.
 
-Source and detailed test records: https://github.com/k0102575/diablo2-mods/tree/main/ProbabilisticRuneDowngrade
+Source and detailed test records: https://github.com/k0102575/diablo2-mods/tree/feature/tiered-rune-probabilities/ProbabilisticRuneDowngrade

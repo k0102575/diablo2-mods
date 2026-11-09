@@ -107,3 +107,11 @@ GheedMin/Max=1, GheedMagicMin/Max=0, GheedMagicLvl=255, PermStoreItem=1, multibu
 기본 cost=1에 대한 참고 근거는 ThePhrozenKeep/D2MOO의 source/D2Common/src/Items/Items.cpp, ITEMS_CalculateTransactionCost이다. 구버전 복원 코드에서는 NPC·퀘스트·흥정 계산 후 nCost<1이면 1로 보정한다. https://github.com/ThePhrozenKeep/D2MOO/blob/master/source/D2Common/src/Items/Items.cpp . 이는 현행 D2R 엔진의 동작을 직접 검증한 근거가 아니므로 구매·판매 1골드는 게임에서 확인해야 한다.
 
 첫 입력과 꽝 출력만 isc에서 prh로 바꾸고 기존 조합 행 수·확률·prg_roll·pg0~pgv는 유지한다. Corruption Shards ZIP이나 코드는 이 구현에 사용하지 않았다. 제작자의 크레딧 동의 및 필요시 코드 사용 허락은 사용자 제공 답변으로 확인했으며, 실제 코드를 사용했다고 기록하지 않는다.
+
+## 2026-11-09: 0.3.0-alpha.1 두 확률 배포판
+
+소스 mod.json/mod.js는 Tiered다. D2RMM section/children 설정은 ModConfig.d.ts,평탄한설정ID값은ModConfigValue.d.ts 및 ModsContext.tsx getDefaultConfig의재귀병합을근거로작성했다. 실제1.9앱UI는검증전이다.
+
+probabilityMode 판종상수는 tools/package-editions.mjs가 Standard패키지에서만고정변환한다. 같은도구의산출코드/설정을자동검사에서실행하고Python빌드가소비한다. 빌드는소스파일을덮어쓰지않는다. 구버전옵션이남아있어도판종을자동추측하지않는다. Standard는기존4개ID, Tiered는low/mid/high접두사12개ID다. 모든구간을읽고검증한후기존게임테이블읽기/생성단계로진행한다.
+
+입력rank2~20=low,21~25=mid,26~33=high를각등급생성루프에서선택하며 op18·저장값1~100·prg_roll·pg0~pgv는유지한다. 별도의스탯이나아이템/이미지를추가하지않는다. 세그룹같은값일때Standard산출과동일함을검사했다.
