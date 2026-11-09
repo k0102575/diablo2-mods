@@ -1,6 +1,6 @@
 /*
  * 확률형 룬 분해 모드 — 악마술사의 군림 전용
- * Probabilistic Rune Downgrade 0.3.0-alpha.1 / 제작자: 빵길빵길
+ * Probabilistic Rune Downgrade 0.4.0-alpha.1 / 제작자: 빵길빵길
  * 오프라인 D2RMM 데이터 모드입니다. 엘드~조드 전체 등급을 생성합니다.
  *
  * 이 파일은 D2RMM의 '모드 설치' 버튼을 누를 때 실행됩니다.
@@ -24,7 +24,7 @@
  * 완전히 동일한 item-mythic 중복만 대상으로 하며, 모든 모드 호환을 보장하지 않습니다.
  * 쓰는 파일: misc/itemtypes/itemstatcost/properties/cubemain TSV,
  * item-runes.json 문자열, hd/items/items.json, 전용 HD 모델 정의·sprite입니다.
- * armor/weapons는 코드 충돌 검사에만 사용합니다. 세이브 파일은 직접 수정하지 않습니다.
+ * armor/weapons는 읽기 전용으로 코드 충돌·제작 무기 존재 여부를 검사합니다. 세이브 파일은 직접 수정하지 않습니다.
  *
  * 아래 순서로 읽으면 됩니다.
  *   1. 설정 검사 → 2. 공통 함수 → 3. 원본 데이터 검사
@@ -73,6 +73,9 @@ if (!['tiered', 'standard'].includes(probabilityMode)) fail('Unsupported probabi
 const chancesByTier = probabilityMode === 'tiered'
   ? Object.fromEntries(probabilityTiers.map(tier => [tier.id, readChances(tier.id, tier.label)]))
   : { standard: readChances('', '전체 / Standard') };
+// Older saved configurations may not contain this new checkbox yet.
+const sellHammerAtGheed = config.sellHammerAtGheed === undefined ? true : config.sellHammerAtGheed;
+if (typeof sellHammerAtGheed !== 'boolean') fail('sellHammerAtGheed: expected boolean.');
 
 // 악마술사의 군림 데이터만 수정합니다. base 경로는 사용하지 않습니다.
 const prefix = 'global\\excel\\';
@@ -81,6 +84,9 @@ const prefix = 'global\\excel\\';
 // HD 아이템 매핑은 3글자 코드만 지원합니다. pg0~pgv를 예약합니다.
 // itemtypes 종류 식별자 prgp(4글자)는 실제 아이템 코드와 별개입니다.
 const hammerCode = 'prh';
+// Exact bases, not the entire hammer type. A restricted edition can narrow this list.
+const hammerCraftBases = ['mau', '9m9', '7m7']; // Maul / War Club / Ogre Maul
+const hammerCraftIngredients = ['r14', 'skz', 'jew']; // Dol / Perfect Skull / Jewel
 const pendingCodes = new Set(
   Array.from({ length: 32 }, (_, i) => 'pg' + i.toString(36)),
 );
@@ -187,13 +193,15 @@ const props = load('properties', ['code', 'func1', 'stat1']);
 
 const cube = load('cubemain', [
   'description', 'enabled', 'version', 'numinputs', 'input 1',
-  'input 2', 'output', 'output b', 'op', 'param', 'value',
+  'input 2', 'input 3', 'input 4', 'output', 'output b', 'op', 'param', 'value',
   'mod 1', 'mod 1 chance', 'mod 1 min', 'mod 1 max',
 ]);
 
 // 다른 아이템 분류에서도 같은 코드를 쓰고 있는지 검사합니다.
 const armor = load('armor', ['code'], true);
 const weapons = load('weapons', ['code'], true);
+hammerCraftBases.forEach(code => unique(weapons, 'code', code));
+hammerCraftIngredients.forEach(code => unique(misc, 'code', code));
 
 if ([armor, weapons].some(t =>
   t.rows.some(r => reservedCode(r.code))
@@ -393,8 +401,9 @@ const hammerHD = JSON.parse(JSON.stringify(sourceHammerHD));
 hammerHD.asset = hammerAsset;
 hd.push({ [hammerCode]: hammerHD });
 text('PRGHammer', 'Rune Dismantling Hammer', '룬 분해 망치');
-text('PRGHammerHelp', 'Transmute with one rune (Eld-Zod). Consumed; returned on a miss.',
-  '엘드~조드 룬 1개와 조합. 소모되며 꽝일 때 망치만 반환됩니다.');
+text('PRGHammerHelp',
+  'Transmute with one rune (Eld-Zod). Consumed; returned on a miss.\nCraft: Magic Maul / War Club / Ogre Maul\n+ Dol Rune + Perfect Skull + Jewel (one each).',
+  '엘드~조드 룬 1개와 조합. 소모되며 꽝일 때 망치만 반환됩니다.\n제작: 매직 마울 / 워 클럽 / 오우거 마울\n+ 돌 룬 + 최상급 해골 + 주얼 (각 1개).');
 add(types, {
   ItemType: 'PRG Dismantling Material', Code: 'prgh', Equiv1: 'misc',
   Normal: '1', Body: '0', Magic: '0', Rare: '0', TreasureClass: '0',
@@ -410,8 +419,9 @@ const hammer = add(misc, {
   spelldesc: '1', spelldescstr: 'PRGHammerHelp', pSpell: '-1', spellicon: '-1',
   invfile: sourceHammer.invfile, flippyfile: sourceHammer.flippyfile,
   // PermStoreItem은 비중첩 아이템도 재구매할 수 있게 합니다.
-  GheedMin: '1', GheedMax: '1', GheedMagicMin: '0', GheedMagicMax: '0', GheedMagicLvl: '255',
-  PermStoreItem: '1', multibuy: '0', NightmareUpgrade: 'xxx', HellUpgrade: 'xxx',
+  GheedMin: sellHammerAtGheed ? '1' : '0', GheedMax: sellHammerAtGheed ? '1' : '0',
+  GheedMagicMin: '0', GheedMagicMax: '0', GheedMagicLvl: '255',
+  PermStoreItem: sellHammerAtGheed ? '1' : '0', multibuy: '0', NightmareUpgrade: 'xxx', HellUpgrade: 'xxx',
 });
 for (const field of ['normcode', 'ubercode', 'ultracode']) {
   if (misc.headers.includes(field)) hammer[field] = hammerCode;
@@ -423,8 +433,21 @@ if (misc.headers.includes('AdvancedStashStackable')) hammer.AdvancedStashStackab
 
 // 등급마다 첫 단계 1행 + 결과 판정 100행을 추가합니다.
 // 이 상한은 보수적인 안전 제한이며 현행 엔진 한도를 입증한 값은 아닙니다.
-if (cube.rows.length + ranks.length * 101 > 32767) {
+if (cube.rows.length + ranks.length * 101 + hammerCraftBases.length > 32767) {
   fail('Safety cap: total cube rows exceed 32767.');
+}
+
+// Fixed tool output: all four ingredients are consumed; no random crafted affixes.
+for (const base of hammerCraftBases) {
+  add(cube, {
+    description: 'PRDG: craft hammer ' + base,
+    enabled: '1', version: '100', numinputs: '4',
+    'input 1': base + ',mag',
+    'input 2': hammerCraftIngredients[0],
+    'input 3': hammerCraftIngredients[1],
+    'input 4': hammerCraftIngredients[2],
+    output: hammerCode + ',nor', lvl: '1',
+  });
 }
 
 for (const rank of ranks) {

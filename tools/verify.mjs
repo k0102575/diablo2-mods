@@ -31,8 +31,10 @@ function fixture() {
   const make=(t,v)=>Object.assign(Object.fromEntries(t.headers.map(k=>[k,''])),v);
   const misc=tables.misc;
   misc.rows=[make(misc,{code:'isc',stackable:'0'})];
+  for(const code of ['skz','jew']) misc.rows.push(make(misc,{code,stackable:'0'}));
   for(let i=1;i<=33;i++) misc.rows.push(make(misc,{code:'r'+String(i).padStart(2,'0'),type:'rune',stackable:'0',namestr:'r'+String(i).padStart(2,'0'),invfile:'invr'+i,flippyfile:'flprun',alternategfx:'r'+String(i).padStart(2,'0')}));
   tables.weapons.rows=[make(tables.weapons,{code:'hdm',type:'hamm',quest:'4',invfile:'invhmr',flippyfile:'flphmr',alternategfx:'whm'})];
+  for(const code of ['mau','9m9','7m7']) tables.weapons.rows.push(make(tables.weapons,{code,type:'hamm'}));
   tables.cubemain.rows=[make(tables.cubemain,{description:'Other mod: rune + scroll',enabled:'1',numinputs:'2','input 1':'r24','input 2':'isc',output:'r23'})];
   tables.itemstatcost.rows=Array.from({length:368},(_,i)=>make(tables.itemstatcost,{Stat:'synthetic_'+i,'*ID':String(i)}));
   return tables;
@@ -66,12 +68,12 @@ let checks=0;
 function verify(overrides={},actual=false,change=()=>{}) {
  const result=run(overrides,change,actual); assert.equal(result.error,undefined,String(result.error));
  const {tables:t,writes,hd,strings}=result;
- const rows=t.cubemain.rows.filter(r=>r.description.startsWith('PRDG:'));
+ const rows=t.cubemain.rows.filter(r=>/^PRDG: (roll|resolve) /.test(r.description));
  const ranks=32;
  assert.ok(!metadata.config.some(c=>c.id==='istOnly'));
  assert.equal(metadata.name,'Probabilistic Rune Downgrade ('+(activeEdition==='tiered'?'Tiered':'Standard')+')');
  assert.equal(metadata.author,'빵길빵길');
- assert.equal(metadata.version,'0.3.0-alpha.1');
+ assert.equal(metadata.version,'0.4.0-alpha.1');
  assert.equal(rows.length,ranks*101);assert.equal(writes.length,40);
  assert.equal(JSON.stringify(hd.slice(0,-33)),result.originalHD);
  assert.equal(JSON.stringify(t.misc.rows.slice(0,-33)),result.originalMisc);
@@ -91,6 +93,10 @@ function verify(overrides={},actual=false,change=()=>{}) {
  assert.deepEqual(copiesAsPlain(hammerModel[1]),result.models['hd\\items\\weapon\\hammer/test_malus.json']);
  assert.equal(strings.find(r=>r.Key==='PRGHammer').enUS,'Rune Dismantling Hammer');
  assert.equal(strings.find(r=>r.Key==='PRGHammer').koKR,'룬 분해 망치');
+ const hammerHelp=strings.find(r=>r.Key==='PRGHammerHelp');
+ assert.match(hammerHelp.enUS,/Magic Maul \/ War Club \/ Ogre Maul/);
+ assert.match(hammerHelp.enUS,/Dol Rune \+ Perfect Skull \+ Jewel/);
+ assert.match(hammerHelp.koKR,/돌 룬 \+ 최상급 해골 \+ 주얼/);
  for(const [key,value] of Object.entries(strings.find(r=>r.Key==='PRGHammer'))) {
   if(key!=='Key'&&key!=='id') assert.ok(!value.includes('ÿc'), 'Hammer name must use the default color: '+key);
  }
@@ -147,6 +153,9 @@ const checksByEdition={};
 for(const edition of ['tiered','standard']) {
  activate(edition);
  const before=checks;
+ assert.deepEqual(copiesAsPlain(metadata.config.find(c=>c.id==='sellHammerAtGheed')),
+  copiesAsPlain(editions.tiered.metadata.config.find(c=>c.id==='sellHammerAtGheed')));
+ assert.equal(metadata.config.find(c=>c.id==='sellHammerAtGheed').defaultValue,true);
 verify();verify({istOnly:true}); // stale saved checkbox must not restrict ranks
 // Exactly one zero-probability result, with all other results positive.
 // verify() exhausts rolls 1..100 for every rank and checks exact output counts.
@@ -312,12 +321,57 @@ for(const values of [[50,25,10,15],[17,28,31,24]]) {
  assert.deepEqual(copiesAsPlain(tiered.strings),copiesAsPlain(standard.strings));assert.deepEqual(copiesAsPlain(tiered.copies),copiesAsPlain(standard.copies));checks++;
 }
 activate('tiered');
-assert.equal(metadata.config.length,3);
-assert.equal(flatFields(metadata.config).length,12);
-assert.equal(new Set(flatFields(metadata.config).map(c=>c.id)).size,12);
-assert.deepEqual(Object.keys(Object.fromEntries(flatFields(editions.standard.metadata.config).map(c=>[c.id,c.defaultValue]))),keys);
-assert.ok(metadata.config.every(s=>s.type==='section'&&s.defaultValue===undefined&&s.children.every(f=>f.type==='number'&&f.minValue===0&&f.maxValue===100)));
+assert.equal(metadata.config.length,4);
+assert.equal(flatFields(metadata.config).length,13);
+assert.equal(new Set(flatFields(metadata.config).map(c=>c.id)).size,13);
+assert.deepEqual(Object.keys(Object.fromEntries(flatFields(editions.standard.metadata.config).map(c=>[c.id,c.defaultValue]))),[...keys,'sellHammerAtGheed']);
+assert.ok(metadata.config.filter(s=>s.type==='section').every(s=>s.defaultValue===undefined&&s.children.every(f=>f.type==='number'&&f.minValue===0&&f.maxValue===100)));
 checks++;
+// Crafting and optional vendor acquisition are shared by both editions.
+for(const edition of ['tiered','standard']) {
+ activate(edition);
+ const before=checks;
+ const base=run();assert.equal(base.error,undefined);
+ const crafts=base.tables.cubemain.rows.filter(r=>r.description.startsWith('PRDG: craft hammer '));
+ assert.equal(crafts.length,3);
+ assert.deepEqual(crafts.map(r=>r['input 1']).sort(),['7m7,mag','9m9,mag','mau,mag']);
+ for(const r of crafts) {
+  assert.equal(r.numinputs,'4');assert.equal(r['input 2'],'r14');
+  assert.equal(r['input 3'],'skz');assert.equal(r['input 4'],'jew');
+  assert.equal(r.enabled,'1');assert.equal(r.version,'100');
+  assert.equal(r.output,'prh,nor');assert.equal(r['output b'],'');assert.equal(r['output c'],'');
+  assert.equal(r.op,'');assert.equal(r['mod 1'],'');
+  assert.ok(Object.keys(r).every(k=>base.tables.cubemain.headers.includes(k)));
+ }
+ assert.equal(base.tables.cubemain.rows.filter(r=>r.description.startsWith('PRDG:')).length,3235);
+ assert.ok(!base.writes.some(([p])=>/treasureclass|monstats|superunique/.test(p)));checks++;
+ for(const setting of [false,true,undefined]) {
+  const r=run({sellHammerAtGheed:setting});assert.equal(r.error,undefined);
+  const hammer=r.tables.misc.rows.find(item=>item.code==='prh');
+  for(const k of ['GheedMin','GheedMax','PermStoreItem']) assert.equal(hammer[k],setting===false?'0':'1');
+  // Switching acquisition must not change recipes, distributions or assets.
+  assert.deepEqual(copiesAsPlain(r.tables.cubemain),copiesAsPlain(base.tables.cubemain));
+  assert.deepEqual(copiesAsPlain(r.hd),copiesAsPlain(base.hd));
+  assert.deepEqual(copiesAsPlain(r.tables.misc.rows.filter(x=>x.code!=='prh')),copiesAsPlain(base.tables.misc.rows.filter(x=>x.code!=='prh')));
+  checks++;
+ }
+ for(const setting of ['false',0,null]) {
+  const r=run({sellHammerAtGheed:setting});assert.ok(r.error);assert.equal(r.writes.length,0);assert.equal(r.copies.length,0);checks++;
+ }
+ for(const [table,code] of [['weapons','mau'],['weapons','9m9'],['weapons','7m7'],['misc','r14'],['misc','skz'],['misc','jew']]) {
+  for(const duplicate of [false,true]) {
+   const r=run({},t=>{if(duplicate)t[table].rows.push({...t[table].rows.find(r=>r.code===code)});else t[table].rows=t[table].rows.filter(r=>r.code!==code);});
+   assert.ok(r.error);assert.equal(r.writes.length,0);assert.equal(r.copies.length,0);checks++;
+  }
+ }
+ for(const column of ['input 3','input 4']) {
+  const r=run({},t=>t.cubemain.headers=t.cubemain.headers.filter(h=>h!==column));
+  assert.ok(r.error);assert.equal(r.writes.length,0);assert.equal(r.copies.length,0);checks++;
+ }
+ const overCap=run({},t=>t.cubemain.rows=Array.from({length:32767-3235+1},()=>({description:'Existing recipe'})));
+ assert.match(overCap.error?.message??'',/Safety cap/);assert.equal(overCap.writes.length,0);assert.equal(overCap.copies.length,0);checks++;
+ checksByEdition[edition]+=checks-before;
+}
 const sha = s => createHash('sha256').update(s).digest('hex');
 const inputs=Object.fromEntries(['ProbabilisticRuneDowngrade/mod.js','ProbabilisticRuneDowngrade/mod.json','ProbabilisticRuneDowngrade/research/schema.json','tools/verify.mjs','tools/package-editions.mjs','ProbabilisticRuneDowngrade/research/glowing-runes.json','ProbabilisticRuneDowngrade/research/hammer-icon.json'].map(p=>[p,sha(read(p))]));
 const report={inputs,date:new Date().toISOString().slice(0,10),checks,checksByEdition,status:'PASS',engine:'Node vm; mocked D2RMM API',actualTables:fs.existsSync('/tmp/rg-cubemain.txt'),limitations:'Not D2RMM installation or game execution. Installer checks only; game validation is separately user-reported. Reign of the Warlock only.'};

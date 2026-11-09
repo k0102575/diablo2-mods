@@ -1,18 +1,18 @@
 {
   "inputs": {
-    "ProbabilisticRuneDowngrade/mod.js": "d45e67a4b2118fc7e204683e58f53c9dcd22ef81da4f2fe56413b0d243efe670",
-    "ProbabilisticRuneDowngrade/mod.json": "81f5bc1157633c6f169fc9ede735cfd70fca2fe9c2beb7f8536222cc8a9ddde5",
+    "ProbabilisticRuneDowngrade/mod.js": "9d29edd3b12cfc36401cff46533282aafbc636f8da8ae401078b0c940f1fe1c2",
+    "ProbabilisticRuneDowngrade/mod.json": "5cfc57f2dbda3eec8149f2d16983b559cbcbbab8fde7c067097c9a1b9f949b0e",
     "ProbabilisticRuneDowngrade/research/schema.json": "c7e5a39958a23432062851714ebf2857d9e888cd31fa462108c2512306974709",
-    "tools/verify.mjs": "7dd7506b8347a3ef399f8c855fbff66d66da6ab66e7798380a06d4a4aac7277c",
-    "tools/package-editions.mjs": "8d283d9388f634ef3e965b5d4d0237779f925f246bfd4cc7640285ef82488d69",
+    "tools/verify.mjs": "0eb4d309070ec459ad8bc5527c36a19e0debbcb9065a47043858582b1d953182",
+    "tools/package-editions.mjs": "d445b28d6127c51d3b924d81f1069bcfad69237426042cb1081bc46adf6726f0",
     "ProbabilisticRuneDowngrade/research/glowing-runes.json": "e46e123193a44cc29c1d3588574b090a1859b4fa54f328cb1f625b2034aba3de",
     "ProbabilisticRuneDowngrade/research/hammer-icon.json": "6dfc1fff0e2da88c68d96ac7e45955a02b09faead65b22d5a089615af6743aeb"
   },
   "date": "2026-11-09",
-  "checks": 171,
+  "checks": 215,
   "checksByEdition": {
-    "tiered": 58,
-    "standard": 58
+    "tiered": 80,
+    "standard": 80
   },
   "status": "PASS",
   "engine": "Node vm; mocked D2RMM API",

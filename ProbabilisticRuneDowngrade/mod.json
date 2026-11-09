@@ -2,7 +2,7 @@
   "name": "Probabilistic Rune Downgrade (Tiered)",
   "description": "악마술사의 군림 오프라인 전용 / Offline Reign of the Warlock. 하급(2-20)·중급(21-25)·고급(26-33) 확률 별도 설정. 각 구간 합계 100. 전용 망치 사용. / Three independent probability groups; dismantling hammer required.",
   "author": "빵길빵길",
-  "version": "0.3.0-alpha.1",
+  "version": "0.4.0-alpha.1",
   "config": [
     {
       "id": "lowRuneChances",
@@ -126,6 +126,13 @@
           "maxValue": 100
         }
       ]
+    },
+    {
+      "id": "sellHammerAtGheed",
+      "type": "checkbox",
+      "name": "기드에게 망치 판매 / Sell hammers at Gheed",
+      "description": "끄면 기드 판매를 비활성화합니다. 매직 마울/워 클럽/오우거 마울 + 돌 룬 + 최상급 해골 + 주얼로 제작할 수 있습니다. / Disable for crafting-only acquisition. Recipes remain available with either setting.",
+      "defaultValue": true
     }
   ]
 }

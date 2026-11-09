@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0-alpha.1 — 2026-11-09
+
+- Add three hammer crafting recipes: Magic Maul, War Club or Ogre Maul + Dol Rune + Perfect Skull + Jewel → one Rune Dismantling Hammer. Consume all four ingredients.
+- Add a shared Gheed sale checkbox, enabled by default; crafting stays available with vendor stock disabled. Missing old saved checkbox values preserve vendor sales.
+- Include the recipe in the English/Korean hammer tooltip, with English fallback for other locales.
+- Preserve the 3,232 downgrade recipes, probabilities, item/stat codes and artwork. Do not change monster drop tables.
+- Pass 215 automated checks across Standard and Tiered; crafting, vendor disablement and tooltip rendering still require D2RMM/game tests.
+
 ## 0.3.0-alpha.1 — 2026-11-09
 
 - Add Tiered settings: Low Eld-Lem (2-20), Mid Pul-Gul (21-25), High Vex-Zod (26-33), with four independent percentages per group.
