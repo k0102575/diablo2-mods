@@ -3,7 +3,7 @@
 **Latest game check:** The author reported all 0.3.0/0.4.0 test cases passed on game 3.4 with D2RMM 1.9.0. Two minor display issues (miss-line color and Tiered vendor-checkbox placement) were subsequently adjusted and await visual rechecking. Exact build and standalone/mixed-mod status were not recorded. Earlier pending-validation statements below describe the pre-test state.
 
 
-By **k0102575** · Version **0.4.0** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
+By **k0102575** · Version **0.4.1** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
 
 Downgrade Eld through Zod with four configurable outcomes. Use one rune and one Rune Dismantling Hammer, then transmute the pending item alone to receive the result.
 
@@ -67,7 +67,7 @@ Pending items use **Glowing Runes** icons by **바론9**. Normal and resulting r
 ## Installation
 
 1. Close the game and back up offline characters and the shared stash.
-2. Extract `ProbabilisticRuneDowngrade-0.4.0-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
+2. Extract `ProbabilisticRuneDowngrade-0.4.1-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
 3. In D2RMM 1.9+, enable the chosen edition. Standard has four shared chances; Tiered has four chances in each of three groups. Review the Gheed sale checkbox as well.
 4. If using Relics of Sanctuary, place this mod **after Relics** in the install order. Click **Install Mods**.
 5. Launch the offline game with your D2RMM configuration. Use a copy of your save for initial checks.
@@ -95,7 +95,7 @@ The following author-reported game checks used **0.1.0, before the icon change**
 
 The combined setup included Relics of Sanctuary, Corruption Shards for RoTW, and rune stacking. Checks also covered descending from Zod to El, runewords, rune storage and stacking, existing upgrade recipes, socket use, save/reload, and resolving a pending item after save/reload. The exact game build and complete active mod list were not recorded. These samples do not prove the random distribution or universal compatibility.
 
-**0.4.0 validation:** 215 automated checks pass across both editions. The author subsequently reported successful tiered/crafting tests on game 3.3 with D2RMM 1.9.0 alongside other mods. The latest tooltip edits and game 3.4 remain unverified.
+**0.4.1 validation:** 215 automated checks pass across both editions. The author subsequently reported successful tiered/crafting tests on game 3.3 with D2RMM 1.9.0 alongside other mods. The latest tooltip edits and game 3.4 remain unverified.
 
 Generator checks using synthetic fixtures cover all ranks and stored rolls, settings validation and compatibility cases. Each of the four configurations with exactly one outcome at 0% and all others positive passed automated checks. Separately, the author reported **10 in-game trials each with mod 0.1.0, D2RMM 1.9.2 and game version 3.3** with `33/33/34/0`, `33/33/0/34`, `33/0/33/34` and `0/33/33/34`: **40 trials with no issues reported**. The exact game build, standalone/mixed-mod status and outcome counts for these additional trials have not yet been recorded. **Game version 3.4 has not been verified.** Automated checks do not run D2RMM or the game.
 

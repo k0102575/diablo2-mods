@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.1 — 2026-11-10
+
+- Set the pending-tooltip miss line to blue explicitly.
+- Move the Tiered Gheed sale checkbox above the rune groups.
+- Record successful game 3.4 tests for the preceding build with D2RMM 1.9.0. These two display adjustments still need visual confirmation.
+- Preserve recipes and probabilities.
+
 ## 0.4.0 — 2026-11-10
 
 - Align the version metadata, package names and descriptions at 0.4.0. No gameplay changes from the current development build.

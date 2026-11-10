@@ -73,7 +73,7 @@ function verify(overrides={},actual=false,change=()=>{}) {
  assert.ok(!metadata.config.some(c=>c.id==='istOnly'));
  assert.equal(metadata.name,'Probabilistic Rune Downgrade ('+(activeEdition==='tiered'?'Tiered':'Standard')+')');
  assert.equal(metadata.author,'빵길빵길');
- assert.equal(metadata.version,'0.4.0');
+ assert.equal(metadata.version,'0.4.1');
  assert.equal(rows.length,ranks*101);assert.equal(writes.length,40);
  assert.equal(JSON.stringify(hd.slice(0,-33)),result.originalHD);
  assert.equal(JSON.stringify(t.misc.rows.slice(0,-33)),result.originalMisc);
