@@ -66,7 +66,7 @@ AI 지원으로 제작한 청록색 망치 아이콘과 HD 두 해상도 sprite�
 
 1. 게임을 종료하고 오프라인 캐릭터·공유 보관함을 백업합니다.
 2. `ProbabilisticRuneDowngrade-0.4.0-<edition>-mods-only.zip`을 D2RMM 실행파일이 있는 폴더에 풉니다. `mods/ProbabilisticRuneDowngrade/mod.json`을 확인하세요. ZIP 이름의 바깥 폴더가 추가되면 안 됩니다. 문서 포함 ZIP도 대안이며 둘 중 하나만 설치합니다.
-3. D2RMM 1.9+에서 모드를 선택하고 확률을 설정합니다.
+3. D2RMM 1.9+에서 선택한 판종을 켭니다. Standard는 공통 확률 4개, Tiered는 세 구간별 확률 4개씩을 설정하며 각 확률표 합계는 100이어야 합니다. 기드 판매 옵션도 확인하세요.
 4. Relics of Sanctuary 병용 시 우리 모드를 **Relics 뒤**에 배치하고 **Install Mods**를 실행합니다.
 5. D2RMM 설정에 맞게 오프라인 게임을 실행하고 시험용 세이브 복사본으로 먼저 확인합니다.
 
@@ -105,7 +105,7 @@ Relics가 동일한 `item-mythic` 속성을 중복 등록한 경우 후속 동�
 - 두 단계 조합 아이디어는 **rogeriogmm**의 **Corruption Shards for RoTW**에서 착안했습니다: https://www.nexusmods.com/diablo2resurrected/mods/1051 . 원본 코드·이미지·파일을 포함하지 않습니다. rogeriogmm에게 직접 연락해 크레딧 문구를 승인받았고, 필요 시 코드 사용도 허용받았습니다.
 - 대기 아이콘: **바론9**의 [빛나는 룬 아이콘](https://www.inven.co.kr/board/diablo2/5734/1634). 출처 표기 조건의 통합 배포 허용에 따라 원본 내용을 변경하지 않고 포함합니다. 이미지에는 MIT를 새로 적용하지 않으며 모드 폴더의 CREDITS.md를 참고하세요.
 - D2RMM을 사용합니다. Diablo II 및 게임 자산의 권리는 각 권리자에게 있습니다. 저장소에서 작성한 코드·문서는 MIT License이며 제3자 게임 자산의 사용권을 부여하지 않습니다.
-- 이 소개문의 작성·번역과 분해 망치 아이콘 제작에 AI 지원을 사용했습니다. 실제 게임 결과는 제작자가 보고한 기록이며 AI 작성 문구가 게임 검증을 대신하지 않습니다.
+- 코드 개발, 문서 작성·번역과 분해 망치 아이콘 제작에 AI 지원을 사용했습니다. 실제 게임 결과는 제작자가 보고한 기록이며 AI 작성 문구가 게임 검증을 대신하지 않습니다.
 
 소스 및 상세 검증 기록: https://github.com/k0102575/diablo2-mods/tree/main/ProbabilisticRuneDowngrade
 

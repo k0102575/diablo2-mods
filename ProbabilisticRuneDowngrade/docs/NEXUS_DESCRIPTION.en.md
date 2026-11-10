@@ -55,6 +55,8 @@ The cyan hammer icon was created with AI assistance, based on the Horadric Malus
 
 This version no longer adds rune + Identify Scroll recipes and leaves other mods' recipes unchanged. Resolve old pending items before updating: their miss result would otherwise change from a scroll to a hammer.
 
+Pending-rune tooltips show the actual result rune names, quantities and all four installed chances. Standard uses its shared settings; Tiered uses the input rune group. Stored winning outcomes are not revealed. The latest tooltip display still requires in-game verification.
+
 ## Pending item icons
 
 Pending items use **Glowing Runes** icons by **바론9**. Normal and resulting runes keep their installed icons. Eld–Ral have only subtle visual differences; identify pending items by the **“— Pending Downgrade”** name. Both HD sprite resolutions are included. Classic graphics retain the input rune icon.
@@ -63,11 +65,11 @@ Pending items use **Glowing Runes** icons by **바론9**. Normal and resulting r
 
 1. Close the game and back up offline characters and the shared stash.
 2. Extract `ProbabilisticRuneDowngrade-0.4.0-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
-3. In D2RMM 1.9+, enable **Probabilistic Rune Downgrade** and set the four chances.
+3. In D2RMM 1.9+, enable the chosen edition. Standard has four shared chances; Tiered has four chances in each of three groups. Review the Gheed sale checkbox as well.
 4. If using Relics of Sanctuary, place this mod **after Relics** in the install order. Click **Install Mods**.
 5. Launch the offline game with your D2RMM configuration. Use a copy of your save for initial checks.
 
-Each chance must be an integer from **0 to 100**, and the four values must total **exactly 100**. Invalid settings stop installation. Defaults are `50 / 25 / 10 / 15`; equal chances are `25 / 25 / 25 / 25`.
+Each chance must be an integer from **0 to 100**. Standard’s four values must total **exactly 100**; in Tiered, each group must independently total **100**. Invalid settings stop installation. Defaults are `50 / 25 / 10 / 15`; equal chances are `25 / 25 / 25 / 25`.
 
 ## Save safety and compatibility
 
@@ -104,9 +106,6 @@ Generator checks using synthetic fixtures cover all ranks and stored rolls, sett
 - The two-stage crafting idea was inspired by **Corruption Shards for RoTW**, by **rogeriogmm**: https://www.nexusmods.com/diablo2resurrected/mods/1051 . Its original code, images and files are not included in this distribution. rogeriogmm approved the proposed credit in a direct reply and also permitted use of his code if needed.
 - Pending icons: **Glowing Runes / 빛나는 룬 아이콘** by **바론9**, https://www.inven.co.kr/board/diablo2/5734/1634 . Included unchanged under the source post’s permission to integrate and distribute with credit. These assets are not relicensed under MIT; see CREDITS.md in the mod folder.
 - Uses D2RMM. Diablo II and its game assets belong to their respective rights holders. This repository's original code and documentation are under the MIT License; this does not license third-party game assets.
-- AI assistance was used to prepare and translate this description and to create the dismantling hammer icon. The in-game test results above were reported by the author; AI-generated text is not evidence of game testing.
+- AI assistance was used in code development, documentation and translation, and creation of the dismantling hammer icon. The in-game test results above were reported by the author; AI-generated text is not evidence of game testing.
 
 Source and detailed test records: https://github.com/k0102575/diablo2-mods/tree/main/ProbabilisticRuneDowngrade
-
-
-Pending-rune tooltips show the actual result rune names, quantities and all four installed chances. Standard uses its shared settings; Tiered uses the input rune group. Stored winning outcomes are not revealed. The added tooltip still requires in-game display verification.

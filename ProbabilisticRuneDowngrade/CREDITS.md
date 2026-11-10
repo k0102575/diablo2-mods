@@ -28,3 +28,9 @@ https://github.com/viniciusamelio/d2r_items_images/blob/master/Horadric%20Malus.
 Diablo II game art and the underlying Horadric Malus design belong to their respective rights holders. This attribution does not claim an independent permission grant or MIT relicensing of the original game art. Only the newly prepared hammer sprites are bundled; the source project's other files are not included. The hammer's in-game ground model is referenced from the user's installed game during D2RMM installation, not distributed here.
 
 호라드림 망치 외형을 참고해 AI로 제작·수정한 전용 아이콘입니다. 게임 원본 아트의 권리를 새로 주장하거나 원본에 MIT를 적용하지 않습니다. 새로 준비한 sprite만 포함하며 원본 프로젝트의 다른 파일은 배포하지 않습니다.
+
+## AI assistance / AI 지원
+
+AI assistance was used in code development, documentation and translation, and creation of the dismantling hammer icon. In-game test results are user-reported; AI-generated code or text is not a substitute for game validation.
+
+코드 개발, 문서 작성·번역, 망치 아이콘 제작에 AI 지원을 사용했습니다. 게임 검증 결과는 제작자가 보고한 기록이며 AI 결과물이 게임 검증을 대신하지 않습니다.
