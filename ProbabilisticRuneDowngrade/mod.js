@@ -401,9 +401,10 @@ const hammerHD = JSON.parse(JSON.stringify(sourceHammerHD));
 hammerHD.asset = hammerAsset;
 hd.push({ [hammerCode]: hammerHD });
 text('PRGHammer', 'Rune Dismantling Hammer', '룬 분해 망치');
+// The game displays these description lines in reverse order.
 text('PRGHammerHelp',
-  'Transmute with one rune (Eld-Zod). Consumed; returned on a miss.\nCraft: Magic Maul / War Club / Ogre Maul\n+ Dol Rune + Perfect Skull + Jewel (one each).',
-  '엘드~조드 룬 1개와 조합. 소모되며 꽝일 때 망치만 반환됩니다.\n제작: 매직 마울 / 워 클럽 / 오우거 마울\n+ 돌 룬 + 최상급 해골 + 주얼 (각 1개).');
+  '+ Dol Rune + Perfect Skull + Jewel\nCraft: Magic Maul family (excluding Great Maul family)\nTransmute with one rune (Eld-Zod). Consumed; returned on a miss.',
+  '+ 돌 룬 + 최상급 해골 + 주얼\n제작: 매직 마울 계열 (그레이트 마울 계열 제외)\n엘드~조드 룬 1개와 조합. 소모되며 꽝일 때 망치만 반환됩니다.');
 add(types, {
   ItemType: 'PRG Dismantling Material', Code: 'prgh', Equiv1: 'misc',
   Normal: '1', Body: '0', Magic: '0', Rare: '0', TreasureClass: '0',

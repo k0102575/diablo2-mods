@@ -94,7 +94,12 @@ function verify(overrides={},actual=false,change=()=>{}) {
  assert.equal(strings.find(r=>r.Key==='PRGHammer').enUS,'Rune Dismantling Hammer');
  assert.equal(strings.find(r=>r.Key==='PRGHammer').koKR,'룬 분해 망치');
  const hammerHelp=strings.find(r=>r.Key==='PRGHammerHelp');
- assert.match(hammerHelp.enUS,/Magic Maul \/ War Club \/ Ogre Maul/);
+ assert.match(hammerHelp.enUS,/Magic Maul family/);
+ assert.ok(hammerHelp.enUS.startsWith('+ Dol Rune'));
+ assert.ok(hammerHelp.koKR.startsWith('+ 돌 룬'));
+ assert.match(hammerHelp.koKR.split('\n')[1],/매직 마울 계열/);
+ assert.ok(!hammerHelp.koKR.includes('각 1개'));
+ assert.ok(!hammerHelp.enUS.includes('one each'));
  assert.match(hammerHelp.enUS,/Dol Rune \+ Perfect Skull \+ Jewel/);
  assert.match(hammerHelp.koKR,/돌 룬 \+ 최상급 해골 \+ 주얼/);
  for(const [key,value] of Object.entries(strings.find(r=>r.Key==='PRGHammer'))) {
