@@ -1,40 +1,138 @@
 {
-  "name": "Probabilistic Rune Downgrade",
-  "description": "악마술사의 군림 오프라인 전용. 기드의 룬 분해 망치 + 룬으로 두 단계 분해 / Gheed's dismantling hammer + rune. 확률 합계 100.",
+  "name": "Probabilistic Rune Downgrade (Tiered)",
+  "description": "악마술사의 군림 오프라인 전용 / Offline Reign of the Warlock. 하급(2-20)·중급(21-25)·고급(26-33) 확률 별도 설정. 각 구간 합계 100. 전용 망치 사용. / Three independent probability groups; dismantling hammer required.",
   "author": "빵길빵길",
-  "version": "0.2.0",
+  "version": "0.4.0-alpha.1",
   "config": [
     {
-      "id": "doubleChance",
-      "type": "number",
-      "name": "하위 룬 2개 / Two lower runes (%)",
-      "defaultValue": 50,
-      "minValue": 0,
-      "maxValue": 100
+      "id": "lowRuneChances",
+      "type": "section",
+      "name": "하급: 엘드~렘 / Low: Eld-Lem (2-20)",
+      "description": "이 구간의 네 확률 합계는 100. 기존 4개 옵션은 자동 이전되지 않습니다. / Total must equal 100. Review new settings when switching editions.",
+      "defaultExpanded": true,
+      "children": [
+        {
+          "id": "lowDoubleChance",
+          "type": "number",
+          "name": "하위 룬 2개 / Two lower runes (%)",
+          "defaultValue": 50,
+          "minValue": 0,
+          "maxValue": 100
+        },
+        {
+          "id": "lowSingleChance",
+          "type": "number",
+          "name": "하위 룬 1개 / One lower rune (%)",
+          "defaultValue": 25,
+          "minValue": 0,
+          "maxValue": 100
+        },
+        {
+          "id": "lowReturnChance",
+          "type": "number",
+          "name": "입력 룬 반환 / Return input (%)",
+          "defaultValue": 10,
+          "minValue": 0,
+          "maxValue": 100
+        },
+        {
+          "id": "lowMissChance",
+          "type": "number",
+          "name": "꽝: 망치 반환 / Miss: return hammer (%)",
+          "defaultValue": 15,
+          "minValue": 0,
+          "maxValue": 100
+        }
+      ]
     },
     {
-      "id": "singleChance",
-      "type": "number",
-      "name": "하위 룬 1개 / One lower rune (%)",
-      "defaultValue": 25,
-      "minValue": 0,
-      "maxValue": 100
+      "id": "midRuneChances",
+      "type": "section",
+      "name": "중급: 풀~굴 / Mid: Pul-Gul (21-25)",
+      "description": "이 구간의 네 확률 합계는 100. 기존 4개 옵션은 자동 이전되지 않습니다. / Total must equal 100. Review new settings when switching editions.",
+      "defaultExpanded": true,
+      "children": [
+        {
+          "id": "midDoubleChance",
+          "type": "number",
+          "name": "하위 룬 2개 / Two lower runes (%)",
+          "defaultValue": 50,
+          "minValue": 0,
+          "maxValue": 100
+        },
+        {
+          "id": "midSingleChance",
+          "type": "number",
+          "name": "하위 룬 1개 / One lower rune (%)",
+          "defaultValue": 25,
+          "minValue": 0,
+          "maxValue": 100
+        },
+        {
+          "id": "midReturnChance",
+          "type": "number",
+          "name": "입력 룬 반환 / Return input (%)",
+          "defaultValue": 10,
+          "minValue": 0,
+          "maxValue": 100
+        },
+        {
+          "id": "midMissChance",
+          "type": "number",
+          "name": "꽝: 망치 반환 / Miss: return hammer (%)",
+          "defaultValue": 15,
+          "minValue": 0,
+          "maxValue": 100
+        }
+      ]
     },
     {
-      "id": "returnChance",
-      "type": "number",
-      "name": "입력 룬 반환 / Return input (%)",
-      "defaultValue": 10,
-      "minValue": 0,
-      "maxValue": 100
+      "id": "highRuneChances",
+      "type": "section",
+      "name": "고급: 벡스~조드 / High: Vex-Zod (26-33)",
+      "description": "이 구간의 네 확률 합계는 100. 기존 4개 옵션은 자동 이전되지 않습니다. / Total must equal 100. Review new settings when switching editions.",
+      "defaultExpanded": true,
+      "children": [
+        {
+          "id": "highDoubleChance",
+          "type": "number",
+          "name": "하위 룬 2개 / Two lower runes (%)",
+          "defaultValue": 50,
+          "minValue": 0,
+          "maxValue": 100
+        },
+        {
+          "id": "highSingleChance",
+          "type": "number",
+          "name": "하위 룬 1개 / One lower rune (%)",
+          "defaultValue": 25,
+          "minValue": 0,
+          "maxValue": 100
+        },
+        {
+          "id": "highReturnChance",
+          "type": "number",
+          "name": "입력 룬 반환 / Return input (%)",
+          "defaultValue": 10,
+          "minValue": 0,
+          "maxValue": 100
+        },
+        {
+          "id": "highMissChance",
+          "type": "number",
+          "name": "꽝: 망치 반환 / Miss: return hammer (%)",
+          "defaultValue": 15,
+          "minValue": 0,
+          "maxValue": 100
+        }
+      ]
     },
     {
-      "id": "missChance",
-      "type": "number",
-      "name": "꽝: 망치 반환 / Miss: return hammer (%)",
-      "defaultValue": 15,
-      "minValue": 0,
-      "maxValue": 100
+      "id": "sellHammerAtGheed",
+      "type": "checkbox",
+      "name": "기드에게 망치 판매 / Sell hammers at Gheed",
+      "description": "끄면 기드 판매를 비활성화합니다. 매직 마울/워 클럽/오우거 마울 + 돌 룬 + 최상급 해골 + 주얼로 제작할 수 있습니다. / Disable for crafting-only acquisition. Recipes remain available with either setting.",
+      "defaultValue": true
     }
   ]
 }
