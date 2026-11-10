@@ -1,9 +1,6 @@
 # Probabilistic Rune Downgrade
 
-**Latest game check:** The author reported all 0.3.0/0.4.0 test cases passed on game 3.4 with D2RMM 1.9.0. Two minor display issues (miss-line color and Tiered vendor-checkbox placement) were subsequently adjusted and await visual rechecking. Exact build and standalone/mixed-mod status were not recorded. Earlier pending-validation statements below describe the pre-test state.
-
-
-By **k0102575** · Version **0.4.1** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
+By **k0102575** · Version **1.0.0** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
 
 Downgrade Eld through Zod with four configurable outcomes. Use one rune and one Rune Dismantling Hammer, then transmute the pending item alone to receive the result.
 
@@ -52,13 +49,13 @@ Transmute **one Magic Maul, War Club or Ogre Maul + one Dol Rune + one Perfect S
 
 Both editions include **Sell hammers at Gheed**, enabled by default. Disable it to stop generating his hammer sale stock; crafting remains available either way. Reinstall with D2RMM and start a new game after changing the option. This does not remove owned hammers or prevent selling them to NPCs. No monster drop tables are changed.
 
-The author reported that the 0.3.0 tiered and 0.4.0 crafting test cases passed with D2RMM 1.9.0, game 3.3 and other mods installed. Subsequent hammer/pending-tooltip changes and game 3.4 compatibility still require in-game verification.
+See the validation scope below for game-test reports.
 
 The cyan hammer icon was created with AI assistance, based on the Horadric Malus silhouette. The quest Malus is not an ingredient and is not modified. Both HD sprite resolutions are included. Classic graphics reference the original Malus icon; its fit in a 1×1 slot has not been tested.
 
 This version no longer adds rune + Identify Scroll recipes and leaves other mods' recipes unchanged. Resolve old pending items before updating: their miss result would otherwise change from a scroll to a hammer.
 
-Pending-rune tooltips show the actual result rune names, quantities and all four installed chances. Standard uses its shared settings; Tiered uses the input rune group. Stored winning outcomes are not revealed. The latest tooltip display still requires in-game verification.
+Pending-rune tooltips show the actual result rune names, quantities and all four installed chances. Standard uses its shared settings; Tiered uses the input rune group. Stored winning outcomes are not revealed. The final color adjustments still require visual confirmation.
 
 ## Pending item icons
 
@@ -67,7 +64,7 @@ Pending items use **Glowing Runes** icons by **바론9**. Normal and resulting r
 ## Installation
 
 1. Close the game and back up offline characters and the shared stash.
-2. Extract `ProbabilisticRuneDowngrade-0.4.1-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
+2. Extract `ProbabilisticRuneDowngrade-1.0.0-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
 3. In D2RMM 1.9+, enable the chosen edition. Standard has four shared chances; Tiered has four chances in each of three groups. Review the Gheed sale checkbox as well.
 4. If using Relics of Sanctuary, place this mod **after Relics** in the install order. Click **Install Mods**.
 5. Launch the offline game with your D2RMM configuration. Use a copy of your save for initial checks.
@@ -84,24 +81,11 @@ The Relics compatibility handling renames only later, identical `item-mythic` pr
 
 ## Validation scope
 
-The following author-reported game checks used **0.1.0, before the icon change**. Additional hammer-version checks are recorded separately below. Outcome order below is **two lower / one lower / returned rune / miss**.
+The author reported that all 0.3.0 tiered-probability and 0.4.0 crafting test cases passed with **D2RMM 1.9.0 and game 3.4**. These features also passed in a mixed-mod game 3.3 setup. The exact 3.4 build and whether that session used other mods were not recorded.
 
-| Environment | Chances | Trials / result |
-|---|---|---|
-| D2RMM 1.9.2, this mod alone | Each outcome set to 100% in turn | All four outcomes and quantities worked |
-| D2RMM 1.9.2, this mod alone | 50 / 25 / 10 / 15 | 41: **24 / 10 / 2 / 5** |
-| D2RMM 1.9.0, alongside other mods | 25 / 25 / 25 / 25 | 100 before release: **27 / 25 / 23 / 25** |
-| D2RMM 1.9.0, alongside other mods | 25 / 25 / 25 / 25 | 50 with the prior GitHub release package: **9 / 15 / 10 / 16** |
+Version 1.0.0 includes these features and subsequent display fixes: gold instructions, four white outcome lines, and the Gheed sale checkbox at the top of both editions. **A separate in-game confirmation of the final display fixes has not yet been recorded.** Check colors, wrapping and option placement while capturing screenshots.
 
-The combined setup included Relics of Sanctuary, Corruption Shards for RoTW, and rune stacking. Checks also covered descending from Zod to El, runewords, rune storage and stacking, existing upgrade recipes, socket use, save/reload, and resolving a pending item after save/reload. The exact game build and complete active mod list were not recorded. These samples do not prove the random distribution or universal compatibility.
-
-**0.4.1 validation:** 215 automated checks pass across both editions. The author subsequently reported successful tiered/crafting tests on game 3.3 with D2RMM 1.9.0 alongside other mods. The latest tooltip edits and game 3.4 remain unverified.
-
-Generator checks using synthetic fixtures cover all ranks and stored rolls, settings validation and compatibility cases. Each of the four configurations with exactly one outcome at 0% and all others positive passed automated checks. Separately, the author reported **10 in-game trials each with mod 0.1.0, D2RMM 1.9.2 and game version 3.3** with `33/33/34/0`, `33/33/0/34`, `33/0/33/34` and `0/33/33/34`: **40 trials with no issues reported**. The exact game build, standalone/mixed-mod status and outcome counts for these additional trials have not yet been recorded. **Game version 3.4 has not been verified.** Automated checks do not run D2RMM or the game.
-
-**0.1.1 icon-version check:** With D2RMM 1.9.0 and game 3.3, the author confirmed the glowing pending icon, save/reload and all four outcomes. No 100- or 50-trial probability run was performed in this session; standalone/mixed-mod status, settings and outcome counts were not recorded. This does not validate the hammer feature in-game.
-
-**0.2.0-alpha.1 hammer-version check:** With D2RMM 1.9.0 and game 3.3 alongside other mods, the author reported no issues with Gheed sales in all difficulties, 1-gold purchase/resale, repeat purchases, the non-stackable one-slot icon, each outcome set to 100%, ground display, or save/reload followed by transmutation. Trial counts, the full mod list and exact game build were not recorded. This does not establish game 3.4 or universal mod compatibility.
+**215 automated checks** cover both editions, all 32 ranks and stored rolls 1–100, tier boundaries, 0%/100% settings, invalid settings, crafting and tooltip strings. These checks do not run D2RMM or the game. Historical probability trials are documented separately in the [test record](https://github.com/k0102575/diablo2-mods/blob/main/ProbabilisticRuneDowngrade/docs/TESTING.ko.md). Classic hammer rendering in a 1×1 slot remains unverified. This is not a guarantee of compatibility with every patch or mod combination.
 
 ## Credits and disclosure
 

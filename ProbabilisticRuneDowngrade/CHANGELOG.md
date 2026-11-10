@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0 — 2026-11-10
+
+- Package Standard and Tiered for public distribution with matching 1.0.0 metadata and documentation.
+- Retain the tested probabilities, dedicated hammer, crafting recipes and optional Gheed sales. No gameplay changes from 0.4.1.
+- Include white pending-outcome lines, gold instructions and a top-level sale checkbox in both editions.
+- Consolidate author-reported game 3.3/3.4 results and historical trials; retain the outstanding final display check explicitly.
+- Include third-party credits, direct author permission and AI assistance disclosure.
+
 ## 0.4.1 — 2026-11-10
 
 - Display all four pending-tooltip result lines in white, stripping inherited rune-name color codes. Keep the instruction line gold.
