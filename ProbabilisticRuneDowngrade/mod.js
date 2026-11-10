@@ -483,6 +483,29 @@ for (const rank of ranks) {
     sourceName.koKR + ' — 분해 대기',
   );
 
+  // Per-rank text uses the same installed probability table as resolution.
+  // Store lines in reverse order for the in-game tooltip renderer.
+  const lowerRune = unique(misc, 'code', lower);
+  const lowerName = unique({ rows: strings }, 'Key', lowerRune.namestr);
+  if (!lowerName.enUS || !lowerName.koKR) fail('English/Korean lower rune name missing: ' + lower);
+  const helpKey = 'PRGHelp' + tag;
+  text(helpKey,
+    [
+      'Transmute again alone to reveal the result',
+      lowerName.enUS + ' x2: ' + chances[0] + '%',
+      lowerName.enUS + ' x1: ' + chances[1] + '%',
+      sourceName.enUS + ' returned: ' + chances[2] + '%',
+      'Miss (hammer returned): ' + chances[3] + '%',
+    ].reverse().join('\n'),
+    [
+      '추가 재료 없이 단독으로 다시 조합하세요',
+      lowerName.koKR + ' 2개: ' + chances[0] + '%',
+      lowerName.koKR + ' 1개: ' + chances[1] + '%',
+      sourceName.koKR + ' 반환: ' + chances[2] + '%',
+      '꽝 (망치 반환): ' + chances[3] + '%',
+    ].reverse().join('\n'),
+  );
+
   // 빈 행에서 시작해 상점·주문·참 접두사 같은 기존 기능의 유입을 막습니다.
   const row = add(misc, {
     name: key,
@@ -510,7 +533,7 @@ for (const rank of ranks) {
     belt: '0',
     autobelt: '0',
     spelldesc: '1',
-    spelldescstr: 'PRGHelp', // 재조합 안내 문자열
+    spelldescstr: helpKey, // 입력 룬별 결과와 적용 확률
     pSpell: '-1',
     spellicon: '-1',
   });

@@ -108,3 +108,6 @@ Relics가 동일한 `item-mythic` 속성을 중복 등록한 경우 후속 동�
 - 이 소개문의 작성·번역과 분해 망치 아이콘 제작에 AI 지원을 사용했습니다. 실제 게임 결과는 제작자가 보고한 기록이며 AI 작성 문구가 게임 검증을 대신하지 않습니다.
 
 소스 및 상세 검증 기록: https://github.com/k0102575/diablo2-mods/tree/feature/hammer-crafting/ProbabilisticRuneDowngrade
+
+
+대기 룬의 툴팁에 실제 결과 룬 이름·수량과 네 확률을 표시합니다. 설치 시 Standard 공통 설정 또는 Tiered 입력 룬 구간 설정을 사용합니다. 저장된 당첨 결과는 표시하지 않습니다. 이 툴팁 추가는 실제 게임 표시 검증이 필요합니다.

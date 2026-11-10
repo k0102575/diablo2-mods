@@ -125,6 +125,20 @@ function verify(overrides={},actual=false,change=()=>{}) {
    else assert.ok(!Object.hasOwn(item,field));
   }
   assert.ok(Object.keys(item).every(k=>t.misc.headers.includes(k)));
+  const help=strings.find(r=>r.Key===item.spelldescstr);
+  const lowerRune=t.misc.rows.find(r=>r.code==='r'+String(inputRank-1).padStart(2,'0'));
+  const lowerName=strings.find(r=>r.Key===lowerRune.namestr);
+  const originalName=strings.find(r=>r.Key===t.misc.rows.find(r=>r.code===start['input 1']).namestr);
+  assert.equal(item.spelldescstr,'PRGHelp'+String(inputRank).padStart(2,'0'));
+  assert.deepEqual(Array.from(help.koKR.split('\n').reverse()),[
+   '추가 재료 없이 단독으로 다시 조합하세요',
+   lowerName.koKR+' 2개: '+chances[0]+'%',lowerName.koKR+' 1개: '+chances[1]+'%',
+   originalName.koKR+' 반환: '+chances[2]+'%','꽝 (망치 반환): '+chances[3]+'%']);
+  assert.deepEqual(Array.from(help.enUS.split('\n').reverse()),[
+   'Transmute again alone to reveal the result',
+   lowerName.enUS+' x2: '+chances[0]+'%',lowerName.enUS+' x1: '+chances[1]+'%',
+   originalName.enUS+' returned: '+chances[2]+'%','Miss (hammer returned): '+chances[3]+'%']);
+  assert.equal(help.jaJP,help.enUS);
   const inputRune=t.misc.rows.find(r=>r.code===start['input 1']);
   for(const field of ['invfile','flippyfile','alternategfx']) assert.equal(item[field],inputRune[field]);
   const rank=Number(start['input 1'].slice(1));

@@ -107,3 +107,6 @@ Generator checks using synthetic fixtures cover all ranks and stored rolls, sett
 - AI assistance was used to prepare and translate this description and to create the dismantling hammer icon. The in-game test results above were reported by the author; AI-generated text is not evidence of game testing.
 
 Source and detailed test records: https://github.com/k0102575/diablo2-mods/tree/feature/hammer-crafting/ProbabilisticRuneDowngrade
+
+
+Pending-rune tooltips show the actual result rune names, quantities and all four installed chances. Standard uses its shared settings; Tiered uses the input rune group. Stored winning outcomes are not revealed. The added tooltip still requires in-game display verification.
