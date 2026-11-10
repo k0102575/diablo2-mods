@@ -2,7 +2,7 @@
 
 ## 0.4.1 — 2026-11-10
 
-- Set the pending-tooltip miss line to blue explicitly.
+- Display all four pending-tooltip result lines in white, stripping inherited rune-name color codes. Keep the instruction line gold.
 - Move the Tiered Gheed sale checkbox above the rune groups.
 - Record successful game 3.4 tests for the preceding build with D2RMM 1.9.0. These two display adjustments still need visual confirmation.
 - Preserve recipes and probabilities.
