@@ -1,5 +1,8 @@
 # Probabilistic Rune Downgrade
 
+**Latest game check:** The author reported all 0.3.0/0.4.0 test cases passed on game 3.4 with D2RMM 1.9.0. Two minor display issues (miss-line color and Tiered vendor-checkbox placement) were subsequently adjusted and await visual rechecking. Exact build and standalone/mixed-mod status were not recorded. Earlier pending-validation statements below describe the pre-test state.
+
+
 By **k0102575** · Version **0.4.0** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
 
 Downgrade Eld through Zod with four configurable outcomes. Use one rune and one Rune Dismantling Hammer, then transmute the pending item alone to receive the result.

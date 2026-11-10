@@ -495,14 +495,14 @@ for (const rank of ranks) {
       lowerName.enUS + ' x2: ' + chances[0] + '%',
       lowerName.enUS + ' x1: ' + chances[1] + '%',
       sourceName.enUS + ' returned: ' + chances[2] + '%',
-      'Miss (hammer returned): ' + chances[3] + '%',
+      'ÿc3Miss (hammer returned): ' + chances[3] + '%',
     ].reverse().join('\n'),
     [
       '추가 재료 없이 단독으로 다시 조합하세요',
       lowerName.koKR + ' 2개: ' + chances[0] + '%',
       lowerName.koKR + ' 1개: ' + chances[1] + '%',
       sourceName.koKR + ' 반환: ' + chances[2] + '%',
-      '꽝 (망치 반환): ' + chances[3] + '%',
+      'ÿc3꽝 (망치 반환): ' + chances[3] + '%',
     ].reverse().join('\n'),
   );
 
