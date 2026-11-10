@@ -1,4 +1,4 @@
-# Probabilistic Rune Downgrade — 0.4.0-alpha.1
+# Probabilistic Rune Downgrade — 0.4.0
 
 [English description](docs/NEXUS_DESCRIPTION.en.md)
 
@@ -74,8 +74,8 @@
 
 간편 설치 ZIP은 다음 중 **하나**를 선택합니다.
 
-- `ProbabilisticRuneDowngrade-0.4.0-alpha.1-tiered-mods-only.zip`
-- `ProbabilisticRuneDowngrade-0.4.0-alpha.1-standard-mods-only.zip`
+- `ProbabilisticRuneDowngrade-0.4.0-tiered-mods-only.zip`
+- `ProbabilisticRuneDowngrade-0.4.0-standard-mods-only.zip`
 
 모드·아이콘·라이선스·크레딧을 포함하며 D2RMM 폴더에 풀면 `mods/ProbabilisticRuneDowngrade/`로 배치됩니다. 두 판은 같은 폴더를 사용하므로 동시에 설치하지 않습니다. `-mods-only`가 없는 ZIP은 문서 포함 대안이며 실행 내용은 해당 판종과 같습니다.
 
@@ -133,7 +133,7 @@ MIT 라이선스는 이 저장소에서 작성한 코드와 문서에 적용합�
 ## 크레딧 및 AI 고지
 
 - 제작자: **k0102575 (빵길빵길)**. D2RMM 설정 파일의 기존 author 표기는 빵길빵길이며 같은 제작자입니다.
-- 두 단계 조합 아이디어는 **rogeriogmm**의 **[Corruption Shards for RoTW](https://www.nexusmods.com/diablo2resurrected/mods/1051)**에서 착안했습니다. 해당 모드의 원본 코드·이미지·파일을 포함하지 않습니다. 이 크레딧은 원작자의 보증이나 별도 허락을 의미하지 않습니다.
+- 두 단계 조합 아이디어는 **rogeriogmm**의 **[Corruption Shards for RoTW](https://www.nexusmods.com/diablo2resurrected/mods/1051)**에서 착안했습니다. 해당 모드의 원본 코드·이미지·파일을 포함하지 않습니다. rogeriogmm에게 직접 연락해 이 크레딧 문구를 승인받았으며, 필요하면 해당 모드의 코드를 사용해도 된다는 허락도 받았습니다.
 - 아이콘: **바론9**, [빛나는 룬 아이콘](https://www.inven.co.kr/board/diablo2/5734/1634). 원문의 출처 표기 조건으로 통합했으며 파일 내용은 변경하지 않았습니다. [CREDITS.md](CREDITS.md)의 조건은 아이콘에 별도로 적용됩니다.
 - README·배포 소개문 정리와 분해 망치 아이콘 제작에 AI 지원을 사용했습니다. 실제 게임 검증 결과는 제작자가 보고한 기록이며 AI 작성 문구가 게임 실행을 대신하지 않습니다.
 
@@ -141,4 +141,4 @@ MIT 라이선스는 이 저장소에서 작성한 코드와 문서에 적용합�
 
 이 모드는 [diablo2-mods 모드 모음 저장소](https://github.com/k0102575/diablo2-mods)의 한 구성요소입니다. 개별 모드 소스·안내 주소는 **[ProbabilisticRuneDowngrade](https://github.com/k0102575/diablo2-mods/tree/main/ProbabilisticRuneDowngrade)**입니다.
 
-0.4.0-alpha.1의 자동 검사 **215개**가 통과했습니다. 0.3.0 등급별 확률 및 0.4.0 제작 관련 테스트는 D2RMM 1.9.0 / 게임 3.3 병용 환경에서 제작자가 통과를 보고했습니다. 이후 수정한 툴팁은 실제 화면 확인이 필요합니다. D2RMM 1.9.2 / 게임 3.3 / 모드 0.1.0에서 한 옵션만 0%인 네 설정을 각각 10회, 총 40회 검사해 이상이 없었다는 추가 보고가 있습니다. 단독/병용 여부·결과별 횟수는 미확인입니다. [검증 기록](docs/TESTING.ko.md)을 참고하세요. 게임 버전 3.4에서의 동작은 검증하지 않았습니다.
+0.4.0의 자동 검사 **215개**가 통과했습니다. 0.3.0 등급별 확률 및 0.4.0 제작 관련 테스트는 D2RMM 1.9.0 / 게임 3.3 병용 환경에서 제작자가 통과를 보고했습니다. 이후 수정한 툴팁은 실제 화면 확인이 필요합니다. D2RMM 1.9.2 / 게임 3.3 / 모드 0.1.0에서 한 옵션만 0%인 네 설정을 각각 10회, 총 40회 검사해 이상이 없었다는 추가 보고가 있습니다. 단독/병용 여부·결과별 횟수는 미확인입니다. [검증 기록](docs/TESTING.ko.md)을 참고하세요. 게임 버전 3.4에서의 동작은 검증하지 않았습니다.

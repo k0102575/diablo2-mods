@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0 — 2026-11-10
+
+- Align the version metadata, package names and descriptions at 0.4.0. No gameplay changes from the current development build.
+- Record rogeriogmm’s direct approval of the proposed credit and permission to use code if needed; no original files from that mod are bundled.
+- Game 3.3 tiered/crafting tests were reported as passed. Subsequent tooltip changes and game 3.4 compatibility remain unverified.
+
 ## 0.4.0-alpha.1 — 2026-11-09
 
 - Add three hammer crafting recipes: Magic Maul, War Club or Ogre Maul + Dol Rune + Perfect Skull + Jewel → one Rune Dismantling Hammer. Consume all four ingredients.

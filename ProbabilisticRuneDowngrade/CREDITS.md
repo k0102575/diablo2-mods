@@ -14,7 +14,9 @@ The 32 Eld–Zod HD inventory icons and their low-resolution variants are includ
 
 ## Crafting inspiration / 조합 방식 착안
 
-The two-stage crafting idea was inspired by **Corruption Shards for RoTW** by **rogeriogmm**. No code, images or files from that mod are included. This credit does not imply endorsement.
+The two-stage crafting idea was inspired by **Corruption Shards for RoTW** by **rogeriogmm**. No code, images or files from that mod are included. rogeriogmm approved the proposed credit in a direct reply and also permitted use of his code if needed.
+
+rogeriogmm에게 직접 연락해 크레딧 문구를 승인받았으며, 필요 시 코드 사용도 허용받았습니다. 현재 배포본에는 해당 모드의 원본 코드·이미지·파일을 포함하지 않습니다.
 
 https://www.nexusmods.com/diablo2resurrected/mods/1051
 

@@ -1,6 +1,6 @@
 # Probabilistic Rune Downgrade
 
-By **k0102575** · Version **0.4.0-alpha.1** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
+By **k0102575** · Version **0.4.0** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
 
 Downgrade Eld through Zod with four configurable outcomes. Use one rune and one Rune Dismantling Hammer, then transmute the pending item alone to receive the result.
 
@@ -62,7 +62,7 @@ Pending items use **Glowing Runes** icons by **바론9**. Normal and resulting r
 ## Installation
 
 1. Close the game and back up offline characters and the shared stash.
-2. Extract `ProbabilisticRuneDowngrade-0.4.0-alpha.1-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
+2. Extract `ProbabilisticRuneDowngrade-0.4.0-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
 3. In D2RMM 1.9+, enable **Probabilistic Rune Downgrade** and set the four chances.
 4. If using Relics of Sanctuary, place this mod **after Relics** in the install order. Click **Install Mods**.
 5. Launch the offline game with your D2RMM configuration. Use a copy of your save for initial checks.
@@ -90,7 +90,7 @@ The following author-reported game checks used **0.1.0, before the icon change**
 
 The combined setup included Relics of Sanctuary, Corruption Shards for RoTW, and rune stacking. Checks also covered descending from Zod to El, runewords, rune storage and stacking, existing upgrade recipes, socket use, save/reload, and resolving a pending item after save/reload. The exact game build and complete active mod list were not recorded. These samples do not prove the random distribution or universal compatibility.
 
-**0.4.0-alpha.1 validation:** 215 automated checks pass across both editions. The author subsequently reported successful tiered/crafting tests on game 3.3 with D2RMM 1.9.0 alongside other mods. The latest tooltip edits and game 3.4 remain unverified.
+**0.4.0 validation:** 215 automated checks pass across both editions. The author subsequently reported successful tiered/crafting tests on game 3.3 with D2RMM 1.9.0 alongside other mods. The latest tooltip edits and game 3.4 remain unverified.
 
 Generator checks using synthetic fixtures cover all ranks and stored rolls, settings validation and compatibility cases. Each of the four configurations with exactly one outcome at 0% and all others positive passed automated checks. Separately, the author reported **10 in-game trials each with mod 0.1.0, D2RMM 1.9.2 and game version 3.3** with `33/33/34/0`, `33/33/0/34`, `33/0/33/34` and `0/33/33/34`: **40 trials with no issues reported**. The exact game build, standalone/mixed-mod status and outcome counts for these additional trials have not yet been recorded. **Game version 3.4 has not been verified.** Automated checks do not run D2RMM or the game.
 
@@ -101,7 +101,7 @@ Generator checks using synthetic fixtures cover all ranks and stored rolls, sett
 ## Credits and disclosure
 
 - Mod author: **k0102575**.
-- The two-stage crafting idea was inspired by **Corruption Shards for RoTW**, by **rogeriogmm**: https://www.nexusmods.com/diablo2resurrected/mods/1051 . Its original code, images and files are not included in this distribution. This credit does not imply endorsement or permission granted by its author.
+- The two-stage crafting idea was inspired by **Corruption Shards for RoTW**, by **rogeriogmm**: https://www.nexusmods.com/diablo2resurrected/mods/1051 . Its original code, images and files are not included in this distribution. rogeriogmm approved the proposed credit in a direct reply and also permitted use of his code if needed.
 - Pending icons: **Glowing Runes / 빛나는 룬 아이콘** by **바론9**, https://www.inven.co.kr/board/diablo2/5734/1634 . Included unchanged under the source post’s permission to integrate and distribute with credit. These assets are not relicensed under MIT; see CREDITS.md in the mod folder.
 - Uses D2RMM. Diablo II and its game assets belong to their respective rights holders. This repository's original code and documentation are under the MIT License; this does not license third-party game assets.
 - AI assistance was used to prepare and translate this description and to create the dismantling hammer icon. The in-game test results above were reported by the author; AI-generated text is not evidence of game testing.
