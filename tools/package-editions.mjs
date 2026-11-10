@@ -16,7 +16,7 @@ export function buildEditions() {
   const standard = structuredClone(metadata);
   standard.name = 'Probabilistic Rune Downgrade (Standard)';
   standard.description = '악마술사의 군림 오프라인 전용 / Offline Reign of the Warlock. 전 등급 동일 확률. 합계 100. 전용 망치 사용. / One probability table for all rune ranks; dismantling hammer required.';
-  standard.config = [...groups[0].children.map((field, i) => ({...field, id:keys[i], defaultValue:[50,25,10,15][i]})), ...shared];
+  standard.config = [...shared, ...groups[0].children.map((field, i) => ({...field, id:keys[i], defaultValue:[50,25,10,15][i]}))];
   return [
     {edition:'tiered', metadata, code:source},
     {edition:'standard', metadata:standard, code:source.replace(marker, "const probabilityMode = 'standard';")},

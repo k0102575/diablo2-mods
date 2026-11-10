@@ -175,6 +175,7 @@ for(const edition of ['tiered','standard']) {
  assert.deepEqual(copiesAsPlain(metadata.config.find(c=>c.id==='sellHammerAtGheed')),
   copiesAsPlain(editions.tiered.metadata.config.find(c=>c.id==='sellHammerAtGheed')));
  assert.equal(metadata.config.find(c=>c.id==='sellHammerAtGheed').defaultValue,true);
+ assert.equal(metadata.config[0].id,'sellHammerAtGheed');
 verify();verify({istOnly:true}); // stale saved checkbox must not restrict ranks
 // Exactly one zero-probability result, with all other results positive.
 // verify() exhausts rolls 1..100 for every rank and checks exact output counts.
@@ -343,7 +344,7 @@ activate('tiered');
 assert.equal(metadata.config.length,4);
 assert.equal(flatFields(metadata.config).length,13);
 assert.equal(new Set(flatFields(metadata.config).map(c=>c.id)).size,13);
-assert.deepEqual(Object.keys(Object.fromEntries(flatFields(editions.standard.metadata.config).map(c=>[c.id,c.defaultValue]))),[...keys,'sellHammerAtGheed']);
+assert.deepEqual(Object.keys(Object.fromEntries(flatFields(editions.standard.metadata.config).map(c=>[c.id,c.defaultValue]))),['sellHammerAtGheed',...keys]);
 assert.ok(metadata.config.filter(s=>s.type==='section').every(s=>s.defaultValue===undefined&&s.children.every(f=>f.type==='number'&&f.minValue===0&&f.maxValue===100)));
 checks++;
 // Crafting and optional vendor acquisition are shared by both editions.
