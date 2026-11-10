@@ -49,7 +49,7 @@ Transmute **one Magic Maul, War Club or Ogre Maul + one Dol Rune + one Perfect S
 
 Both editions include **Sell hammers at Gheed**, enabled by default. Disable it to stop generating his hammer sale stock; crafting remains available either way. Reinstall with D2RMM and start a new game after changing the option. This does not remove owned hammers or prevent selling them to NPCs. No monster drop tables are changed.
 
-**Crafting, disabled vendor stock and the updated hammer tooltip are not yet tested in game in 0.4.0-alpha.1.** Earlier vendor tests do not validate these additions.
+The author reported that the 0.3.0 tiered and 0.4.0 crafting test cases passed with D2RMM 1.9.0, game 3.3 and other mods installed. Subsequent hammer/pending-tooltip changes and game 3.4 compatibility still require in-game verification.
 
 The cyan hammer icon was created with AI assistance, based on the Horadric Malus silhouette. The quest Malus is not an ingredient and is not modified. Both HD sprite resolutions are included. Classic graphics reference the original Malus icon; its fit in a 1×1 slot has not been tested.
 
@@ -90,7 +90,7 @@ The following author-reported game checks used **0.1.0, before the icon change**
 
 The combined setup included Relics of Sanctuary, Corruption Shards for RoTW, and rune stacking. Checks also covered descending from Zod to El, runewords, rune storage and stacking, existing upgrade recipes, socket use, save/reload, and resolving a pending item after save/reload. The exact game build and complete active mod list were not recorded. These samples do not prove the random distribution or universal compatibility.
 
-**0.4.0-alpha.1 validation:** 215 automated checks pass across both editions. Crafting, the vendor checkbox, tooltip rendering and tiered behavior have **not been tested in the D2RMM app or game**; historical checks below do not validate this version.
+**0.4.0-alpha.1 validation:** 215 automated checks pass across both editions. The author subsequently reported successful tiered/crafting tests on game 3.3 with D2RMM 1.9.0 alongside other mods. The latest tooltip edits and game 3.4 remain unverified.
 
 Generator checks using synthetic fixtures cover all ranks and stored rolls, settings validation and compatibility cases. Each of the four configurations with exactly one outcome at 0% and all others positive passed automated checks. Separately, the author reported **10 in-game trials each with mod 0.1.0, D2RMM 1.9.2 and game version 3.3** with `33/33/34/0`, `33/33/0/34`, `33/0/33/34` and `0/33/33/34`: **40 trials with no issues reported**. The exact game build, standalone/mixed-mod status and outcome counts for these additional trials have not yet been recorded. **Game version 3.4 has not been verified.** Automated checks do not run D2RMM or the game.
 
@@ -106,7 +106,7 @@ Generator checks using synthetic fixtures cover all ranks and stored rolls, sett
 - Uses D2RMM. Diablo II and its game assets belong to their respective rights holders. This repository's original code and documentation are under the MIT License; this does not license third-party game assets.
 - AI assistance was used to prepare and translate this description and to create the dismantling hammer icon. The in-game test results above were reported by the author; AI-generated text is not evidence of game testing.
 
-Source and detailed test records: https://github.com/k0102575/diablo2-mods/tree/feature/hammer-crafting/ProbabilisticRuneDowngrade
+Source and detailed test records: https://github.com/k0102575/diablo2-mods/tree/main/ProbabilisticRuneDowngrade
 
 
 Pending-rune tooltips show the actual result rune names, quantities and all four installed chances. Standard uses its shared settings; Tiered uses the input rune group. Stored winning outcomes are not revealed. The added tooltip still requires in-game display verification.
