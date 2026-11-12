@@ -1,5 +1,9 @@
 # 구현 및 조사 기록
 
+## 1.1.0-alpha.3 중첩형 아이콘
+
+보관형 phs의 HD asset을 prg/dismantling_hammer_stack으로 분리했다. 정상/lowend RGBA v31 sprite 두 개와 research/stacked-hammer-icon.json의 해시를 빌드에 포함한다. 단품 asset과 sprite를 덮어쓰지 않으며 새 misc 모델 별칭은 현재 게임에서 읽은 망치 바닥 모델을 그대로 쓴다. 클래식 invfile은 단품의 기존 참조를 유지한다.
+
 ## 1.1.0-alpha.2 중첩 보관
 
 원래 단품 prh/prgh를 유지하고 보관형 phs/prgs를 추가한다. 묶음은 stackable=1, minstack=1, maxstack=256, spawnstack=1, compactsave=0이며 상점/드롭/고급창고 자동중첩 대상에서 제외한다. 동일 망치 HD 자산을 재사용해 새 이미지 파일은 추가하지 않는다.

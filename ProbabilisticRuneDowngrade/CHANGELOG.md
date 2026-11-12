@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0-alpha.3 — 2026-11-12
+
+- Give storage-only hammer stacks a separate AI-assisted overlapping-hammer HD icon in both sprite resolutions.
+- Preserve single-hammer icons and installed ground models. Native quantity display remains separate from artwork.
+- Pass 302 automated checks, sprite decoder/pixel roundtrip checks and both package builds. Actual in-game rendering remains unverified.
+
 ## 1.1.0-alpha.2 — 2026-11-12
 
 - Combine the planned stacking feature with the optional-drop update. Add a separate storage-only hammer stack, maximum 256.

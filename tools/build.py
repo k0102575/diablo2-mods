@@ -19,7 +19,7 @@ runtime[f'mods/{mod.name}/CREDITS.md'] = (mod/'CREDITS.md').read_bytes()
 for license_file in sorted((mod/'LICENSES').glob('*.txt')):
     runtime[f'mods/{mod.name}/LICENSES/{license_file.name}'] = license_file.read_bytes()
 assets = {}
-for name in ['glowing-runes.json', 'hammer-icon.json']:
+for name in ['glowing-runes.json', 'hammer-icon.json', 'stacked-hammer-icon.json']:
     assets.update(json.loads((mod/'research'/name).read_text())['files'])
 actual_assets = {p.relative_to(mod).as_posix() for p in (mod/'hd').rglob('*') if p.is_file()}
 assert actual_assets == set(assets), 'Unexpected or missing bundled assets'

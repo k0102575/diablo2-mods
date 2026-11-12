@@ -1,6 +1,6 @@
 /*
  * 확률형 룬 분해 모드 — 악마술사의 군림 전용
- * Probabilistic Rune Downgrade 1.1.0-alpha.2 / 제작자: 빵길빵길
+ * Probabilistic Rune Downgrade 1.1.0-alpha.3 / 제작자: 빵길빵길
  * 오프라인 D2RMM 데이터 모드입니다. 엘드~조드 전체 등급을 생성합니다.
  *
  * 이 파일은 D2RMM의 '모드 설치' 버튼을 누를 때 실행됩니다.
@@ -516,7 +516,9 @@ for (const field of ['normcode', 'ubercode', 'ultracode']) {
   if (misc.headers.includes(field)) stackedHammer[field] = stackedHammerCode;
 }
 if (misc.headers.includes('AdvancedStashStackable')) stackedHammer.AdvancedStashStackable = '0';
-hd.push({ [stackedHammerCode]: JSON.parse(JSON.stringify(hammerHD)) });
+const stackedHammerAsset = 'prg/dismantling_hammer_stack';
+pendingModels['hd\\items\\misc\\' + stackedHammerAsset + '.json'] = hammerModel;
+hd.push({ [stackedHammerCode]: { ...hammerHD, asset: stackedHammerAsset } });
 
 
 // 등급마다 첫 단계 1행 + 결과 판정 100행을 추가합니다.

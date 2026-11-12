@@ -48,3 +48,7 @@ The configurable weighted-drop idea was a reference for the optional hammer-drop
 Adapted from **Stackable Runes / Stackable Gems** by **olegbl (Oleg Lokhvitsky)**, from commit `d999b4b73ceacfafbdbe29ebd77bcdb20448336e` of https://github.com/olegbl/d2rmm.mods . Copyright (c) 2022 Oleg Lokhvitsky. Used under the MIT License; the original copyright notice and full license are included in **LICENSES/olegbl-MIT.txt** in both source and installation packages.
 
 단품/중첩형 큐브 변환 및 수량별 분리 패턴을 망치 보관 기능에 맞게 응용했습니다. 기존 게임 자산의 권리는 별도이며 게임 그래픽을 MIT로 재허가하지 않습니다.
+
+The stacked-hammer HD icon was generated with AI assistance using this mod’s existing cyan hammer artwork as the reference. It depicts overlapping hammers without a fixed quantity label. The same original game-art ownership qualifications apply.
+
+중첩형 아이콘은 기존 청록색 망치 그림을 참고해 AI로 생성한 겹친 망치 그림입니다. 수량을 이미지에 고정하지 않으며 원래 게임 아트의 권리는 별도로 유지됩니다.

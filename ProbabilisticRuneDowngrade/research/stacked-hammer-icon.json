@@ -1,0 +1,14 @@
+{
+  "description": "AI-generated stacked storage hammer icon, edited from the existing cyan hammer reference. Two overlapping hammers; no baked quantity text.",
+  "sourcePngSha256": "327cb4e9e6c9f6b47efebcd6759671d586bd1760266d127ddb6695f2716d9970",
+  "referencePngSha256": "cf2b527bbae43cc56bdf9842e0510b9093629333a9609d9f797b1c8a6515b23b",
+  "format": "SPa1 RGBA v31; 98x98 and 49x49; transparency preserved",
+  "files": {
+    "hd/global/ui/items/misc/prg/dismantling_hammer_stack.sprite": {
+      "sha256": "f224526093c2a7e30f2e4af314354ab6b1291d424be96c725c469e50ca9e0e24"
+    },
+    "hd/global/ui/items/misc/prg/dismantling_hammer_stack.lowend.sprite": {
+      "sha256": "4c2ea19d5a9736628e0450c21479de6c01660c2444d7db7f903e35ffaae0c8f4"
+    }
+  }
+}

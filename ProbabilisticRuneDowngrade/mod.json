@@ -2,7 +2,7 @@
   "name": "Probabilistic Rune Downgrade (Tiered)",
   "description": "악마술사의 군림 오프라인 전용 / Offline Reign of the Warlock. 하급(2-20)·중급(21-25)·고급(26-33) 확률 별도 설정. 각 구간 합계 100. 전용 망치 사용. / Three independent probability groups; dismantling hammer required.",
   "author": "빵길빵길",
-  "version": "1.1.0-alpha.2",
+  "version": "1.1.0-alpha.3",
   "config": [
     {
       "id": "sellHammerAtGheed",

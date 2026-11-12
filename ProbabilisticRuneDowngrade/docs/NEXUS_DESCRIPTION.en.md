@@ -12,6 +12,8 @@ Stacks are for storage. Rune downgrade recipes accept only the **single hammer**
 
 The conversion/splitting pattern adapts olegbl’s MIT-licensed stacking code. The original notice and license are included in `LICENSES/olegbl-MIT.txt`. **In-game quantity handling, prices, combining/splitting, save/reload and compatibility remain untested.**
 
+Stacked hammers have a separate overlapping-hammer HD icon. Single-hammer icons and ground models are preserved; quantities use the game display, not baked image text. Classic mode keeps the original icon.
+
 ## Optional monster drops — 1.1.0 alpha
 
 **Development build: the new drop feature has not been tested in D2RMM or in game.** Historical 1.0.0 game tests do not validate it.
@@ -24,7 +26,7 @@ The conversion/splitting pattern adapts olegbl’s MIT-licensed stacking code. T
 - Vendor sales and crafting remain separate options. This is not an independent bonus-drop mechanism.
 
 
-By **k0102575** · Version **1.1.0-alpha.2** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
+By **k0102575** · Version **1.1.0-alpha.3** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
 
 Downgrade Eld through Zod with four configurable outcomes. Use one rune and one Rune Dismantling Hammer, then transmute the pending item alone to receive the result.
 
@@ -88,7 +90,7 @@ Pending items use **Glowing Runes** icons by **바론9**. Normal and resulting r
 ## Installation
 
 1. Close the game and back up offline characters and the shared stash.
-2. Extract `ProbabilisticRuneDowngrade-1.1.0-alpha.2-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
+2. Extract `ProbabilisticRuneDowngrade-1.1.0-alpha.3-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
 3. In D2RMM 1.9+, enable the chosen edition. Standard has four shared chances; Tiered has four chances in each of three groups. Review the Gheed sale checkbox as well.
 4. If using Relics of Sanctuary, place this mod **after Relics** in the install order. Click **Install Mods**.
 5. Launch the offline game with your D2RMM configuration. Use a copy of your save for initial checks.
@@ -109,7 +111,7 @@ The author reported that all 0.3.0 tiered-probability and 0.4.0 crafting test ca
 
 Version 1.0.0 includes these features and subsequent display fixes: gold instructions, four white outcome lines, and the Gheed sale checkbox at the top of both editions. **A separate in-game confirmation of the final display fixes has not yet been recorded.** Check colors, wrapping and option placement while capturing screenshots.
 
-**300 automated checks** cover both editions, all 32 ranks and stored rolls 1–100, tier boundaries, 0%/100% settings, invalid settings, crafting and tooltip strings. These checks do not run D2RMM or the game. Historical probability trials are documented separately in the [test record](https://github.com/k0102575/diablo2-mods/blob/main/ProbabilisticRuneDowngrade/docs/TESTING.ko.md). Classic hammer rendering in a 1×1 slot remains unverified. This is not a guarantee of compatibility with every patch or mod combination.
+**302 automated checks** cover both editions, all 32 ranks and stored rolls 1–100, tier boundaries, 0%/100% settings, invalid settings, crafting and tooltip strings. These checks do not run D2RMM or the game. Historical probability trials are documented separately in the [test record](https://github.com/k0102575/diablo2-mods/blob/main/ProbabilisticRuneDowngrade/docs/TESTING.ko.md). Classic hammer rendering in a 1×1 slot remains unverified. This is not a guarantee of compatibility with every patch or mod combination.
 
 ## Credits and disclosure
 

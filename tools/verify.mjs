@@ -74,8 +74,8 @@ function verify(overrides={},actual=false,change=()=>{}) {
  assert.ok(!metadata.config.some(c=>c.id==='istOnly'));
  assert.equal(metadata.name,'Probabilistic Rune Downgrade ('+(activeEdition==='tiered'?'Tiered':'Standard')+')');
  assert.equal(metadata.author,'빵길빵길');
- assert.equal(metadata.version,'1.1.0-alpha.2');
- assert.equal(rows.length,ranks*101);assert.equal(writes.length,40);
+ assert.equal(metadata.version,'1.1.0-alpha.3');
+ assert.equal(rows.length,ranks*101);assert.equal(writes.length,41);
  assert.equal(JSON.stringify(hd.slice(0,-34)),result.originalHD);
  assert.equal(JSON.stringify(t.misc.rows.slice(0,-34)),result.originalMisc);
  assert.deepEqual(copiesAsPlain(result.copies),[{src:'hd\\global\\ui\\items\\misc\\rune',dst:'hd\\global\\ui\\items\\misc\\rune',overwrite:true},{src:'hd\\global\\ui\\items\\misc\\prg',dst:'hd\\global\\ui\\items\\misc\\prg',overwrite:true}]);
@@ -311,6 +311,21 @@ for(const [path,info] of Object.entries(hammerAssets)) {
  assert.equal(data.length,40+size*size*4);
 }
 checks++;
+const stackAssets=JSON.parse(read('ProbabilisticRuneDowngrade/research/stacked-hammer-icon.json')).files;
+assert.equal(Object.keys(stackAssets).length,2);
+for(const [path,info] of Object.entries(stackAssets)) {
+ const data=fs.readFileSync(new URL('ProbabilisticRuneDowngrade/'+path,root));
+ assert.equal(createHash('sha256').update(data).digest('hex'),info.sha256);
+ const size=path.endsWith('.lowend.sprite')?49:98;
+ assert.equal(data.subarray(0,4).toString(),'SPa1');assert.equal(data.readUInt16LE(4),31);
+ assert.equal(data.readInt32LE(8),size);assert.equal(data.readInt32LE(12),size);
+ assert.equal(data.length,40+size*size*4);
+ const alpha=Array.from(data.subarray(40)).filter((_,i)=>i%4===3);
+ assert.ok(alpha.some(v=>v===0)&&alpha.some(v=>v>0));
+ const single=fs.readFileSync(new URL('ProbabilisticRuneDowngrade/'+path.replace('_stack',''),root));
+ assert.notEqual(info.sha256,createHash('sha256').update(single).digest('hex'));
+}
+checks++;
 if(fs.existsSync('/tmp/rg-cubemain.txt')) verify({istOnly:false},true);
  checksByEdition[edition]=checks-before;
 }
@@ -418,7 +433,7 @@ for(const edition of ['standard','tiered']) {
   assert.equal(r.error,undefined,String(r.error));
   assert.deepEqual(r.tables.treasureclassex,original,'Read input must remain unchanged');
   const outputs=r.writes.filter(([p])=>p.endsWith('treasureclassex.txt'));
-  assert.equal(outputs.length,1);assert.equal(r.writes.length,41);
+  assert.equal(outputs.length,1);assert.equal(r.writes.length,42);
   const out=copiesAsPlain(outputs[0][1]);assert.deepEqual(out.headers,original.headers);
   assert.equal(out.rows.length,original.rows.length);
   for(let i=0;i<15;i++) {
@@ -464,7 +479,8 @@ for(const edition of ['standard','tiered']) {
  for(const [key,value] of Object.entries({type:'prgs',stackable:'1',compactsave:'0',minstack:'1',maxstack:'256',spawnstack:'1',spawnable:'0',GheedMin:'0',GheedMax:'0',PermStoreItem:'0',quest:'0'}))assert.equal(stack[key],value);
  if(t.misc.headers.includes('AdvancedStashStackable'))assert.equal(stack.AdvancedStashStackable,'0');
  for(const field of ['normcode','ubercode','ultracode'])if(t.misc.headers.includes(field))assert.equal(stack[field],'phs');
- assert.deepEqual(copiesAsPlain(r.hd.find(x=>x.phs).phs),copiesAsPlain(r.hd.find(x=>x.prh).prh));
+ assert.deepEqual(copiesAsPlain(r.hd.find(x=>x.phs).phs),{...copiesAsPlain(r.hd.find(x=>x.prh).prh),asset:'prg/dismantling_hammer_stack'});
+ assert.deepEqual(copiesAsPlain(r.writes.find(([p])=>p==='hd\\items\\misc\\prg/dismantling_hammer_stack.json')[1]),r.models['hd\\items\\weapon\\hammer/test_malus.json']);
  assert.equal(r.strings.find(x=>x.Key===stack.namestr).enUS,'Rune Dismantling Hammers (Stacked)');checks++;
  const packing=t.cubemain.rows.filter(x=>x.description==='PRDG: pack hammer');assert.equal(packing.length,1);
  assert.equal(packing[0]['input 1'],'prh');assert.equal(packing[0].output,'phs,qty=1');assert.equal(packing[0].numinputs,'1');checks++;
@@ -510,7 +526,7 @@ const upstreamLicense=read('ProbabilisticRuneDowngrade/LICENSES/olegbl-MIT.txt')
 assert.equal(createHash('sha256').update(upstreamLicense).digest('hex'),'f2729820b05efcdf3e17d765d1fc7c2b9c57852b6c7798466a6ec285f40c84b4');checks++;
 
 const sha = s => createHash('sha256').update(s).digest('hex');
-const inputs=Object.fromEntries(['ProbabilisticRuneDowngrade/mod.js','ProbabilisticRuneDowngrade/mod.json','ProbabilisticRuneDowngrade/research/schema.json','tools/verify.mjs','tools/package-editions.mjs','tools/build.py','ProbabilisticRuneDowngrade/LICENSES/olegbl-MIT.txt','ProbabilisticRuneDowngrade/research/glowing-runes.json','ProbabilisticRuneDowngrade/research/hammer-icon.json'].map(p=>[p,sha(read(p))]));
+const inputs=Object.fromEntries(['ProbabilisticRuneDowngrade/mod.js','ProbabilisticRuneDowngrade/mod.json','ProbabilisticRuneDowngrade/research/schema.json','tools/verify.mjs','tools/package-editions.mjs','tools/build.py','ProbabilisticRuneDowngrade/LICENSES/olegbl-MIT.txt','ProbabilisticRuneDowngrade/research/glowing-runes.json','ProbabilisticRuneDowngrade/research/hammer-icon.json','ProbabilisticRuneDowngrade/research/stacked-hammer-icon.json'].map(p=>[p,sha(read(p))]));
 const report={inputs,date:new Date().toISOString().slice(0,10),checks,checksByEdition,status:'PASS',engine:'Node vm; mocked D2RMM API',actualTables:fs.existsSync('/tmp/rg-cubemain.txt'),limitations:'Not D2RMM installation or game execution. Installer checks only; game validation is separately user-reported. Reign of the Warlock only.'};
 fs.writeFileSync(new URL('ProbabilisticRuneDowngrade/docs/LOCAL_VALIDATION.json',root),JSON.stringify(report,null,2)+'\n');
 console.log(report);
