@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0-alpha.2 — 2026-11-12
+
+- Combine the planned stacking feature with the optional-drop update. Add a separate storage-only hammer stack, maximum 256.
+- Pack one single hammer in the cube; transmute a stack to withdraw one single and preserve the remainder. Single-hammer recipes and payouts remain unchanged.
+- Bind quantity checks by the installed quantity-stat row instead of a hardcoded ID.
+- Include olegbl’s original MIT notice/license for the adapted conversion/splitting pattern.
+- Pass 300 automated checks and both package builds. Drop and stack features still need actual D2RMM/game validation.
+
 ## 1.1.0-alpha.1 — 2026-11-12
 
 - Add optional hammer monster drops, OFF by default, and a shared weight setting (1–1000, default 1).

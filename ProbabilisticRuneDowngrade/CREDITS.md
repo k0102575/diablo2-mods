@@ -42,3 +42,9 @@ Burning Anvil Balanced by RinusDiablo: https://www.nexusmods.com/diablo2resurrec
 The configurable weighted-drop idea was a reference for the optional hammer-drop feature. No source code, images or files from that mod are included. Its permission terms are not represented as granting code reuse.
 
 가중치 설정으로 드롭 후보를 추가하는 아이디어를 참고했습니다. 해당 모드의 코드·이미지·파일은 포함하지 않으며, 코드 재사용 허락을 받은 것으로 표시하지 않습니다.
+
+## Stack conversion and splitting code / 중첩 변환·분리 코드
+
+Adapted from **Stackable Runes / Stackable Gems** by **olegbl (Oleg Lokhvitsky)**, from commit `d999b4b73ceacfafbdbe29ebd77bcdb20448336e` of https://github.com/olegbl/d2rmm.mods . Copyright (c) 2022 Oleg Lokhvitsky. Used under the MIT License; the original copyright notice and full license are included in **LICENSES/olegbl-MIT.txt** in both source and installation packages.
+
+단품/중첩형 큐브 변환 및 수량별 분리 패턴을 망치 보관 기능에 맞게 응용했습니다. 기존 게임 자산의 권리는 별도이며 게임 그래픽을 MIT로 재허가하지 않습니다.

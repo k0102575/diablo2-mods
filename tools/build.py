@@ -16,6 +16,8 @@ dist = root / 'dist'
 dist.mkdir(exist_ok=True)
 runtime = {f'mods/{mod.name}/{name}': (mod/name).read_bytes() for name in ['mod.js', 'mod.json']}
 runtime[f'mods/{mod.name}/CREDITS.md'] = (mod/'CREDITS.md').read_bytes()
+for license_file in sorted((mod/'LICENSES').glob('*.txt')):
+    runtime[f'mods/{mod.name}/LICENSES/{license_file.name}'] = license_file.read_bytes()
 assets = {}
 for name in ['glowing-runes.json', 'hammer-icon.json']:
     assets.update(json.loads((mod/'research'/name).read_text())['files'])

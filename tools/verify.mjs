@@ -37,6 +37,7 @@ function fixture() {
   for(const code of ['mau','9m9','7m7']) tables.weapons.rows.push(make(tables.weapons,{code,type:'hamm'}));
   tables.cubemain.rows=[make(tables.cubemain,{description:'Other mod: rune + scroll',enabled:'1',numinputs:'2','input 1':'r24','input 2':'isc',output:'r23'})];
   tables.itemstatcost.rows=Array.from({length:368},(_,i)=>make(tables.itemstatcost,{Stat:'synthetic_'+i,'*ID':String(i)}));
+  tables.itemstatcost.rows[70].Stat='quantity';
   return tables;
 }
 function run(overrides={},change=()=>{},actual=false,modelOverride=undefined,raw=false) {
@@ -73,10 +74,10 @@ function verify(overrides={},actual=false,change=()=>{}) {
  assert.ok(!metadata.config.some(c=>c.id==='istOnly'));
  assert.equal(metadata.name,'Probabilistic Rune Downgrade ('+(activeEdition==='tiered'?'Tiered':'Standard')+')');
  assert.equal(metadata.author,'빵길빵길');
- assert.equal(metadata.version,'1.1.0-alpha.1');
+ assert.equal(metadata.version,'1.1.0-alpha.2');
  assert.equal(rows.length,ranks*101);assert.equal(writes.length,40);
- assert.equal(JSON.stringify(hd.slice(0,-33)),result.originalHD);
- assert.equal(JSON.stringify(t.misc.rows.slice(0,-33)),result.originalMisc);
+ assert.equal(JSON.stringify(hd.slice(0,-34)),result.originalHD);
+ assert.equal(JSON.stringify(t.misc.rows.slice(0,-34)),result.originalMisc);
  assert.deepEqual(copiesAsPlain(result.copies),[{src:'hd\\global\\ui\\items\\misc\\rune',dst:'hd\\global\\ui\\items\\misc\\rune',overwrite:true},{src:'hd\\global\\ui\\items\\misc\\prg',dst:'hd\\global\\ui\\items\\misc\\prg',overwrite:true}]);
  assert.equal(JSON.stringify(t.weapons),result.originalWeapons);
  assert.equal(JSON.stringify(t.cubemain.rows.filter(r=>!r.description.startsWith('PRDG:'))),result.originalCube);
@@ -108,7 +109,7 @@ function verify(overrides={},actual=false,change=()=>{}) {
  const rollIndex=t.itemstatcost.rows.findIndex(r=>r.Stat==='prg_roll');
  assert.equal(rollIndex,t.itemstatcost.rows.length-1);
  assert.equal(JSON.stringify(t.itemstatcost.rows.slice(0,rollIndex)),result.originalStatRows);
- assert.ok(rows.filter(r=>r.numinputs==='1').every(r=>r.param===String(rollIndex)));
+ assert.ok(rows.filter(r=>r.description.startsWith('PRDG: resolve ')).every(r=>r.param===String(rollIndex)));
  assert.ok(writes.filter(([p])=>p.endsWith('.txt')).every(([p])=>p.startsWith('global\\excel\\') && !p.includes('base')));
  assert.ok(!metadata.config.some(c=>c.id==='tablePath')); 
  for(const start of rows.filter(r=>r.numinputs==='2')) {
@@ -368,7 +369,7 @@ for(const edition of ['tiered','standard']) {
   assert.equal(r.op,'');assert.equal(r['mod 1'],'');
   assert.ok(Object.keys(r).every(k=>base.tables.cubemain.headers.includes(k)));
  }
- assert.equal(base.tables.cubemain.rows.filter(r=>r.description.startsWith('PRDG:')).length,3235);
+ assert.equal(base.tables.cubemain.rows.filter(r=>r.description.startsWith('PRDG:')).length,3492);
  assert.ok(!base.writes.some(([p])=>/treasureclass|monstats|superunique/.test(p)));checks++;
  for(const setting of [false,true,undefined]) {
   const r=run({sellHammerAtGheed:setting});assert.equal(r.error,undefined);
@@ -393,7 +394,7 @@ for(const edition of ['tiered','standard']) {
   const r=run({},t=>t.cubemain.headers=t.cubemain.headers.filter(h=>h!==column));
   assert.ok(r.error);assert.equal(r.writes.length,0);assert.equal(r.copies.length,0);checks++;
  }
- const overCap=run({},t=>t.cubemain.rows=Array.from({length:32767-3235+1},()=>({description:'Existing recipe'})));
+ const overCap=run({},t=>t.cubemain.rows=Array.from({length:32767-3492+1},()=>({description:'Existing recipe'})));
  assert.match(overCap.error?.message??'',/Safety cap/);assert.equal(overCap.writes.length,0);assert.equal(overCap.copies.length,0);checks++;
  checksByEdition[edition]+=checks-before;
 }
@@ -455,8 +456,61 @@ for(const edition of ['standard','tiered']) {
  checksByEdition[edition]+=checks-before;
 }
 
+// Storage-only hammer stacks: exact quantities, dynamic stat binding and isolation.
+for(const edition of ['standard','tiered']) {
+ activate(edition);const before=checks;
+ const r=run();assert.equal(r.error,undefined);
+ const t=r.tables,stack=t.misc.rows.find(x=>x.code==='phs');
+ for(const [key,value] of Object.entries({type:'prgs',stackable:'1',compactsave:'0',minstack:'1',maxstack:'256',spawnstack:'1',spawnable:'0',GheedMin:'0',GheedMax:'0',PermStoreItem:'0',quest:'0'}))assert.equal(stack[key],value);
+ if(t.misc.headers.includes('AdvancedStashStackable'))assert.equal(stack.AdvancedStashStackable,'0');
+ for(const field of ['normcode','ubercode','ultracode'])if(t.misc.headers.includes(field))assert.equal(stack[field],'phs');
+ assert.deepEqual(copiesAsPlain(r.hd.find(x=>x.phs).phs),copiesAsPlain(r.hd.find(x=>x.prh).prh));
+ assert.equal(r.strings.find(x=>x.Key===stack.namestr).enUS,'Rune Dismantling Hammers (Stacked)');checks++;
+ const packing=t.cubemain.rows.filter(x=>x.description==='PRDG: pack hammer');assert.equal(packing.length,1);
+ assert.equal(packing[0]['input 1'],'prh');assert.equal(packing[0].output,'phs,qty=1');assert.equal(packing[0].numinputs,'1');checks++;
+ const splitting=t.cubemain.rows.filter(x=>x.description.startsWith('PRDG: unpack hammer '));assert.equal(splitting.length,256);
+ const quantityIndex=t.itemstatcost.rows.findIndex(x=>x.Stat==='quantity');
+ for(let quantity=1;quantity<=256;quantity++) {
+  const matches=splitting.filter(x=>x.op==='18'&&x.param===String(quantityIndex)&&x.value===String(quantity));
+  assert.equal(matches.length,1);const row=matches[0];
+  assert.equal(row.numinputs,'1');assert.equal(row['input 1'],'phs');assert.equal(row.output,'prh,nor');
+  assert.equal(row['output b'],quantity===1?'':'phs,qty='+(quantity-1));
+  assert.equal(row['output c'],'');assert.equal(row['mod 1'],'');
+ }
+ assert.ok(!splitting.some(x=>['0','257'].includes(x.value)));checks++;
+ // Repeated withdrawals from a full stack must yield 256 singles, no residue.
+ let remaining=256,singles=0;
+ while(remaining>0) {
+  const row=splitting.find(x=>x.value===String(remaining));singles++;
+  remaining=row['output b']?Number(row['output b'].split('qty=')[1]):0;
+ }
+ assert.equal(singles,256);checks++;
+ // Stack code is never accepted as a dismantling input or paid out on a miss.
+ assert.ok(t.cubemain.rows.filter(x=>x.description.startsWith('PRDG: roll ')).every(x=>x['input 2']==='prh'));
+ assert.ok(t.cubemain.rows.filter(x=>x.description.startsWith('PRDG: resolve ')).every(x=>x.output!=='phs'));
+ assert.ok(t.cubemain.rows.filter(x=>x.description.startsWith('PRDG: craft hammer ')).every(x=>x.output==='prh,nor'));checks++;
+ const enabled=run({enableHammerDrops:true},dropFixture);assert.equal(enabled.error,undefined);
+ const drops=enabled.writes.find(([p])=>p.endsWith('treasureclassex.txt'))[1];
+ assert.equal(drops.rows.filter(x=>Object.values(x).includes('prh')).length,15);
+ assert.ok(!drops.rows.some(x=>Object.values(x).includes('phs')));checks++;
+ const moved=run({},t=>{[t.itemstatcost.rows[70],t.itemstatcost.rows[111]]=[t.itemstatcost.rows[111],t.itemstatcost.rows[70]];});
+ assert.equal(moved.error,undefined);
+ assert.ok(moved.tables.cubemain.rows.filter(x=>x.description.startsWith('PRDG: unpack hammer ')).every(x=>x.param==='111'));checks++;
+ for(const mutate of [
+  t=>t.itemstatcost.rows[70].Stat='not_quantity',
+  t=>t.itemstatcost.rows[71].Stat='quantity',
+  ...['misc','weapons','armor'].map(table=>t=>t[table].rows.push({code:'phs'})),
+  t=>t.itemtypes.rows.push({Code:'prgs'}),
+ ]) {
+  const bad=run({},mutate);assert.ok(bad.error);assert.equal(bad.writes.length,0);assert.equal(bad.copies.length,0);checks++;
+ }
+ checksByEdition[edition]+=checks-before;
+}
+const upstreamLicense=read('ProbabilisticRuneDowngrade/LICENSES/olegbl-MIT.txt');
+assert.equal(createHash('sha256').update(upstreamLicense).digest('hex'),'f2729820b05efcdf3e17d765d1fc7c2b9c57852b6c7798466a6ec285f40c84b4');checks++;
+
 const sha = s => createHash('sha256').update(s).digest('hex');
-const inputs=Object.fromEntries(['ProbabilisticRuneDowngrade/mod.js','ProbabilisticRuneDowngrade/mod.json','ProbabilisticRuneDowngrade/research/schema.json','tools/verify.mjs','tools/package-editions.mjs','ProbabilisticRuneDowngrade/research/glowing-runes.json','ProbabilisticRuneDowngrade/research/hammer-icon.json'].map(p=>[p,sha(read(p))]));
+const inputs=Object.fromEntries(['ProbabilisticRuneDowngrade/mod.js','ProbabilisticRuneDowngrade/mod.json','ProbabilisticRuneDowngrade/research/schema.json','tools/verify.mjs','tools/package-editions.mjs','tools/build.py','ProbabilisticRuneDowngrade/LICENSES/olegbl-MIT.txt','ProbabilisticRuneDowngrade/research/glowing-runes.json','ProbabilisticRuneDowngrade/research/hammer-icon.json'].map(p=>[p,sha(read(p))]));
 const report={inputs,date:new Date().toISOString().slice(0,10),checks,checksByEdition,status:'PASS',engine:'Node vm; mocked D2RMM API',actualTables:fs.existsSync('/tmp/rg-cubemain.txt'),limitations:'Not D2RMM installation or game execution. Installer checks only; game validation is separately user-reported. Reign of the Warlock only.'};
 fs.writeFileSync(new URL('ProbabilisticRuneDowngrade/docs/LOCAL_VALIDATION.json',root),JSON.stringify(report,null,2)+'\n');
 console.log(report);

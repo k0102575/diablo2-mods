@@ -1,6 +1,6 @@
 /*
  * 확률형 룬 분해 모드 — 악마술사의 군림 전용
- * Probabilistic Rune Downgrade 1.1.0-alpha.1 / 제작자: 빵길빵길
+ * Probabilistic Rune Downgrade 1.1.0-alpha.2 / 제작자: 빵길빵길
  * 오프라인 D2RMM 데이터 모드입니다. 엘드~조드 전체 등급을 생성합니다.
  *
  * 이 파일은 D2RMM의 '모드 설치' 버튼을 누를 때 실행됩니다.
@@ -91,6 +91,8 @@ const prefix = 'global\\excel\\';
 // HD 아이템 매핑은 3글자 코드만 지원합니다. pg0~pgv를 예약합니다.
 // itemtypes 종류 식별자 prgp(4글자)는 실제 아이템 코드와 별개입니다.
 const hammerCode = 'prh';
+const stackedHammerCode = 'phs';
+const hammerStackLimit = 256;
 // Exact bases, not the entire hammer type. A restricted edition can narrow this list.
 const hammerCraftBases = ['mau', '9m9', '7m7']; // Maul / War Club / Ogre Maul
 const hammerCraftIngredients = ['r14', 'skz', 'jew']; // Dol / Perfect Skull / Jewel
@@ -99,7 +101,7 @@ const pendingCodes = new Set(
 );
 const reservedCode = value => {
   const code = String(value).toLowerCase();
-  return code.startsWith('prg') || code === hammerCode || pendingCodes.has(code);
+  return code.startsWith('prg') || code === hammerCode || code === stackedHammerCode || pendingCodes.has(code);
 };
 
 const files = {};
@@ -488,10 +490,55 @@ for (const field of ['alternategfx', 'dropsound', 'dropsfxframe', 'usesound']) {
 }
 if (misc.headers.includes('AdvancedStashStackable')) hammer.AdvancedStashStackable = '0';
 
+// Stack conversion/splitting pattern adapted from olegbl's Stackable Runes/Gems.
+// Copyright (c) 2022 Oleg Lokhvitsky. See LICENSES/olegbl-MIT.txt.
+// Keep prh as the only usable material; phs is a storage-only variant.
+const quantityStat = unique(stats, 'Stat', 'quantity');
+const quantityStatIndex = stats.rows.indexOf(quantityStat);
+text('PRGHammerStack', 'Rune Dismantling Hammers (Stacked)', '룬 분해 망치 (묶음)');
+text('PRGHammerStackHelp',
+  'Combine stacks by dragging them together. Maximum 256.\nTransmute a single hammer alone to pack it.\nTransmute this stack alone to withdraw one usable hammer.',
+  '묶음을 서로 겹쳐 합칩니다. 최대 256개.\n단품 망치만 단독 조합하면 묶음으로 바뀝니다.\n이 묶음만 단독 조합하면 사용 가능한 망치 1개를 꺼냅니다.');
+add(types, {
+  ItemType: 'PRG Hammer Storage', Code: 'prgs', Equiv1: 'misc',
+  Normal: '1', Body: '0', Magic: '0', Rare: '0', TreasureClass: '0',
+  VarInvGfx: '0', StorePage: 'misc',
+});
+const stackedHammer = add(misc, {
+  ...hammer, name: 'PRGHammerStack', code: stackedHammerCode,
+  namestr: 'PRGHammerStack', type: 'prgs', spawnable: '0',
+  stackable: '1', minstack: '1', maxstack: String(hammerStackLimit), spawnstack: '1',
+  spelldescstr: 'PRGHammerStackHelp',
+  GheedMin: '0', GheedMax: '0', GheedMagicMin: '0', GheedMagicMax: '0',
+  PermStoreItem: '0', multibuy: '0',
+});
+for (const field of ['normcode', 'ubercode', 'ultracode']) {
+  if (misc.headers.includes(field)) stackedHammer[field] = stackedHammerCode;
+}
+if (misc.headers.includes('AdvancedStashStackable')) stackedHammer.AdvancedStashStackable = '0';
+hd.push({ [stackedHammerCode]: JSON.parse(JSON.stringify(hammerHD)) });
+
+
 // 등급마다 첫 단계 1행 + 결과 판정 100행을 추가합니다.
 // 이 상한은 보수적인 안전 제한이며 현행 엔진 한도를 입증한 값은 아닙니다.
-if (cube.rows.length + ranks.length * 101 + hammerCraftBases.length > 32767) {
+if (cube.rows.length + ranks.length * 101 + hammerCraftBases.length + hammerStackLimit + 1 > 32767) {
   fail('Safety cap: total cube rows exceed 32767.');
+}
+
+// Packing creates quantity 1. Withdrawing replaces the consumed stack with
+// exactly one single hammer plus the unchanged remainder (no zero-size output).
+add(cube, {
+  description: 'PRDG: pack hammer', enabled: '1', version: '100', numinputs: '1',
+  'input 1': hammerCode, output: stackedHammerCode + ',qty=1', lvl: '1',
+});
+for (let quantity = 1; quantity <= hammerStackLimit; quantity++) {
+  add(cube, {
+    description: 'PRDG: unpack hammer ' + quantity,
+    enabled: '1', version: '100', numinputs: '1',
+    'input 1': stackedHammerCode, op: '18', param: String(quantityStatIndex),
+    value: String(quantity), output: hammerCode + ',nor', lvl: '1',
+    'output b': quantity > 1 ? stackedHammerCode + ',qty=' + (quantity - 1) : '',
+  });
 }
 
 // Fixed tool output: all four ingredients are consumed; no random crafted affixes.
