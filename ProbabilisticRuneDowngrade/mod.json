@@ -2,7 +2,7 @@
   "name": "Probabilistic Rune Downgrade (Tiered)",
   "description": "악마술사의 군림 오프라인 전용 / Offline Reign of the Warlock. 하급(2-20)·중급(21-25)·고급(26-33) 확률 별도 설정. 각 구간 합계 100. 전용 망치 사용. / Three independent probability groups; dismantling hammer required.",
   "author": "빵길빵길",
-  "version": "1.0.0",
+  "version": "1.1.0-alpha.1",
   "config": [
     {
       "id": "sellHammerAtGheed",
@@ -10,6 +10,22 @@
       "name": "기드에게 망치 판매 / Sell hammers at Gheed",
       "description": "끄면 기드 판매를 비활성화합니다. 매직 마울/워 클럽/오우거 마울 + 돌 룬 + 최상급 해골 + 주얼로 제작할 수 있습니다. / Disable for crafting-only acquisition. Recipes remain available with either setting.",
       "defaultValue": true
+    },
+    {
+      "id": "enableHammerDrops",
+      "type": "checkbox",
+      "name": "망치 몬스터 드롭 / Enable hammer drops",
+      "description": "기본 꺼짐. 켜면 세 난이도·액트의 Good 드롭 후보에 망치를 추가해 기존 후보의 선택 확률에 영향을 줍니다. 독립 추가 드롭이 아닙니다. / OFF by default. Shares weighted loot rolls with existing candidates; not an independent bonus drop.",
+      "defaultValue": false
+    },
+    {
+      "id": "hammerDropWeight",
+      "type": "number",
+      "name": "망치 드롭 가중치 / Hammer drop weight",
+      "description": "드롭을 켰을 때만 적용. 퍼센트가 아닙니다. 높일수록 기존 후보보다 망치가 선택될 비중이 커집니다. / Used only when drops are enabled. Not a percentage; higher values compete more strongly with existing loot.",
+      "defaultValue": 1,
+      "minValue": 1,
+      "maxValue": 1000
     },
     {
       "id": "lowRuneChances",

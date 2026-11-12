@@ -1,6 +1,18 @@
 # Probabilistic Rune Downgrade
 
-By **k0102575** · Version **1.0.0** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
+## Optional monster drops — 1.1.0 alpha
+
+**Development build: the new drop feature has not been tested in D2RMM or in game.** Historical 1.0.0 game tests do not validate it.
+
+- **Enable hammer drops:** OFF by default. Disabled installs do not read or write the treasure-class table.
+- **Hammer drop weight:** default 1, integer 1–1000. Used when enabled; this is not a percentage.
+- Adds a hammer candidate to 15 act/difficulty Good treasure classes. Only drops using those paths are affected; this is not a promise that every monster or quest drop can produce hammers.
+- **Hammers compete with existing loot candidates.** Original weights, NoDrop and Picks are preserved, but adding a candidate changes relative selection chances. Player count and other mods also affect the result. Larger weights have larger effects.
+- Missing/duplicate target classes, full candidate lists, malformed weights or unsafe totals stop installation. Existing candidates are never overwritten.
+- Vendor sales and crafting remain separate options. This is not an independent bonus-drop mechanism.
+
+
+By **k0102575** · Version **1.1.0-alpha.1** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
 
 Downgrade Eld through Zod with four configurable outcomes. Use one rune and one Rune Dismantling Hammer, then transmute the pending item alone to receive the result.
 
@@ -47,7 +59,7 @@ Buy the dedicated **Rune Dismantling Hammer** from **Gheed in Act I**. It is a n
 
 Transmute **one Magic Maul, War Club or Ogre Maul + one Dol Rune + one Perfect Skull + one Jewel** to create **one Rune Dismantling Hammer**. All four ingredients are consumed. Only Magic (blue) weapons qualify; other qualities, the Great Maul family and one-handed hammers do not. Ethereal Magic bases are allowed by the recipe and require in-game verification. Jewel quality is unrestricted, so choose the jewel carefully. The output is a fixed tool, without randomized crafted affixes.
 
-Both editions include **Sell hammers at Gheed**, enabled by default. Disable it to stop generating his hammer sale stock; crafting remains available either way. Reinstall with D2RMM and start a new game after changing the option. This does not remove owned hammers or prevent selling them to NPCs. No monster drop tables are changed.
+Both editions include **Sell hammers at Gheed**, enabled by default. Disable it to stop generating his hammer sale stock; crafting remains available either way. Reinstall with D2RMM and start a new game after changing the option. This does not remove owned hammers or prevent selling them to NPCs. Monster drop tables are unchanged when the new drop option is OFF.
 
 See the validation scope below for game-test reports.
 
@@ -64,7 +76,7 @@ Pending items use **Glowing Runes** icons by **바론9**. Normal and resulting r
 ## Installation
 
 1. Close the game and back up offline characters and the shared stash.
-2. Extract `ProbabilisticRuneDowngrade-1.0.0-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
+2. Extract `ProbabilisticRuneDowngrade-1.1.0-alpha.1-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
 3. In D2RMM 1.9+, enable the chosen edition. Standard has four shared chances; Tiered has four chances in each of three groups. Review the Gheed sale checkbox as well.
 4. If using Relics of Sanctuary, place this mod **after Relics** in the install order. Click **Install Mods**.
 5. Launch the offline game with your D2RMM configuration. Use a copy of your save for initial checks.
@@ -85,7 +97,7 @@ The author reported that all 0.3.0 tiered-probability and 0.4.0 crafting test ca
 
 Version 1.0.0 includes these features and subsequent display fixes: gold instructions, four white outcome lines, and the Gheed sale checkbox at the top of both editions. **A separate in-game confirmation of the final display fixes has not yet been recorded.** Check colors, wrapping and option placement while capturing screenshots.
 
-**215 automated checks** cover both editions, all 32 ranks and stored rolls 1–100, tier boundaries, 0%/100% settings, invalid settings, crafting and tooltip strings. These checks do not run D2RMM or the game. Historical probability trials are documented separately in the [test record](https://github.com/k0102575/diablo2-mods/blob/main/ProbabilisticRuneDowngrade/docs/TESTING.ko.md). Classic hammer rendering in a 1×1 slot remains unverified. This is not a guarantee of compatibility with every patch or mod combination.
+**273 automated checks** cover both editions, all 32 ranks and stored rolls 1–100, tier boundaries, 0%/100% settings, invalid settings, crafting and tooltip strings. These checks do not run D2RMM or the game. Historical probability trials are documented separately in the [test record](https://github.com/k0102575/diablo2-mods/blob/main/ProbabilisticRuneDowngrade/docs/TESTING.ko.md). Classic hammer rendering in a 1×1 slot remains unverified. This is not a guarantee of compatibility with every patch or mod combination.
 
 ## Credits and disclosure
 
@@ -95,4 +107,4 @@ Version 1.0.0 includes these features and subsequent display fixes: gold instruc
 - Uses D2RMM. Diablo II and its game assets belong to their respective rights holders. This repository's original code and documentation are under the MIT License; this does not license third-party game assets.
 - AI assistance was used in code development, documentation and translation, and creation of the dismantling hammer icon. The in-game test results above were reported by the author; AI-generated text is not evidence of game testing.
 
-Source and detailed test records: https://github.com/k0102575/diablo2-mods/tree/main/ProbabilisticRuneDowngrade
+Source and detailed test records: https://github.com/k0102575/diablo2-mods/tree/feature/hammer-drops-1.1.0/ProbabilisticRuneDowngrade

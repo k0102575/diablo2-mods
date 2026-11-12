@@ -1,6 +1,6 @@
 /*
  * 확률형 룬 분해 모드 — 악마술사의 군림 전용
- * Probabilistic Rune Downgrade 1.0.0 / 제작자: 빵길빵길
+ * Probabilistic Rune Downgrade 1.1.0-alpha.1 / 제작자: 빵길빵길
  * 오프라인 D2RMM 데이터 모드입니다. 엘드~조드 전체 등급을 생성합니다.
  *
  * 이 파일은 D2RMM의 '모드 설치' 버튼을 누를 때 실행됩니다.
@@ -76,6 +76,13 @@ const chancesByTier = probabilityMode === 'tiered'
 // Older saved configurations may not contain this new checkbox yet.
 const sellHammerAtGheed = config.sellHammerAtGheed === undefined ? true : config.sellHammerAtGheed;
 if (typeof sellHammerAtGheed !== 'boolean') fail('sellHammerAtGheed: expected boolean.');
+const enableHammerDrops = config.enableHammerDrops === undefined ? false : config.enableHammerDrops;
+const hammerDropWeight = config.hammerDropWeight === undefined ? 1 : config.hammerDropWeight;
+if (typeof enableHammerDrops !== 'boolean') fail('enableHammerDrops: expected boolean.');
+if (!Number.isInteger(hammerDropWeight) || hammerDropWeight < 1 || hammerDropWeight > 1000) {
+  fail('hammerDropWeight: expected integer 1..1000 (weight, not percent).');
+}
+
 
 // 악마술사의 군림 데이터만 수정합니다. base 경로는 사용하지 않습니다.
 const prefix = 'global\\excel\\';
@@ -207,6 +214,55 @@ if ([armor, weapons].some(t =>
   t.rows.some(r => reservedCode(r.code))
 )) {
   fail('PRG item code collision in armor/weapons.');
+}
+
+// Optional weighted candidate insertion. No third-party runtime code is used.
+// Disabled installations do not even read this table; the stable path is unchanged.
+if (enableHammerDrops) {
+  const itemColumns = Array.from({ length: 10 }, (_, i) => 'Item' + (i + 1));
+  const probabilityColumns = Array.from({ length: 10 }, (_, i) => 'Prob' + (i + 1));
+  const drops = load('treasureclassex',
+    ['Treasure Class', 'Picks', 'NoDrop', ...itemColumns, ...probabilityColumns], true);
+  const targets = ['', 'N', 'H'].flatMap(difficulty =>
+    Array.from({ length: 5 }, (_, i) => 'Act ' + (i + 1) +
+      (difficulty ? ' (' + difficulty + ')' : '') + ' Good'));
+  const replacements = new Map();
+  const natural = value => /^\d+$/.test(String(value)) && Number.isSafeInteger(Number(value));
+  for (const name of targets) {
+    const source = unique(drops, 'Treasure Class', name);
+    if (!natural(source.Picks) || Number(source.Picks) < 1) {
+      fail('Hammer drops require positive Picks: ' + name);
+    }
+    const noDrop = source.NoDrop === '' ? '0' : source.NoDrop;
+    if (!natural(noDrop)) fail('Invalid NoDrop: ' + name);
+    let totalWeight = Number(noDrop) + hammerDropWeight;
+    const vacant = [];
+    for (let index = 0; index < itemColumns.length; index++) {
+      const candidate = source[itemColumns[index]];
+      const weight = source[probabilityColumns[index]];
+      if (!candidate) {
+        if (weight !== '' && weight !== '0') fail('Orphan drop weight: ' + name);
+        vacant.push(index);
+      } else {
+        if (candidate === hammerCode) fail('Hammer drop candidate already present: ' + name);
+        if (!natural(weight)) fail('Invalid candidate weight: ' + name);
+        totalWeight += Number(weight);
+      }
+    }
+    if (vacant.length === 0) fail('No free drop candidate slot: ' + name);
+    if (!Number.isSafeInteger(totalWeight) || totalWeight > 2147483647) {
+      fail('Drop weight total exceeds safety limit: ' + name);
+    }
+    const index = vacant[0];
+    replacements.set(source, {
+      ...source, [itemColumns[index]]: hammerCode,
+      [probabilityColumns[index]]: String(hammerDropWeight),
+    });
+  }
+  // Only commit the prepared table after every target has passed validation.
+  files[prefix + 'treasureclassex.txt'] = {
+    headers: drops.headers, rows: drops.rows.map(row => replacements.get(row) || row),
+  };
 }
 
 const statIDColumn = stats.headers.includes('*ID') ? '*ID' : 'ID';

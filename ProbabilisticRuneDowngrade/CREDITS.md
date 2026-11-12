@@ -34,3 +34,11 @@ Diablo II game art and the underlying Horadric Malus design belong to their resp
 AI assistance was used in code development, documentation and translation, and creation of the dismantling hammer icon. In-game test results are user-reported; AI-generated code or text is not a substitute for game validation.
 
 코드 개발, 문서 작성·번역, 망치 아이콘 제작에 AI 지원을 사용했습니다. 게임 검증 결과는 제작자가 보고한 기록이며 AI 결과물이 게임 검증을 대신하지 않습니다.
+
+## Weighted-drop concept reference / 가중치 드롭 아이디어 참고
+
+Burning Anvil Balanced by RinusDiablo: https://www.nexusmods.com/diablo2resurrected/mods/994
+
+The configurable weighted-drop idea was a reference for the optional hammer-drop feature. No source code, images or files from that mod are included. Its permission terms are not represented as granting code reuse.
+
+가중치 설정으로 드롭 후보를 추가하는 아이디어를 참고했습니다. 해당 모드의 코드·이미지·파일은 포함하지 않으며, 코드 재사용 허락을 받은 것으로 표시하지 않습니다.

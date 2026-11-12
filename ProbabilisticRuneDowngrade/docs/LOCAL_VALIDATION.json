@@ -1,18 +1,18 @@
 {
   "inputs": {
-    "ProbabilisticRuneDowngrade/mod.js": "65199da376307e712067873e8e6481d6ca82f4741a6720088bde1cbf679d876c",
-    "ProbabilisticRuneDowngrade/mod.json": "3d51af2246c25a42e4a044275c554f05541caba844f8d8c98f82e066dd661ce9",
+    "ProbabilisticRuneDowngrade/mod.js": "8e8c7b91dbdb8cb31fbd75f19f13d15b3e4d1715414a327f62a19d458ea1fac1",
+    "ProbabilisticRuneDowngrade/mod.json": "ca0c8e2afb092e44702faaa9468c7637915c9b0b8f8eb781cdc2277c8d58b4a7",
     "ProbabilisticRuneDowngrade/research/schema.json": "c7e5a39958a23432062851714ebf2857d9e888cd31fa462108c2512306974709",
-    "tools/verify.mjs": "497620c52be59c88a60d36f9baa123cb17998ebbfb710c93c9a4e146d14e8ba5",
+    "tools/verify.mjs": "4a74cb9c59e0fcb386543dfbbc8531ffe005aa6f43e5c824f19572eeb734cee2",
     "tools/package-editions.mjs": "ae63e6f436124851bee5b0552775222bd1b42904dc28eec2239da6d5b95082ca",
     "ProbabilisticRuneDowngrade/research/glowing-runes.json": "e46e123193a44cc29c1d3588574b090a1859b4fa54f328cb1f625b2034aba3de",
     "ProbabilisticRuneDowngrade/research/hammer-icon.json": "6dfc1fff0e2da88c68d96ac7e45955a02b09faead65b22d5a089615af6743aeb"
   },
-  "date": "2026-11-10",
-  "checks": 215,
+  "date": "2026-11-12",
+  "checks": 273,
   "checksByEdition": {
-    "tiered": 80,
-    "standard": 80
+    "tiered": 109,
+    "standard": 109
   },
   "status": "PASS",
   "engine": "Node vm; mocked D2RMM API",

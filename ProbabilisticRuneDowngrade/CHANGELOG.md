@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0-alpha.1 — 2026-11-12
+
+- Add optional hammer monster drops, OFF by default, and a shared weight setting (1–1000, default 1).
+- Add weighted candidates to 15 act/difficulty Good classes without replacing existing entries. Existing loot chances are affected when enabled; this is not an independent bonus drop.
+- Validate every target and available slot before writes; do not read/write the drop table when disabled.
+- Preserve crafting, vendor controls, probabilities, item codes and artwork.
+- Pass 273 automated checks. Actual installation, drops and mixed-mod behavior remain untested.
+
 ## 1.0.0 — 2026-11-10
 
 - Package Standard and Tiered for public distribution with matching 1.0.0 metadata and documentation.
