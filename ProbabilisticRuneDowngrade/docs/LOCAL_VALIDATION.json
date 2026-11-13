@@ -1,21 +1,21 @@
 {
   "inputs": {
-    "ProbabilisticRuneDowngrade/mod.js": "dadbcc7972f888fb93ddea66e1e084368843d90b3fb9cba3c8dff7d995efc9f0",
-    "ProbabilisticRuneDowngrade/mod.json": "f2aa7d500c25dcf380cd5cc7239c0e288df9b17af96425c4c9dbd0c5eef263a6",
+    "ProbabilisticRuneDowngrade/mod.js": "691b7edc4627a86cb6f7c4f844cf9bf8a4965db74f5c1a7c4e20d41dd27a5cbc",
+    "ProbabilisticRuneDowngrade/mod.json": "744492cdf2c5389aa739f46cc56ad0723c2b40acece1d2090a7f54f5bcf90013",
     "ProbabilisticRuneDowngrade/research/schema.json": "c7e5a39958a23432062851714ebf2857d9e888cd31fa462108c2512306974709",
-    "tools/verify.mjs": "a127a20f8123b171a4ae9467b0963d78f54ff58bbbcbacc5f9bc9d960e772330",
+    "tools/verify.mjs": "5fe6a2449ede2e45ed12f26f5a17c3effff830692059060580ef243d207a9ead",
     "tools/package-editions.mjs": "ae63e6f436124851bee5b0552775222bd1b42904dc28eec2239da6d5b95082ca",
     "tools/build.py": "c98115a5a44068fe48828ac92d8534d75836b6b27322929289685a8e1541e476",
     "ProbabilisticRuneDowngrade/LICENSES/olegbl-MIT.txt": "f2729820b05efcdf3e17d765d1fc7c2b9c57852b6c7798466a6ec285f40c84b4",
     "ProbabilisticRuneDowngrade/research/glowing-runes.json": "e46e123193a44cc29c1d3588574b090a1859b4fa54f328cb1f625b2034aba3de",
     "ProbabilisticRuneDowngrade/research/hammer-icon.json": "6dfc1fff0e2da88c68d96ac7e45955a02b09faead65b22d5a089615af6743aeb",
-    "ProbabilisticRuneDowngrade/research/stacked-hammer-icon.json": "7e3dc68d28704f4b123be4f383bf1f0e0930259499d2ef806caa5f9e8848bf5a"
+    "ProbabilisticRuneDowngrade/research/stacked-hammer-icon.json": "8c6e2ff757fe57a7e23d1bc6e7e31720b05855080e2c666d81cd0f952dba2308"
   },
-  "date": "2026-11-12",
-  "checks": 302,
+  "date": "2026-11-13",
+  "checks": 308,
   "checksByEdition": {
-    "tiered": 123,
-    "standard": 123
+    "tiered": 126,
+    "standard": 126
   },
   "status": "PASS",
   "engine": "Node vm; mocked D2RMM API",

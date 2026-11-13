@@ -74,7 +74,7 @@ function verify(overrides={},actual=false,change=()=>{}) {
  assert.ok(!metadata.config.some(c=>c.id==='istOnly'));
  assert.equal(metadata.name,'Probabilistic Rune Downgrade ('+(activeEdition==='tiered'?'Tiered':'Standard')+')');
  assert.equal(metadata.author,'빵길빵길');
- assert.equal(metadata.version,'1.1.0-alpha.3');
+ assert.equal(metadata.version,'1.1.0-alpha.4');
  assert.equal(rows.length,ranks*101);assert.equal(writes.length,41);
  assert.equal(JSON.stringify(hd.slice(0,-34)),result.originalHD);
  assert.equal(JSON.stringify(t.misc.rows.slice(0,-34)),result.originalMisc);
@@ -92,19 +92,19 @@ function verify(overrides={},actual=false,change=()=>{}) {
  assert.equal(hd.find(r=>r.prh).prh.asset,'prg/dismantling_hammer');
  const hammerModel=writes.find(([p])=>p==='hd\\items\\misc\\prg/dismantling_hammer.json');
  assert.deepEqual(copiesAsPlain(hammerModel[1]),result.models['hd\\items\\weapon\\hammer/test_malus.json']);
- assert.equal(strings.find(r=>r.Key==='PRGHammer').enUS,'Rune Dismantling Hammer');
- assert.equal(strings.find(r=>r.Key==='PRGHammer').koKR,'룬 분해 망치');
+ assert.equal(strings.find(r=>r.Key==='PRGHammer').enUS,'ÿc8Rune Dismantling Hammer');
+ assert.equal(strings.find(r=>r.Key==='PRGHammer').koKR,'ÿc8룬 분해 망치');
  const hammerHelp=strings.find(r=>r.Key==='PRGHammerHelp');
  assert.match(hammerHelp.enUS,/Magic Maul family/);
- assert.ok(hammerHelp.enUS.startsWith('+ Dol Rune'));
- assert.ok(hammerHelp.koKR.startsWith('+ 돌 룬'));
+ assert.ok(hammerHelp.enUS.startsWith('ÿc0+ Dol Rune'));
+ assert.ok(hammerHelp.koKR.startsWith('ÿc0+ 돌 룬'));
  assert.match(hammerHelp.koKR.split('\n')[1],/매직 마울 계열/);
  assert.ok(!hammerHelp.koKR.includes('각 1개'));
  assert.ok(!hammerHelp.enUS.includes('one each'));
  assert.match(hammerHelp.enUS,/Dol Rune \+ Perfect Skull \+ Jewel/);
  assert.match(hammerHelp.koKR,/돌 룬 \+ 최상급 해골 \+ 주얼/);
  for(const [key,value] of Object.entries(strings.find(r=>r.Key==='PRGHammer'))) {
-  if(key!=='Key'&&key!=='id') assert.ok(!value.includes('ÿc'), 'Hammer name must use the default color: '+key);
+  if(key!=='Key'&&key!=='id') assert.ok(value.startsWith('ÿc8'), 'Hammer name must use crafting orange: '+key);
  }
  const rollIndex=t.itemstatcost.rows.findIndex(r=>r.Stat==='prg_roll');
  assert.equal(rollIndex,t.itemstatcost.rows.length-1);
@@ -481,7 +481,7 @@ for(const edition of ['standard','tiered']) {
  for(const field of ['normcode','ubercode','ultracode'])if(t.misc.headers.includes(field))assert.equal(stack[field],'phs');
  assert.deepEqual(copiesAsPlain(r.hd.find(x=>x.phs).phs),{...copiesAsPlain(r.hd.find(x=>x.prh).prh),asset:'prg/dismantling_hammer_stack'});
  assert.deepEqual(copiesAsPlain(r.writes.find(([p])=>p==='hd\\items\\misc\\prg/dismantling_hammer_stack.json')[1]),r.models['hd\\items\\weapon\\hammer/test_malus.json']);
- assert.equal(r.strings.find(x=>x.Key===stack.namestr).enUS,'Rune Dismantling Hammers (Stacked)');checks++;
+ assert.equal(r.strings.find(x=>x.Key===stack.namestr).enUS,'ÿc8Rune Dismantling Hammers (Stacked)');checks++;
  const packing=t.cubemain.rows.filter(x=>x.description==='PRDG: pack hammer');assert.equal(packing.length,1);
  assert.equal(packing[0]['input 1'],'prh');assert.equal(packing[0].output,'phs,qty=1');assert.equal(packing[0].numinputs,'1');checks++;
  const splitting=t.cubemain.rows.filter(x=>x.description.startsWith('PRDG: unpack hammer '));assert.equal(splitting.length,256);
@@ -519,6 +519,24 @@ for(const edition of ['standard','tiered']) {
   t=>t.itemtypes.rows.push({Code:'prgs'}),
  ]) {
   const bad=run({},mutate);assert.ok(bad.error);assert.equal(bad.writes.length,0);assert.equal(bad.copies.length,0);checks++;
+ }
+ checksByEdition[edition]+=checks-before;
+}
+for(const edition of ['standard','tiered']) {
+ activate(edition);const before=checks;const r=run();assert.equal(r.error,undefined);
+ const stack=r.tables.misc.rows.find(x=>x.code==='phs');
+ assert.equal(stack.spelldesc,'2');assert.equal(stack.spelldesccalc,"stat('quantity'.accr)");assert.equal(stack.spelldesccolor,'0');
+ const help=r.strings.find(x=>x.Key===stack.spelldescstr);
+ for(const language of ['koKR','enUS']) {
+  assert.equal(help[language].split('\n').length,2);
+  assert.equal((help[language].match(/%d/g)||[]).length,1);
+  assert.ok(help[language].includes('/ 256'));
+  assert.ok(r.strings.find(x=>x.Key===stack.namestr)[language].startsWith('ÿc8'));
+ }
+ checks++;
+ for(const field of ['spelldesccalc','spelldesccolor']) {
+  const bad=run({},t=>t.misc.headers=t.misc.headers.filter(x=>x!==field));
+  assert.ok(bad.error);assert.equal(bad.writes.length,0);assert.equal(bad.copies.length,0);checks++;
  }
  checksByEdition[edition]+=checks-before;
 }

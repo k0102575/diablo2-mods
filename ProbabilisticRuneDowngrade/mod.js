@@ -1,6 +1,6 @@
 /*
  * 확률형 룬 분해 모드 — 악마술사의 군림 전용
- * Probabilistic Rune Downgrade 1.1.0-alpha.3 / 제작자: 빵길빵길
+ * Probabilistic Rune Downgrade 1.1.0-alpha.4 / 제작자: 빵길빵길
  * 오프라인 D2RMM 데이터 모드입니다. 엘드~조드 전체 등급을 생성합니다.
  *
  * 이 파일은 D2RMM의 '모드 설치' 버튼을 누를 때 실행됩니다.
@@ -181,7 +181,7 @@ function unique(t, key, value) {
 const misc = load('misc', [
   'code', 'namestr', 'type', 'type2', 'compactsave', 'invfile',
   'flippyfile', 'useable', 'stackable', 'spawnable',
-  'spelldesc', 'spelldescstr', 'gemsockets', 'cost', 'quest',
+  'spelldesc', 'spelldescstr', 'spelldesccalc', 'spelldesccolor', 'gemsockets', 'cost', 'quest',
   'GheedMin', 'GheedMax', 'GheedMagicMin', 'GheedMagicMax', 'GheedMagicLvl',
   'PermStoreItem', 'multibuy', 'NightmareUpgrade', 'HellUpgrade',
 ]);
@@ -458,11 +458,11 @@ pendingModels['hd\\items\\misc\\' + hammerAsset + '.json'] = hammerModel;
 const hammerHD = JSON.parse(JSON.stringify(sourceHammerHD));
 hammerHD.asset = hammerAsset;
 hd.push({ [hammerCode]: hammerHD });
-text('PRGHammer', 'Rune Dismantling Hammer', '룬 분해 망치');
+text('PRGHammer', 'ÿc8Rune Dismantling Hammer', 'ÿc8룬 분해 망치');
 // The game displays these description lines in reverse order.
 text('PRGHammerHelp',
-  '+ Dol Rune + Perfect Skull + Jewel\nCraft: Magic Maul family (excluding Great Maul family)\nTransmute with one rune (Eld-Zod). Consumed; returned on a miss.',
-  '+ 돌 룬 + 최상급 해골 + 주얼\n제작: 매직 마울 계열 (그레이트 마울 계열 제외)\n엘드~조드 룬 1개와 조합. 소모되며 꽝일 때 망치만 반환됩니다.');
+  'ÿc0+ Dol Rune + Perfect Skull + Jewel\nÿc0Craft: Magic Maul family (excluding Great Maul family)\nÿc0Transmute with one rune (Eld-Zod). Consumed; returned on a miss.',
+  'ÿc0+ 돌 룬 + 최상급 해골 + 주얼\nÿc0제작: 매직 마울 계열 (그레이트 마울 계열 제외)\nÿc0엘드~조드 룬 1개와 조합. 소모되며 꽝일 때 망치만 반환됩니다.');
 add(types, {
   ItemType: 'PRG Dismantling Material', Code: 'prgh', Equiv1: 'misc',
   Normal: '1', Body: '0', Magic: '0', Rare: '0', TreasureClass: '0',
@@ -495,10 +495,10 @@ if (misc.headers.includes('AdvancedStashStackable')) hammer.AdvancedStashStackab
 // Keep prh as the only usable material; phs is a storage-only variant.
 const quantityStat = unique(stats, 'Stat', 'quantity');
 const quantityStatIndex = stats.rows.indexOf(quantityStat);
-text('PRGHammerStack', 'Rune Dismantling Hammers (Stacked)', '룬 분해 망치 (묶음)');
+text('PRGHammerStack', 'ÿc8Rune Dismantling Hammers (Stacked)', 'ÿc8룬 분해 망치 (묶음)');
 text('PRGHammerStackHelp',
-  'Combine stacks by dragging them together. Maximum 256.\nTransmute a single hammer alone to pack it.\nTransmute this stack alone to withdraw one usable hammer.',
-  '묶음을 서로 겹쳐 합칩니다. 최대 256개.\n단품 망치만 단독 조합하면 묶음으로 바뀝니다.\n이 묶음만 단독 조합하면 사용 가능한 망치 1개를 꺼냅니다.');
+  'ÿc0Transmute alone: withdraw one hammer.\nÿc0Quantity: %d / 256',
+  'ÿc0단독 조합: 망치 1개 꺼내기\nÿc0수량: %d / 256');
 add(types, {
   ItemType: 'PRG Hammer Storage', Code: 'prgs', Equiv1: 'misc',
   Normal: '1', Body: '0', Magic: '0', Rare: '0', TreasureClass: '0',
@@ -508,7 +508,8 @@ const stackedHammer = add(misc, {
   ...hammer, name: 'PRGHammerStack', code: stackedHammerCode,
   namestr: 'PRGHammerStack', type: 'prgs', spawnable: '0',
   stackable: '1', minstack: '1', maxstack: String(hammerStackLimit), spawnstack: '1',
-  spelldescstr: 'PRGHammerStackHelp',
+  spelldesc: '2', spelldescstr: 'PRGHammerStackHelp',
+  spelldesccalc: "stat('quantity'.accr)", spelldesccolor: '0',
   GheedMin: '0', GheedMax: '0', GheedMagicMin: '0', GheedMagicMax: '0',
   PermStoreItem: '0', multibuy: '0',
 });

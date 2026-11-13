@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0-alpha.4 — 2026-11-13
+
+- Restore the first double-hammer icon for readability at inventory size.
+- Color single and stacked hammer names crafting orange; keep help text white.
+- Show calculated quantity in a compact two-line stack tooltip.
+- Record passed game 3.4 / D2RMM 1.9.2 mixed-mod tests for vendor/crafting/downgrade and small-stack conversion. Limit/overflow and these revised displays remain pending.
+- Pass 308 automated checks and sprite/ZIP validation.
+
 ## 1.1.0-alpha.3 — 2026-11-12
 
 - Give storage-only hammer stacks a separate AI-assisted overlapping-hammer HD icon in both sprite resolutions.
