@@ -1,12 +1,15 @@
 // Larzuk Socket Recipe — independently implemented cube recipes.
 // Only cubemain.txt is changed. Existing recipes and equipment tables are preserved.
-const path = 'global\\excel\\cubemain.txt';
-const table = D2RMM.readTsv(path);
+const path = 'global\excel\cubemain.txt';
+const table = D2RMM.readTsv(path, { removeCarriageReturns: true });
 const required = ['description', 'enabled', 'version', 'numinputs', 'input 1',
-  'input 2', 'input 3', 'output', 'mod 1', 'mod 1 min', 'mod 1 max', '*eol'];
-if (!table || !Array.isArray(table.headers) || !Array.isArray(table.rows) ||
-    required.some((column) => !table.headers.includes(column))) {
-  throw new Error('Larzuk Socket Recipe: unsupported cubemain.txt schema.');
+  'input 2', 'input 3', 'output', 'mod 1', 'mod 1 min', 'mod 1 max'];
+if (!table || !Array.isArray(table.headers) || !Array.isArray(table.rows)) {
+  throw new Error('Larzuk Socket Recipe: cubemain.txt could not be read as a TSV table.');
+}
+const missing = required.filter((column) => !table.headers.includes(column));
+if (missing.length) {
+  throw new Error('Larzuk Socket Recipe: missing cubemain.txt columns: ' + missing.join(', '));
 }
 const prefix = 'LSR socket ';
 if (table.rows.some((row) => String(row.description || '').startsWith(prefix))) {
@@ -30,8 +33,9 @@ for (const type of ['weap', 'armo']) {
       'input 1': `${type},${quality},nos`,
       'input 2': 'r23,qty=1', 'input 3': 'gem4,qty=1',
       output: 'useitem,sock=6', 'mod 1': 'sock',
-      'mod 1 min': String(min), 'mod 1 max': String(max), '*eol': '0',
+      'mod 1 min': String(min), 'mod 1 max': String(max),
     });
+    if (table.headers.includes('*eol')) row['*eol'] = '0';
     added.push(row);
   }
 }

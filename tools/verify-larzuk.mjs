@@ -11,7 +11,7 @@ const existing = [{description:'Unrelated existing recipe', enabled:'1', output:
 function run(table) {
   const calls = [];
   vm.runInNewContext(code, {D2RMM: {
-    readTsv(path) { assert.equal(path, 'global\\excel\\cubemain.txt'); return structuredClone(table); },
+    readTsv(path, options) { assert.equal(options.removeCarriageReturns, true); assert.equal(path, 'global\excel\cubemain.txt'); return structuredClone(table); },
     writeTsv(path, result) { calls.push({path, table: JSON.parse(JSON.stringify(result))}); },
   }});
   return calls;
@@ -22,7 +22,7 @@ const writes = run({headers, rows:existing});
 const out = writes[0].table;
 const added = out.rows.slice(existing.length);
 test('only cube file written once; existing headers/rows preserved',()=>{
-  assert.equal(writes.length,1); assert.equal(writes[0].path,'global\\excel\\cubemain.txt');
+  assert.equal(writes.length,1); assert.equal(writes[0].path,'global\excel\cubemain.txt');
   assert.deepEqual(out.headers,headers); assert.deepEqual(out.rows.slice(0,existing.length),existing);
 });
 test('16 distinct weapon/armor and quality combinations',()=>{
@@ -46,13 +46,18 @@ test('quality-specific ranges',()=>{
   }
 });
 test('missing required columns fail without writing',()=>{
-  for(const col of ['output','input 3','mod 1','*eol'])
-    assert.throws(()=>run({headers:headers.filter(x=>x!==col),rows:existing}), /schema/);
+  for(const col of ['output','input 3','mod 1'])
+    assert.throws(()=>run({headers:headers.filter(x=>x!==col),rows:existing}), /columns/);
 });
 test('malformed table rejected',()=>{
-  for(const table of [null,{}, {headers,rows:null}]) assert.throws(()=>run(table), /schema/);
+  for(const table of [null,{}, {headers,rows:null}]) assert.throws(()=>run(table), /TSV table/);
 });
 test('duplicate install rejected',()=>assert.throws(()=>run(out),/already present/));
+test('optional end marker absent is supported',()=>{
+  const result=run({headers:headers.filter(x=>x!=='*eol'),rows:existing})[0].table;
+  assert.equal(result.rows.length,17);
+  for(const r of result.rows.slice(1)) assert(!Object.hasOwn(r,'*eol'));
+});
 test('metadata valid and no bundled assets',()=>{
   const m=JSON.parse(read('LarzukSocketRecipe/mod.json'));
   assert.equal(m.version,'0.1.0-alpha.1'); assert.equal(m.name,'Larzuk Socket Recipe');
