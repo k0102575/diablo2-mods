@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "checks": 8,
+  "scope": "Mocked D2RMM table operations only; no game engine execution.",
+  "inputs": {
+    "LarzukSocketRecipe/mod.js": "ffdbaaacd12dc4a4897c85a9dc43e94e379311be2147cab920c8e855cbe96316",
+    "LarzukSocketRecipe/mod.json": "a3bdb2785361e9522e999b95e6153b7ee87c9be1b9dad04709c2de5bf0d6fcdf",
+    "tools/verify-larzuk.mjs": "1083ca8f38c2abda11fd3a7cbc1435c5b7bef419630fb868ee558b4fef924778",
+    "tools/build-larzuk.py": "deac3655eb1f65e2d8d3e220100c40ff22383c2188db9922b1495024b0f5b975"
+  }
+}
