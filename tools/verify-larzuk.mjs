@@ -70,8 +70,8 @@ test('optional end marker absent is supported',()=>{
 });
 test('metadata valid and no bundled assets',()=>{
   const m=JSON.parse(read('LarzukSocketRecipe/mod.json'));
-  assert.equal(m.version,'0.1.0-alpha.1'); assert.equal(m.name,'Larzuk Socket Recipe');
-  assert.equal(m.author,'k0102575'); assert.deepEqual(m.config,[]);
+  assert.equal(m.version,'1.0.0'); assert.equal(m.name,'Larzuk Socket Recipe');
+  assert.equal(m.author,'빵길빵길'); assert.equal(Object.hasOwn(m,'config'),false);
 });
 const files=['LarzukSocketRecipe/mod.js','LarzukSocketRecipe/mod.json','tools/verify-larzuk.mjs','tools/build-larzuk.py'];
 const inputs=Object.fromEntries(files.map(p=>[p,createHash('sha256').update(read(p)).digest('hex')]));
