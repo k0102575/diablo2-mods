@@ -11,7 +11,7 @@ const existing = [{description:'Unrelated existing recipe', enabled:'1', output:
 function run(table) {
   const calls = [];
   vm.runInNewContext(code, {D2RMM: {
-    readTsv(path, options) { assert.equal(options.removeCarriageReturns, true); assert.equal(path, 'global\excel\cubemain.txt'); return structuredClone(table); },
+    readTsv(path, options) { assert.equal(options.removeCarriageReturns, true); assert.equal(path, 'global\\\\excel\\\\cubemain.txt'); return structuredClone(table); },
     writeTsv(path, result) { calls.push({path, table: JSON.parse(JSON.stringify(result))}); },
   }});
   return calls;
@@ -22,7 +22,7 @@ const writes = run({headers, rows:existing});
 const out = writes[0].table;
 const added = out.rows.slice(existing.length);
 test('only cube file written once; existing headers/rows preserved',()=>{
-  assert.equal(writes.length,1); assert.equal(writes[0].path,'global\excel\cubemain.txt');
+  assert.equal(writes.length,1); assert.equal(writes[0].path,'global\\\\excel\\\\cubemain.txt');
   assert.deepEqual(out.headers,headers); assert.deepEqual(out.rows.slice(0,existing.length),existing);
 });
 test('16 distinct weapon/armor and quality combinations',()=>{
@@ -53,6 +53,16 @@ test('malformed table rejected',()=>{
   for(const table of [null,{}, {headers,rows:null}]) assert.throws(()=>run(table), /TSV table/);
 });
 test('duplicate install rejected',()=>assert.throws(()=>run(out),/already present/));
+test('D2RMM host interpolation retains CASC path separators',()=>{
+  // D2RMM evaluates a generated script; check the additional interpolation layer.
+  const generated = vm.runInNewContext('`' + code.replace(/`/g, '\\`').replace(/\$\{/g, '\\${') + '`');
+  const paths=[];
+  vm.runInNewContext(generated,{D2RMM:{
+    readTsv(path){paths.push(path);return {headers,rows:[]};},
+    writeTsv(path){paths.push(path);}
+  }});
+  assert.deepEqual(paths, [String.raw`global\excel\cubemain.txt`,String.raw`global\excel\cubemain.txt`]);
+});
 test('optional end marker absent is supported',()=>{
   const result=run({headers:headers.filter(x=>x!=='*eol'),rows:existing})[0].table;
   assert.equal(result.rows.length,17);
