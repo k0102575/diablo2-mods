@@ -1,6 +1,7 @@
 // Larzuk Socket Recipe — independently implemented cube recipes.
 // Only cubemain.txt is changed. Existing recipes and equipment tables are preserved.
-const path = 'global\\\\excel\\\\cubemain.txt';
+// Construct one separator at runtime; duplicate separators split D2RMM's file cache.
+const path = ['global', 'excel', 'cubemain.txt'].join(String.fromCharCode(92));
 const table = D2RMM.readTsv(path, { removeCarriageReturns: true });
 const required = ['description', 'enabled', 'version', 'numinputs', 'input 1',
   'input 2', 'input 3', 'output', 'mod 1', 'mod 1 min', 'mod 1 max'];
