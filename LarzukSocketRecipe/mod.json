@@ -1,6 +1,6 @@
 {
   "name": "Larzuk Socket Recipe",
-  "description": "말 룬 1개 + 최상급 보석(해골 포함) 1개 + 소켓 없는 장비 → 라주크 규칙의 소켓. / Mal Rune + Perfect Gem (including Skull) + unsocketed equipment: Larzuk-style sockets. Offline only.",
+  "description": "소켓 없는 장비 + 최상급 보석(해골 포함) + 룬: 움=저품질·일반·고급 최대 소켓, 풀=고급만 랜덤, 말=매직·레어·세트·유니크·크래프트. / Unsocketed equipment + Perfect Gem: Um=max sockets; Pul=Superior-only random; Mal=Magic/Rare/Set/Unique/Crafted. Offline only.",
   "author": "빵길빵길",
-  "version": "1.0.1"
+  "version": "1.1.0"
 }

@@ -26,25 +26,55 @@ test('only cube file written once; existing headers/rows preserved',()=>{
   assert.equal(writes.length,1); assert.equal(writes[0].path,expectedPath);
   assert.deepEqual(out.headers,headers); assert.deepEqual(out.rows.slice(0,existing.length),existing);
 });
-test('16 distinct weapon/armor and quality combinations',()=>{
-  assert.equal(added.length,16); assert.equal(new Set(added.map(r=>r['input 1'])).size,16);
+test('18 unique combinations of equipment, quality and materials',()=>{
+  assert.equal(added.length,18);
+  const key=r=>['input 1','input 2','input 3'].map(k=>r[k]).join('|');
+  assert.equal(new Set(added.map(key)).size,18);
+  assert.equal(new Set(added.map(r=>r.description)).size,18);
   for(const type of ['weap','armo']) for(const q of ['low','nor','hiq','mag','rar','set','uni','crf'])
     assert(added.some(r=>r['input 1']===`${type},${q},nos`));
 });
 test('exact materials, socketability output guard, original item preservation',()=>{
   for(const row of added) {
-    assert.equal(row['input 2'],'r23,qty=1'); assert.equal(row['input 3'],'gem4,qty=1');
+    assert.equal(row['input 3'],'gem4,qty=1');
     assert.equal(row.numinputs,'3'); assert.equal(row.output,'useitem,sock=6');
     assert.equal(row.enabled,'1'); assert.equal(row['mod 1'],'sock');
     for(const key of ['lvl','plvl','ilvl','ladder','min diff','op']) assert.equal(row[key],'');
   }
 });
-test('quality-specific ranges',()=>{
-  for(const row of added) {
-    const q=row['input 1'].split(',')[1];
-    assert.equal(row['mod 1 min'], ['low','nor','hiq'].includes(q)?'6':'1');
-    assert.equal(row['mod 1 max'], ['low','nor','hiq'].includes(q)?'6':q==='mag'?'2':'1');
+function routes(type, quality, rune) {
+  return added.filter(r=>r['input 1']===`${type},${quality},nos` && r['input 2']===`${rune},qty=1`);
+}
+function range(row,min,max) {
+  assert.equal(row['mod 1 min'],String(min));assert.equal(row['mod 1 max'],String(max));
+}
+test('Um gives maximum sockets only to low, normal and superior',()=>{
+  for(const type of ['weap','armo']) for(const q of ['low','nor','hiq']) {
+    const matches=routes(type,q,'r22'); assert.equal(matches.length,1);range(matches[0],6,6);
   }
+  assert.equal(added.filter(r=>r['input 2']==='r22,qty=1').length,6);
+});
+test('Pul superior-only random uses 1..6 before the engine cap',()=>{
+  for(const type of ['weap','armo']) {
+    const matches=routes(type,'hiq','r21');assert.equal(matches.length,1);range(matches[0],1,6);
+    assert.equal(matches[0].output,'useitem,sock=6');
+  }
+  assert.equal(added.filter(r=>r['input 2']==='r21,qty=1').length,2);
+});
+test('Mal preserves magic 1..2 and rare/set/unique/crafted one socket',()=>{
+  for(const type of ['weap','armo']) for(const q of ['mag','rar','set','uni','crf']) {
+    const matches=routes(type,q,'r23');assert.equal(matches.length,1);range(matches[0],1,q==='mag'?2:1);
+  }
+  assert.equal(added.filter(r=>r['input 2']==='r23,qty=1').length,10);
+});
+test('no unintended rune/quality routes or legacy Mal maximum recipes',()=>{
+  for(const type of ['weap','armo']) for(const q of ['low','nor','hiq','mag','rar','set','uni','crf']) {
+    for(const rune of ['r21','r22','r23','r20','r24']) {
+      const allowed=rune==='r21'?q==='hiq':rune==='r22'?['low','nor','hiq'].includes(q):rune==='r23'?['mag','rar','set','uni','crf'].includes(q):false;
+      assert.equal(routes(type,q,rune).length,allowed?1:0,`${type}/${q}/${rune}`);
+    }
+  }
+  for(const r of added) assert.equal(r['input 1'].split(',').length,3);
 });
 test('missing required columns fail without writing',()=>{
   for(const col of ['output','input 3','mod 1'])
@@ -70,10 +100,15 @@ for (const order of ['stacking-first','larzuk-first']) {
     const key = path=>path.split(String.fromCharCode(92)).join('/').toLowerCase();
     const cache=new Map();
     const conversions=[
+      {description:'r21 -> s21',numinputs:1,'input 1':'r21',output:'s21'},
+      {description:'s21 -> r21',numinputs:1,'input 1':'s21',output:'r21',op:18,param:70,value:1},
+      {description:'r22 -> s22',numinputs:1,'input 1':'r22',output:'s22'},
+      {description:'s22 -> r22',numinputs:1,'input 1':'s22',output:'r22',op:18,param:70,value:1},
       {description:'r23 -> s23',numinputs:1,'input 1':'r23',output:'s23'},
       {description:'s23 -> r23',numinputs:1,'input 1':'s23',output:'r23',op:18,param:70,value:1},
       {description:'gpv -> zpv',numinputs:1,'input 1':'gpv',output:'zpv'},
       {description:'zpv -> gpv',numinputs:1,'input 1':'zpv',output:'gpv',op:18,param:70,value:1},
+      {description:'Stack of 2 -> Stack of 1 and Stack of 1',numinputs:1,'input 1':'misc',output:'usetype,qty=1','output b':'usetype,qty=1',op:18,param:70,value:2},
     ];
     const api={
       readTsv(path){
@@ -91,19 +126,19 @@ for (const order of ['stacking-first','larzuk-first']) {
     if(order==='larzuk-first') stacking();
     assert.deepEqual([...cache.keys()],['global/excel/cubemain.txt']);
     const rows=cache.get('global/excel/cubemain.txt').rows;
-    assert.equal(rows.length,21);
+    assert.equal(rows.length,existing.length+conversions.length+18);
     for(const c of conversions) assert.deepEqual(rows.find(r=>r.description===c.description),c);
-    assert.equal(rows.filter(r=>r.description.startsWith('LSR socket ')).length,16);
+    assert.equal(rows.filter(r=>r.description.startsWith('LSR socket ')).length,18);
   });
 }
 test('optional end marker absent is supported',()=>{
   const result=run({headers:headers.filter(x=>x!=='*eol'),rows:existing})[0].table;
-  assert.equal(result.rows.length,17);
+  assert.equal(result.rows.length,19);
   for(const r of result.rows.slice(1)) assert(!Object.hasOwn(r,'*eol'));
 });
 test('metadata valid and no bundled assets',()=>{
   const m=JSON.parse(read('LarzukSocketRecipe/mod.json'));
-  assert.equal(m.version,'1.0.1'); assert.equal(m.name,'Larzuk Socket Recipe');
+  assert.equal(m.version,'1.1.0'); assert.equal(m.name,'Larzuk Socket Recipe');
   assert.equal(m.author,'빵길빵길'); assert.equal(Object.hasOwn(m,'config'),false);
 });
 const files=['LarzukSocketRecipe/mod.js','LarzukSocketRecipe/mod.json','tools/verify-larzuk.mjs','tools/build-larzuk.py'];
