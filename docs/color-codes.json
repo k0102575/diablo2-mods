@@ -1,0 +1,315 @@
+{
+  "checked_on": "2026-11-16",
+  "palette_source": "https://github.com/olegbl/d2rmm/blob/826ace147d8ff2303cd7a4b323de25a477d9409c/.claude/d2r-modding-api.md#colors-current",
+  "usage_source": "https://github.com/CelestialRayOne/d2rloader_plugins/blob/acf6e5ad5e248468c86b66876e1cea79ce33d62e/plugins/loot-filter/plugin.cpp",
+  "groups": [
+    {
+      "name": "흰색·회색·검정",
+      "colors": [
+        {
+          "code": "ÿc0",
+          "english": "White",
+          "korean": "흰색",
+          "hex": "#ffffff",
+          "usage": "일반·저품질·고급 아이템 이름 — 툴팁 [2]"
+        },
+        {
+          "code": "ÿcE",
+          "english": "White",
+          "korean": "흰색",
+          "hex": "#ffffff",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcF",
+          "english": "White",
+          "korean": "흰색",
+          "hex": "#ffffff",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcG",
+          "english": "White",
+          "korean": "흰색",
+          "hex": "#ffffff",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcH",
+          "english": "White",
+          "korean": "흰색",
+          "hex": "#ffffff",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿc=",
+          "english": "White",
+          "korean": "흰색",
+          "hex": "#a2bd9f",
+          "usage": "일반·저품질·고급 아이템 이름 — 바닥 라벨 [2]"
+        },
+        {
+          "code": "ÿcK",
+          "english": "Gray",
+          "korean": "회색",
+          "hex": "#b7a293",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿc5",
+          "english": "Gray",
+          "korean": "회색",
+          "hex": "#5e5e5e",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿc6",
+          "english": "Black",
+          "korean": "검정",
+          "hex": "#000000",
+          "usage": "확인되지 않음"
+        }
+      ]
+    },
+    {
+      "name": "빨강",
+      "colors": [
+        {
+          "code": "ÿcT",
+          "english": "DarkRed",
+          "korean": "어두운 빨강",
+          "hex": "#8b3133",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcV",
+          "english": "BrightRed",
+          "korean": "선명한 빨강",
+          "hex": "#9e1e13",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿc1",
+          "english": "LightRed",
+          "korean": "밝은 빨강",
+          "hex": "#ac4041",
+          "usage": "확인되지 않음"
+        }
+      ]
+    },
+    {
+      "name": "주황",
+      "colors": [
+        {
+          "code": "ÿc@",
+          "english": "Orange",
+          "korean": "주황",
+          "hex": "#a07527",
+          "usage": "제작(크래프트) 아이템 이름 — 바닥 라벨 [2]"
+        },
+        {
+          "code": "ÿcL",
+          "english": "Orange",
+          "korean": "주황",
+          "hex": "#a57826",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcJ",
+          "english": "Orange",
+          "korean": "주황",
+          "hex": "#a57928",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿc8",
+          "english": "Orange",
+          "korean": "주황",
+          "hex": "#a77b2a",
+          "usage": "제작(크래프트) 아이템 이름 — 툴팁 [2]"
+        }
+      ]
+    },
+    {
+      "name": "노랑·금색",
+      "colors": [
+        {
+          "code": "ÿc>",
+          "english": "Gold",
+          "korean": "금색",
+          "hex": "#9b8d64",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcD",
+          "english": "Gold",
+          "korean": "금색",
+          "hex": "#999166",
+          "usage": "유니크 아이템 이름 — 바닥 라벨 [2]"
+        },
+        {
+          "code": "ÿc4",
+          "english": "Gold",
+          "korean": "금색",
+          "hex": "#99926d",
+          "usage": "유니크 아이템 이름 — 툴팁 [2]"
+        },
+        {
+          "code": "ÿc7",
+          "english": "Gold",
+          "korean": "금색",
+          "hex": "#9e9b6f",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcN",
+          "english": "Gold",
+          "korean": "금색",
+          "hex": "#ada47a",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿc?",
+          "english": "Yellow",
+          "korean": "노랑",
+          "hex": "#abaf5d",
+          "usage": "레어 아이템 이름 — 바닥 라벨 [2]"
+        },
+        {
+          "code": "ÿc9",
+          "english": "Yellow",
+          "korean": "노랑",
+          "hex": "#afb05d",
+          "usage": "레어 아이템 이름 — 툴팁 [2]"
+        },
+        {
+          "code": "ÿcS",
+          "english": "Yellow",
+          "korean": "노랑",
+          "hex": "#adb169",
+          "usage": "확인되지 않음"
+        }
+      ]
+    },
+    {
+      "name": "초록",
+      "colors": [
+        {
+          "code": "ÿcA",
+          "english": "DarkGreen",
+          "korean": "어두운 초록",
+          "hex": "#216218",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿc:",
+          "english": "DarkGreen",
+          "korean": "어두운 초록",
+          "hex": "#216319",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿc<",
+          "english": "MediumGreen",
+          "korean": "중간 초록",
+          "hex": "#358c25",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcC",
+          "english": "BrightGreen",
+          "korean": "선명한 초록",
+          "hex": "#48a431",
+          "usage": "세트 아이템 이름 — 바닥 라벨 [2]"
+        },
+        {
+          "code": "ÿcR",
+          "english": "BrightGreen",
+          "korean": "선명한 초록",
+          "hex": "#48a832",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿc2",
+          "english": "BrightGreen",
+          "korean": "선명한 초록",
+          "hex": "#4bb034",
+          "usage": "세트 아이템 이름 — 툴팁 [2]"
+        }
+      ]
+    },
+    {
+      "name": "청록·파랑",
+      "colors": [
+        {
+          "code": "ÿcI",
+          "english": "LightTeal",
+          "korean": "밝은 청록",
+          "hex": "#71a69a",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcO",
+          "english": "BrightCyan",
+          "korean": "선명한 청록",
+          "hex": "#2f7795",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcU",
+          "english": "LightCyan",
+          "korean": "밝은 하늘색",
+          "hex": "#6d8fad",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcQ",
+          "english": "LightBlue",
+          "korean": "밝은 파랑",
+          "hex": "#8a86b8",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿc3",
+          "english": "Blue",
+          "korean": "파랑",
+          "hex": "#5653a8",
+          "usage": "매직 아이템 이름 — 툴팁 [2]"
+        },
+        {
+          "code": "ÿcB",
+          "english": "Blue",
+          "korean": "파랑",
+          "hex": "#4e509d",
+          "usage": "매직 아이템 이름 — 바닥 라벨 [2]"
+        }
+      ]
+    },
+    {
+      "name": "보라·분홍",
+      "colors": [
+        {
+          "code": "ÿc;",
+          "english": "Purple",
+          "korean": "보라",
+          "hex": "#74199c",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcM",
+          "english": "Purple",
+          "korean": "보라",
+          "hex": "#69379c",
+          "usage": "확인되지 않음"
+        },
+        {
+          "code": "ÿcP",
+          "english": "Pink",
+          "korean": "분홍",
+          "hex": "#ab64a7",
+          "usage": "확인되지 않음"
+        }
+      ]
+    }
+  ]
+}
