@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0-alpha.6 — 2026-11-21
+
+- Restore the stack tooltip mode after alpha.5 hid the count. The custom tooltip contains only the withdrawal hint.
+- In-game verification of the restored display is pending.
+
 ## 1.1.0-alpha.5 — 2026-11-21
 
 - Use the built-in stack count and show only the withdrawal hint as custom tooltip text. This removes the second count that showed zero in alpha.4.

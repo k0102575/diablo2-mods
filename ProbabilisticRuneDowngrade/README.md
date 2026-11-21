@@ -1,10 +1,10 @@
-# Probabilistic Rune Downgrade — 1.1.0-alpha.5
+# Probabilistic Rune Downgrade — 1.1.0-alpha.6
 
 ## 최신 실제 검사와 표시 수정
 
 게임 **3.4 / D2RMM 1.9.2 / 병용** 환경에서 드롭 OFF의 구매·제작·기존 분해, 묶음1/2/5 합치기·인출 및 수량 보존, 룬+묶음 거부와 단품 분해·꽝 단품1 반환이 통과했다고 보고됐습니다. 256개 및 초과 합치기는 미검사입니다.
 
-alpha.5는 게임 기본 수량 표시를 사용하고 **단독 조합: 망치 1개 꺼내기** 안내만 추가합니다. alpha.4에서 커스텀 수량 0과 게임 기본 수량이 함께 표시되었습니다. 수정한 툴팁은 실제 게임에서 재확인이 필요합니다.
+alpha.6은 룬·보석 겹치기와 같은 툴팁 방식으로 묶음 수량을 표시하도록 설정하고, **단독 조합: 망치 1개 꺼내기** 안내를 표시합니다. alpha.5에서는 수량이 사라졌으며, alpha.6의 실제 표시 결과는 재확인이 필요합니다.
 
 
 ## 망치 중첩 보관
@@ -107,8 +107,8 @@ olegbl의 룬·보석 중첩 코드 패턴을 MIT 조건으로 응용했으며 �
 
 간편 설치 ZIP은 다음 중 **하나**를 선택합니다.
 
-- `ProbabilisticRuneDowngrade-1.1.0-alpha.5-tiered-mods-only.zip`
-- `ProbabilisticRuneDowngrade-1.1.0-alpha.5-standard-mods-only.zip`
+- `ProbabilisticRuneDowngrade-1.1.0-alpha.6-tiered-mods-only.zip`
+- `ProbabilisticRuneDowngrade-1.1.0-alpha.6-standard-mods-only.zip`
 
 모드·아이콘·라이선스·크레딧을 포함하며 D2RMM 폴더에 풀면 `mods/ProbabilisticRuneDowngrade/`로 배치됩니다. 두 판은 같은 폴더를 사용하므로 동시에 설치하지 않습니다. `-mods-only`가 없는 ZIP은 문서 포함 대안이며 실행 내용은 해당 판종과 같습니다.
 

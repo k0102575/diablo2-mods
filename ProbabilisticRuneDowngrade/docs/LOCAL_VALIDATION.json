@@ -1,9 +1,9 @@
 {
   "inputs": {
-    "ProbabilisticRuneDowngrade/mod.js": "fa26b51439bee7458d509b23f1f7761f658e56bf79b3fc96969fdc61432a5e2b",
-    "ProbabilisticRuneDowngrade/mod.json": "3bd613e098a4780d16d52ee17d642633ac62b25fffe3db065507c3960ff68ef6",
+    "ProbabilisticRuneDowngrade/mod.js": "cd83e386241bf575734202d480654a5e9a011d029873f85415d695914cd4a309",
+    "ProbabilisticRuneDowngrade/mod.json": "8a759ecc6b83c98b29a276e8593d169c508cafa0b315b4ab7ddeb27535d16ac8",
     "ProbabilisticRuneDowngrade/research/schema.json": "c7e5a39958a23432062851714ebf2857d9e888cd31fa462108c2512306974709",
-    "tools/verify.mjs": "5363969fd134837eea0a57aac2dc7de2ad0efba0b222f9779e5f30bf230eae5f",
+    "tools/verify.mjs": "d98bda39179bd82f53e7f06e89c2ae0941a2e69b6e376f58943df3e7324cd84e",
     "tools/package-editions.mjs": "ae63e6f436124851bee5b0552775222bd1b42904dc28eec2239da6d5b95082ca",
     "tools/build.py": "c98115a5a44068fe48828ac92d8534d75836b6b27322929289685a8e1541e476",
     "ProbabilisticRuneDowngrade/LICENSES/olegbl-MIT.txt": "f2729820b05efcdf3e17d765d1fc7c2b9c57852b6c7798466a6ec285f40c84b4",

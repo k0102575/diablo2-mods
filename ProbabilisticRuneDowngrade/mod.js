@@ -1,6 +1,6 @@
 /*
  * 확률형 룬 분해 모드 — 악마술사의 군림 전용
- * Probabilistic Rune Downgrade 1.1.0-alpha.5 / 제작자: 빵길빵길
+ * Probabilistic Rune Downgrade 1.1.0-alpha.6 / 제작자: 빵길빵길
  * 오프라인 D2RMM 데이터 모드입니다. 엘드~조드 전체 등급을 생성합니다.
  *
  * 이 파일은 D2RMM의 '모드 설치' 버튼을 누를 때 실행됩니다.
@@ -508,14 +508,15 @@ const stackedHammer = add(misc, {
   ...hammer, name: 'PRGHammerStack', code: stackedHammerCode,
   namestr: 'PRGHammerStack', type: 'prgs', spawnable: '0',
   stackable: '1', minstack: '1', maxstack: String(hammerStackLimit), spawnstack: '1',
-  // D2R already renders the stack count. Add only the withdrawal hint.
-  spelldesc: '1', spelldescstr: 'PRGHammerStackHelp',
+  // Match the stack tooltip mode used by Stackable Runes/Gems. The hint has no quantity placeholder.
+  spelldesc: '2', spelldescstr: 'PRGHammerStackHelp',
   GheedMin: '0', GheedMax: '0', GheedMagicMin: '0', GheedMagicMax: '0',
   PermStoreItem: '0', multibuy: '0',
 });
 for (const field of ['normcode', 'ubercode', 'ultracode']) {
   if (misc.headers.includes(field)) stackedHammer[field] = stackedHammerCode;
 }
+if (misc.headers.includes('spelldesccolor')) stackedHammer.spelldesccolor = '0';
 if (misc.headers.includes('AdvancedStashStackable')) stackedHammer.AdvancedStashStackable = '0';
 const stackedHammerAsset = 'prg/dismantling_hammer_stack';
 pendingModels['hd\\items\\misc\\' + stackedHammerAsset + '.json'] = hammerModel;
