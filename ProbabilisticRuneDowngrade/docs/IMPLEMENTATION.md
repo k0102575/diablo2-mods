@@ -1,5 +1,21 @@
 # 구현 및 조사 기록
 
+## 1.1.0-alpha.3 중첩형 아이콘
+
+보관형 phs의 HD asset을 prg/dismantling_hammer_stack으로 분리했다. 정상/lowend RGBA v31 sprite 두 개와 research/stacked-hammer-icon.json의 해시를 빌드에 포함한다. 단품 asset과 sprite를 덮어쓰지 않으며 새 misc 모델 별칭은 현재 게임에서 읽은 망치 바닥 모델을 그대로 쓴다. 클래식 invfile은 단품의 기존 참조를 유지한다.
+
+## 1.1.0-alpha.2 중첩 보관
+
+원래 단품 prh/prgh를 유지하고 보관형 phs/prgs를 추가한다. 묶음은 stackable=1, minstack=1, maxstack=256, spawnstack=1, compactsave=0이며 상점/드롭/고급창고 자동중첩 대상에서 제외한다. 동일 망치 HD 자산을 재사용해 새 이미지 파일은 추가하지 않는다.
+
+단품→묶음1 조합1개와 quantity=1..256 각각에 대응하는 인출 조합256개를 추가한다. 인출 결과는 단품prh,nor와 (수량>1일때만)phs,qty=N-1이다. quantity스탯의 현재 행 위치를 이름으로 조회하며 ID70을 고정하지 않는다. 기존 분해3232+제작3+변환/분리257=3492행을 추가하며 안전 상한에 모두 포함한다.
+
+olegbl MIT 패턴을 응용한 구간을 주석에 표시했다. 설치ZIP에 LICENSES/olegbl-MIT.txt를 포함한다. 런타임 엔진 수량/자동합치기/가격 동작은 별도 게임 검사 대상이다.
+
+## 1.1.0-alpha.1 선택형 드롭
+
+설치 옵션을 먼저 검증한다. 활성화된 경우에만 global/excel/treasureclassex.txt를 읽고 15개 Good 행의 존재·유일성·양수 Picks·가중치·빈 슬롯을 검사한다. 모든 대상이 통과하면 표의 복사본에 빈 후보 칸 하나씩만 채워 저장한다. NoDrop과 기존 Prob/Picks, 행 순서 및 다른 모드의 필드는 보존한다. 후보 추가로 실제 상대 확률은 변하며 게임 엔진에서의 드롭 빈도는 미검증이다. 원본 파일을 직접 수정하지 않고 D2RMM 병합 출력만 쓴다.
+
 ## 현재 구현 — 1.0.0
 
 Standard/Tiered 공통 생성기를 사용합니다. 대기 아이템 32종, 분해 조합 3,232개와 망치 제작 3개(총 3,235개), 망치 판매 옵션과 룬별 확률 툴팁을 제공합니다. 원래 룬·퀘스트 망치·몬스터 드롭 테이블은 변경하지 않습니다. 최신 검증 상태는 [TESTING.ko.md](TESTING.ko.md)를 참고하세요.

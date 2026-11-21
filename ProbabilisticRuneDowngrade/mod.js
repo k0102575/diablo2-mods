@@ -1,6 +1,6 @@
 /*
  * 확률형 룬 분해 모드 — 악마술사의 군림 전용
- * Probabilistic Rune Downgrade 1.0.0 / 제작자: 빵길빵길
+ * Probabilistic Rune Downgrade 1.1.0-alpha.5 / 제작자: 빵길빵길
  * 오프라인 D2RMM 데이터 모드입니다. 엘드~조드 전체 등급을 생성합니다.
  *
  * 이 파일은 D2RMM의 '모드 설치' 버튼을 누를 때 실행됩니다.
@@ -76,6 +76,13 @@ const chancesByTier = probabilityMode === 'tiered'
 // Older saved configurations may not contain this new checkbox yet.
 const sellHammerAtGheed = config.sellHammerAtGheed === undefined ? true : config.sellHammerAtGheed;
 if (typeof sellHammerAtGheed !== 'boolean') fail('sellHammerAtGheed: expected boolean.');
+const enableHammerDrops = config.enableHammerDrops === undefined ? false : config.enableHammerDrops;
+const hammerDropWeight = config.hammerDropWeight === undefined ? 1 : config.hammerDropWeight;
+if (typeof enableHammerDrops !== 'boolean') fail('enableHammerDrops: expected boolean.');
+if (!Number.isInteger(hammerDropWeight) || hammerDropWeight < 1 || hammerDropWeight > 1000) {
+  fail('hammerDropWeight: expected integer 1..1000 (weight, not percent).');
+}
+
 
 // 악마술사의 군림 데이터만 수정합니다. base 경로는 사용하지 않습니다.
 const prefix = 'global\\excel\\';
@@ -84,6 +91,8 @@ const prefix = 'global\\excel\\';
 // HD 아이템 매핑은 3글자 코드만 지원합니다. pg0~pgv를 예약합니다.
 // itemtypes 종류 식별자 prgp(4글자)는 실제 아이템 코드와 별개입니다.
 const hammerCode = 'prh';
+const stackedHammerCode = 'phs';
+const hammerStackLimit = 256;
 // Exact bases, not the entire hammer type. A restricted edition can narrow this list.
 const hammerCraftBases = ['mau', '9m9', '7m7']; // Maul / War Club / Ogre Maul
 const hammerCraftIngredients = ['r14', 'skz', 'jew']; // Dol / Perfect Skull / Jewel
@@ -92,7 +101,7 @@ const pendingCodes = new Set(
 );
 const reservedCode = value => {
   const code = String(value).toLowerCase();
-  return code.startsWith('prg') || code === hammerCode || pendingCodes.has(code);
+  return code.startsWith('prg') || code === hammerCode || code === stackedHammerCode || pendingCodes.has(code);
 };
 
 const files = {};
@@ -207,6 +216,55 @@ if ([armor, weapons].some(t =>
   t.rows.some(r => reservedCode(r.code))
 )) {
   fail('PRG item code collision in armor/weapons.');
+}
+
+// Optional weighted candidate insertion. No third-party runtime code is used.
+// Disabled installations do not even read this table; the stable path is unchanged.
+if (enableHammerDrops) {
+  const itemColumns = Array.from({ length: 10 }, (_, i) => 'Item' + (i + 1));
+  const probabilityColumns = Array.from({ length: 10 }, (_, i) => 'Prob' + (i + 1));
+  const drops = load('treasureclassex',
+    ['Treasure Class', 'Picks', 'NoDrop', ...itemColumns, ...probabilityColumns], true);
+  const targets = ['', 'N', 'H'].flatMap(difficulty =>
+    Array.from({ length: 5 }, (_, i) => 'Act ' + (i + 1) +
+      (difficulty ? ' (' + difficulty + ')' : '') + ' Good'));
+  const replacements = new Map();
+  const natural = value => /^\d+$/.test(String(value)) && Number.isSafeInteger(Number(value));
+  for (const name of targets) {
+    const source = unique(drops, 'Treasure Class', name);
+    if (!natural(source.Picks) || Number(source.Picks) < 1) {
+      fail('Hammer drops require positive Picks: ' + name);
+    }
+    const noDrop = source.NoDrop === '' ? '0' : source.NoDrop;
+    if (!natural(noDrop)) fail('Invalid NoDrop: ' + name);
+    let totalWeight = Number(noDrop) + hammerDropWeight;
+    const vacant = [];
+    for (let index = 0; index < itemColumns.length; index++) {
+      const candidate = source[itemColumns[index]];
+      const weight = source[probabilityColumns[index]];
+      if (!candidate) {
+        if (weight !== '' && weight !== '0') fail('Orphan drop weight: ' + name);
+        vacant.push(index);
+      } else {
+        if (candidate === hammerCode) fail('Hammer drop candidate already present: ' + name);
+        if (!natural(weight)) fail('Invalid candidate weight: ' + name);
+        totalWeight += Number(weight);
+      }
+    }
+    if (vacant.length === 0) fail('No free drop candidate slot: ' + name);
+    if (!Number.isSafeInteger(totalWeight) || totalWeight > 2147483647) {
+      fail('Drop weight total exceeds safety limit: ' + name);
+    }
+    const index = vacant[0];
+    replacements.set(source, {
+      ...source, [itemColumns[index]]: hammerCode,
+      [probabilityColumns[index]]: String(hammerDropWeight),
+    });
+  }
+  // Only commit the prepared table after every target has passed validation.
+  files[prefix + 'treasureclassex.txt'] = {
+    headers: drops.headers, rows: drops.rows.map(row => replacements.get(row) || row),
+  };
 }
 
 const statIDColumn = stats.headers.includes('*ID') ? '*ID' : 'ID';
@@ -400,11 +458,11 @@ pendingModels['hd\\items\\misc\\' + hammerAsset + '.json'] = hammerModel;
 const hammerHD = JSON.parse(JSON.stringify(sourceHammerHD));
 hammerHD.asset = hammerAsset;
 hd.push({ [hammerCode]: hammerHD });
-text('PRGHammer', 'Rune Dismantling Hammer', '룬 분해 망치');
+text('PRGHammer', 'ÿc8Rune Dismantling Hammer', 'ÿc8룬 분해 망치');
 // The game displays these description lines in reverse order.
 text('PRGHammerHelp',
-  '+ Dol Rune + Perfect Skull + Jewel\nCraft: Magic Maul family (excluding Great Maul family)\nTransmute with one rune (Eld-Zod). Consumed; returned on a miss.',
-  '+ 돌 룬 + 최상급 해골 + 주얼\n제작: 매직 마울 계열 (그레이트 마울 계열 제외)\n엘드~조드 룬 1개와 조합. 소모되며 꽝일 때 망치만 반환됩니다.');
+  'ÿc0+ Dol Rune + Perfect Skull + Jewel\nÿc0Craft: Magic Maul family (excluding Great Maul family)\nÿc0Transmute with one rune (Eld-Zod). Consumed; returned on a miss.',
+  'ÿc0+ 돌 룬 + 최상급 해골 + 주얼\nÿc0제작: 매직 마울 계열 (그레이트 마울 계열 제외)\nÿc0엘드~조드 룬 1개와 조합. 소모되며 꽝일 때 망치만 반환됩니다.');
 add(types, {
   ItemType: 'PRG Dismantling Material', Code: 'prgh', Equiv1: 'misc',
   Normal: '1', Body: '0', Magic: '0', Rare: '0', TreasureClass: '0',
@@ -432,10 +490,58 @@ for (const field of ['alternategfx', 'dropsound', 'dropsfxframe', 'usesound']) {
 }
 if (misc.headers.includes('AdvancedStashStackable')) hammer.AdvancedStashStackable = '0';
 
+// Stack conversion/splitting pattern adapted from olegbl's Stackable Runes/Gems.
+// Copyright (c) 2022 Oleg Lokhvitsky. See LICENSES/olegbl-MIT.txt.
+// Keep prh as the only usable material; phs is a storage-only variant.
+const quantityStat = unique(stats, 'Stat', 'quantity');
+const quantityStatIndex = stats.rows.indexOf(quantityStat);
+text('PRGHammerStack', 'ÿc8Rune Dismantling Hammers (Stacked)', 'ÿc8룬 분해 망치 (묶음)');
+text('PRGHammerStackHelp',
+  'ÿc0Transmute alone: withdraw one hammer.',
+  'ÿc0단독 조합: 망치 1개 꺼내기');
+add(types, {
+  ItemType: 'PRG Hammer Storage', Code: 'prgs', Equiv1: 'misc',
+  Normal: '1', Body: '0', Magic: '0', Rare: '0', TreasureClass: '0',
+  VarInvGfx: '0', StorePage: 'misc',
+});
+const stackedHammer = add(misc, {
+  ...hammer, name: 'PRGHammerStack', code: stackedHammerCode,
+  namestr: 'PRGHammerStack', type: 'prgs', spawnable: '0',
+  stackable: '1', minstack: '1', maxstack: String(hammerStackLimit), spawnstack: '1',
+  // D2R already renders the stack count. Add only the withdrawal hint.
+  spelldesc: '1', spelldescstr: 'PRGHammerStackHelp',
+  GheedMin: '0', GheedMax: '0', GheedMagicMin: '0', GheedMagicMax: '0',
+  PermStoreItem: '0', multibuy: '0',
+});
+for (const field of ['normcode', 'ubercode', 'ultracode']) {
+  if (misc.headers.includes(field)) stackedHammer[field] = stackedHammerCode;
+}
+if (misc.headers.includes('AdvancedStashStackable')) stackedHammer.AdvancedStashStackable = '0';
+const stackedHammerAsset = 'prg/dismantling_hammer_stack';
+pendingModels['hd\\items\\misc\\' + stackedHammerAsset + '.json'] = hammerModel;
+hd.push({ [stackedHammerCode]: { ...hammerHD, asset: stackedHammerAsset } });
+
+
 // 등급마다 첫 단계 1행 + 결과 판정 100행을 추가합니다.
 // 이 상한은 보수적인 안전 제한이며 현행 엔진 한도를 입증한 값은 아닙니다.
-if (cube.rows.length + ranks.length * 101 + hammerCraftBases.length > 32767) {
+if (cube.rows.length + ranks.length * 101 + hammerCraftBases.length + hammerStackLimit + 1 > 32767) {
   fail('Safety cap: total cube rows exceed 32767.');
+}
+
+// Packing creates quantity 1. Withdrawing replaces the consumed stack with
+// exactly one single hammer plus the unchanged remainder (no zero-size output).
+add(cube, {
+  description: 'PRDG: pack hammer', enabled: '1', version: '100', numinputs: '1',
+  'input 1': hammerCode, output: stackedHammerCode + ',qty=1', lvl: '1',
+});
+for (let quantity = 1; quantity <= hammerStackLimit; quantity++) {
+  add(cube, {
+    description: 'PRDG: unpack hammer ' + quantity,
+    enabled: '1', version: '100', numinputs: '1',
+    'input 1': stackedHammerCode, op: '18', param: String(quantityStatIndex),
+    value: String(quantity), output: hammerCode + ',nor', lvl: '1',
+    'output b': quantity > 1 ? stackedHammerCode + ',qty=' + (quantity - 1) : '',
+  });
 }
 
 // Fixed tool output: all four ingredients are consumed; no random crafted affixes.

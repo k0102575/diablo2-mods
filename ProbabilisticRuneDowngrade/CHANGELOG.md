@@ -1,5 +1,40 @@
 # Changelog
 
+## 1.1.0-alpha.5 — 2026-11-21
+
+- Use the built-in stack count and show only the withdrawal hint as custom tooltip text. This removes the second count that showed zero in alpha.4.
+- In-game tooltip verification is pending.
+
+## 1.1.0-alpha.4 — 2026-11-13
+
+- Restore the first double-hammer icon for readability at inventory size.
+- Color single and stacked hammer names crafting orange; keep help text white.
+- Show calculated quantity in a compact two-line stack tooltip.
+- Record passed game 3.4 / D2RMM 1.9.2 mixed-mod tests for vendor/crafting/downgrade and small-stack conversion. Limit/overflow and these revised displays remain pending.
+- Pass 308 automated checks and sprite/ZIP validation.
+
+## 1.1.0-alpha.3 — 2026-11-12
+
+- Give storage-only hammer stacks a separate AI-assisted overlapping-hammer HD icon in both sprite resolutions.
+- Preserve single-hammer icons and installed ground models. Native quantity display remains separate from artwork.
+- Pass 302 automated checks, sprite decoder/pixel roundtrip checks and both package builds. Actual in-game rendering remains unverified.
+
+## 1.1.0-alpha.2 — 2026-11-12
+
+- Combine the planned stacking feature with the optional-drop update. Add a separate storage-only hammer stack, maximum 256.
+- Pack one single hammer in the cube; transmute a stack to withdraw one single and preserve the remainder. Single-hammer recipes and payouts remain unchanged.
+- Bind quantity checks by the installed quantity-stat row instead of a hardcoded ID.
+- Include olegbl’s original MIT notice/license for the adapted conversion/splitting pattern.
+- Pass 300 automated checks and both package builds. Drop and stack features still need actual D2RMM/game validation.
+
+## 1.1.0-alpha.1 — 2026-11-12
+
+- Add optional hammer monster drops, OFF by default, and a shared weight setting (1–1000, default 1).
+- Add weighted candidates to 15 act/difficulty Good classes without replacing existing entries. Existing loot chances are affected when enabled; this is not an independent bonus drop.
+- Validate every target and available slot before writes; do not read/write the drop table when disabled.
+- Preserve crafting, vendor controls, probabilities, item codes and artwork.
+- Pass 273 automated checks. Actual installation, drops and mixed-mod behavior remain untested.
+
 ## 1.0.0 — 2026-11-10
 
 - Package Standard and Tiered for public distribution with matching 1.0.0 metadata and documentation.
