@@ -1,0 +1,6 @@
+{
+  "name": "Act II Mercenary Aura Activation",
+  "description": "액트 2 용병의 첫 교전에서 기본 오라가 선택될 확률을 높이는 D2RMM 오프라인 모드. / Earlier aura activation for Act II mercenaries in offline play.",
+  "author": "빵길빵길",
+  "version": "0.2.0"
+}
