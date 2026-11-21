@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0-alpha.5 — 2026-11-21
+
+- Use the built-in stack count and show only the withdrawal hint as custom tooltip text. This removes the second count that showed zero in alpha.4.
+- In-game tooltip verification is pending.
+
 ## 1.1.0-alpha.4 — 2026-11-13
 
 - Restore the first double-hammer icon for readability at inventory size.

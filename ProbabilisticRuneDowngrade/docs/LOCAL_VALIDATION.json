@@ -1,9 +1,9 @@
 {
   "inputs": {
-    "ProbabilisticRuneDowngrade/mod.js": "691b7edc4627a86cb6f7c4f844cf9bf8a4965db74f5c1a7c4e20d41dd27a5cbc",
-    "ProbabilisticRuneDowngrade/mod.json": "744492cdf2c5389aa739f46cc56ad0723c2b40acece1d2090a7f54f5bcf90013",
+    "ProbabilisticRuneDowngrade/mod.js": "fa26b51439bee7458d509b23f1f7761f658e56bf79b3fc96969fdc61432a5e2b",
+    "ProbabilisticRuneDowngrade/mod.json": "3bd613e098a4780d16d52ee17d642633ac62b25fffe3db065507c3960ff68ef6",
     "ProbabilisticRuneDowngrade/research/schema.json": "c7e5a39958a23432062851714ebf2857d9e888cd31fa462108c2512306974709",
-    "tools/verify.mjs": "5fe6a2449ede2e45ed12f26f5a17c3effff830692059060580ef243d207a9ead",
+    "tools/verify.mjs": "5363969fd134837eea0a57aac2dc7de2ad0efba0b222f9779e5f30bf230eae5f",
     "tools/package-editions.mjs": "ae63e6f436124851bee5b0552775222bd1b42904dc28eec2239da6d5b95082ca",
     "tools/build.py": "c98115a5a44068fe48828ac92d8534d75836b6b27322929289685a8e1541e476",
     "ProbabilisticRuneDowngrade/LICENSES/olegbl-MIT.txt": "f2729820b05efcdf3e17d765d1fc7c2b9c57852b6c7798466a6ec285f40c84b4",
@@ -11,7 +11,7 @@
     "ProbabilisticRuneDowngrade/research/hammer-icon.json": "6dfc1fff0e2da88c68d96ac7e45955a02b09faead65b22d5a089615af6743aeb",
     "ProbabilisticRuneDowngrade/research/stacked-hammer-icon.json": "8c6e2ff757fe57a7e23d1bc6e7e31720b05855080e2c666d81cd0f952dba2308"
   },
-  "date": "2026-11-13",
+  "date": "2026-11-21",
   "checks": 308,
   "checksByEdition": {
     "tiered": 126,

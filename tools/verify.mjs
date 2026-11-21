@@ -74,7 +74,7 @@ function verify(overrides={},actual=false,change=()=>{}) {
  assert.ok(!metadata.config.some(c=>c.id==='istOnly'));
  assert.equal(metadata.name,'Probabilistic Rune Downgrade ('+(activeEdition==='tiered'?'Tiered':'Standard')+')');
  assert.equal(metadata.author,'빵길빵길');
- assert.equal(metadata.version,'1.1.0-alpha.4');
+ assert.equal(metadata.version,'1.1.0-alpha.5');
  assert.equal(rows.length,ranks*101);assert.equal(writes.length,41);
  assert.equal(JSON.stringify(hd.slice(0,-34)),result.originalHD);
  assert.equal(JSON.stringify(t.misc.rows.slice(0,-34)),result.originalMisc);
@@ -525,18 +525,21 @@ for(const edition of ['standard','tiered']) {
 for(const edition of ['standard','tiered']) {
  activate(edition);const before=checks;const r=run();assert.equal(r.error,undefined);
  const stack=r.tables.misc.rows.find(x=>x.code==='phs');
- assert.equal(stack.spelldesc,'2');assert.equal(stack.spelldesccalc,"stat('quantity'.accr)");assert.equal(stack.spelldesccolor,'0');
+ assert.equal(stack.spelldesc,'1');
+ assert.equal(stack.spelldesccalc,'');
  const help=r.strings.find(x=>x.Key===stack.spelldescstr);
+ assert.equal(help.koKR,'ÿc0단독 조합: 망치 1개 꺼내기');
+ assert.equal(help.enUS,'ÿc0Transmute alone: withdraw one hammer.');
  for(const language of ['koKR','enUS']) {
-  assert.equal(help[language].split('\n').length,2);
-  assert.equal((help[language].match(/%d/g)||[]).length,1);
-  assert.ok(help[language].includes('/ 256'));
   assert.ok(r.strings.find(x=>x.Key===stack.namestr)[language].startsWith('ÿc8'));
  }
  checks++;
  for(const field of ['spelldesccalc','spelldesccolor']) {
-  const bad=run({},t=>t.misc.headers=t.misc.headers.filter(x=>x!==field));
-  assert.ok(bad.error);assert.equal(bad.writes.length,0);assert.equal(bad.copies.length,0);checks++;
+  const withoutField=run({},t=>t.misc.headers=t.misc.headers.filter(x=>x!==field));
+  assert.equal(withoutField.error,undefined);
+  const item=withoutField.tables.misc.rows.find(x=>x.code==='phs');
+  assert.ok(!Object.hasOwn(item,field));
+  assert.equal(item.spelldesc,'1');checks++;
  }
  checksByEdition[edition]+=checks-before;
 }
