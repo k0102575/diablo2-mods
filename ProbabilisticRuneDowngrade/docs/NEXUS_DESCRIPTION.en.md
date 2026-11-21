@@ -4,7 +4,7 @@
 
 The author reported passing these checks with **game 3.4 / D2RMM 1.9.2 / other mods**: vendor/crafting/downgrade with drops OFF; combining and withdrawing stacks of 1/2/5 with quantity conservation; rejecting rune+storage-stack recipes; normal single-hammer downgrades and one single returned on a miss. The 256 limit and overflow combining remain untested.
 
-Alpha.6 restores the tooltip mode used by Stackable Runes/Gems and keeps the withdrawal hint as plain text. The stack count was missing in alpha.5. The revised display still needs an in-game check.
+Version 1.2.0 displays the game’s stack count and a withdrawal hint. The user confirmed that the count displayed normally in alpha.6 on 2026-11-21.
 
 
 ## Hammer stack storage
@@ -33,7 +33,7 @@ Stacked hammers have a separate overlapping-hammer HD icon. Single-hammer icons 
 - Vendor sales and crafting remain separate options. This is not an independent bonus-drop mechanism.
 
 
-By **k0102575** · Version **1.1.0-alpha.6** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
+By **k0102575** · Version **1.2.0** · **Offline Reign of the Warlock only** · D2RMM **1.9+**
 
 Downgrade Eld through Zod with four configurable outcomes. Use one rune and one Rune Dismantling Hammer, then transmute the pending item alone to receive the result.
 
@@ -97,7 +97,7 @@ Pending items use **Glowing Runes** icons by **바론9**. Normal and resulting r
 ## Installation
 
 1. Close the game and back up offline characters and the shared stash.
-2. Extract `ProbabilisticRuneDowngrade-1.1.0-alpha.6-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
+2. Extract `ProbabilisticRuneDowngrade-1.2.0-<edition>-mods-only.zip` into the folder containing D2RMM. Confirm `mods/ProbabilisticRuneDowngrade/mod.json` exists, without an extra enclosing ZIP-name folder. The documentation ZIP is an alternative; install only one package.
 3. In D2RMM 1.9+, enable the chosen edition. Standard has four shared chances; Tiered has four chances in each of three groups. Review the Gheed sale checkbox as well.
 4. If using Relics of Sanctuary, place this mod **after Relics** in the install order. Click **Install Mods**.
 5. Launch the offline game with your D2RMM configuration. Use a copy of your save for initial checks.

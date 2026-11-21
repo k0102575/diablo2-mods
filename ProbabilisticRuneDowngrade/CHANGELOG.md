@@ -1,9 +1,15 @@
 # Changelog
 
+## 1.2.0 — 2026-11-21
+
+- Add optional monster drops for the Rune Dismantling Hammer, disabled by default, with a configurable drop weight.
+- Pack and withdraw hammers in the Cube. Stacks show the game’s quantity line and a short withdrawal hint.
+- The user confirmed that the stack count displays normally in alpha.6.
+
 ## 1.1.0-alpha.6 — 2026-11-21
 
 - Restore the stack tooltip mode after alpha.5 hid the count. The custom tooltip contains only the withdrawal hint.
-- In-game verification of the restored display is pending.
+- The user confirmed normal stack count display on 2026-11-21.
 
 ## 1.1.0-alpha.5 — 2026-11-21
 
